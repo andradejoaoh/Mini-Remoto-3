@@ -12,6 +12,7 @@
 		610F983E245B6770003EFDA8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F983D245B6770003EFDA8 /* ViewController.swift */; };
 		610F9843245B6773003EFDA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 610F9842245B6773003EFDA8 /* Assets.xcassets */; };
 		610F9846245B6773003EFDA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 610F9844245B6773003EFDA8 /* LaunchScreen.storyboard */; };
+		616A26AF246DD2AD00BD2117 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26AE246DD2AD00BD2117 /* ImageManager.swift */; };
 		A45626A5246DA73F006EEABF /* TextWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetViewController.swift */; };
 		A45626A7246DA787006EEABF /* TextWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TextWidgetViewModel.swift */; };
 		A45626A9246DA79C006EEABF /* TextWidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A8246DA79C006EEABF /* TextWidgetModel.swift */; };
@@ -31,6 +32,7 @@
 		610F9842245B6773003EFDA8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		610F9845245B6773003EFDA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		610F9847245B6773003EFDA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		616A26AE246DD2AD00BD2117 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		A45626A4246DA73F006EEABF /* TextWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetViewController.swift; sourceTree = "<group>"; };
 		A45626A6246DA787006EEABF /* TextWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetViewModel.swift; sourceTree = "<group>"; };
 		A45626A8246DA79C006EEABF /* TextWidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetModel.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 		610F9838245B6770003EFDA8 /* MiniRemoto */ = {
 			isa = PBXGroup;
 			children = (
+				616A26AD246DD29300BD2117 /* Managers */,
 				A45626A2246DA71A006EEABF /* Widgets */,
 				A462573C246C8D0D00CE2B96 /* Protocols */,
 				610F9839245B6770003EFDA8 /* AppDelegate.swift */,
@@ -83,6 +86,14 @@
 				A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */,
 			);
 			path = MiniRemoto;
+			sourceTree = "<group>";
+		};
+		616A26AD246DD29300BD2117 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				616A26AE246DD2AD00BD2117 /* ImageManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		A45626A2246DA71A006EEABF /* Widgets */ = {
@@ -205,6 +216,7 @@
 				610F983A245B6770003EFDA8 /* AppDelegate.swift in Sources */,
 				610F983C245B6770003EFDA8 /* SceneDelegate.swift in Sources */,
 				A45626A7246DA787006EEABF /* TextWidgetViewModel.swift in Sources */,
+				616A26AF246DD2AD00BD2117 /* ImageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
