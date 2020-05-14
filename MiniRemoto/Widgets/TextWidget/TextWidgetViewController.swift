@@ -9,21 +9,6 @@
 import Foundation
 import UIKit
 
-final class TextWidgetViewController: UIViewController {
-    
-}
-
-extension TextWidgetViewController: WidgetRepresentation {
-    func hide() {
-        self.view.isHidden = true
-    }
-
-    func show() {
-        self.view.isHidden = false
-    }
-
-    func update() {
-        //update UI
-    }
+final class TextWidgetViewController: WidgetViewController {
 
 }
