@@ -14,25 +14,25 @@ class ImageManager: UIViewController {
     func pickImage(){
         
         let actionSheet = UIAlertController(title: "Escolha uma Foto", message: "Selecione o local da foto.", preferredStyle: .actionSheet)
-        let photoAction = UIAlertAction(title: "Fotos", style: .default) { (action) in
+        let photoAction = UIAlertAction(title: "Galeria", style: .default) { [weak self] (action) in
             if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
                 let photoPicker = UIImagePickerController()
                 photoPicker.delegate = self
                 photoPicker.sourceType = .photoLibrary
                 photoPicker.allowsEditing = false
-                self.present(photoPicker, animated: true, completion: nil)
+                self?.present(photoPicker, animated: true, completion: nil)
             }
         }
         actionSheet.addAction(photoAction)
 
         
-        let cameraAction = UIAlertAction(title: "Câmera", style: .default) { (action) in
+        let cameraAction = UIAlertAction(title: "Câmera", style: .default) { [weak self] (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 let cameraPicker = UIImagePickerController()
                 cameraPicker.delegate = self
                 cameraPicker.sourceType = .camera
                 
-                self.present(cameraPicker, animated: true, completion: nil)
+                self?.present(cameraPicker, animated: true, completion: nil)
             }
         }
         actionSheet.addAction(cameraAction)
