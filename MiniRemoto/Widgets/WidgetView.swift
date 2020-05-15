@@ -1,5 +1,5 @@
 //
-//  WidgetViewController.swift
+//  WidgetView.swift
 //  MiniRemoto
 //
 //  Created by Artur Carneiro on 14/05/20.
@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-class WidgetViewController: UIViewController {
-
+class WidgetView: UIViewController {
     private var beganTouchLocation: CGPoint?
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
