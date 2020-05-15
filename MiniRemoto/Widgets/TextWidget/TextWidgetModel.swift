@@ -9,25 +9,12 @@
 import Foundation
 import CoreData
 
-class TextWidgets: NSManagedObjectModel {
-    var id: Int = 0
-    var title: String = ""
-    var body: String = ""
-}
-
-struct TextWidgetModel: Widget {
-    private(set) var id: Int
+/// The Model used by the TextWidget's Controller.
+struct TextWidgetModel {
+    /// The title input from the user.
     var title: String
+
+    /// The body input from the user.
     var body: String
-}
-
-extension TextWidgetModel: CoreDataModel {
-    typealias T = TextWidgets
-
-    init(managedObject object: TextWidgets) {
-        self.id = object.id
-        self.title = object.title
-        self.body = object.body
-    }
 }
 
