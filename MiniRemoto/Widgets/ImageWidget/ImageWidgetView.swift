@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-/// A representation of an Image Widget. This WidgetView
+/// A representation of an `ImageWidget`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: WidgetView {
-    /// The UIImageView used to display this ImageWidget's image.
-    /// This UIImageView will fill the entirety of this ImageWidget's frame.
+    /// The UIImageView used to display a `ImageWidget`'s image.
+    /// This UIImageView will fill the entirety of a `ImageWidget`'s frame.
     @AutoLayout private var imageView: UIImageView
 
     /// The image being displayed. It is assumed that
@@ -36,7 +36,7 @@ final class ImageWidgetView: WidgetView {
         setupUI()
     }
 
-    /// Set the UI up with constraints to match this ImageWidget's frame.
+    /// Set the UI up with constraints to match a `ImageWidget`'s frame.
     private func setupUI() {
         view.backgroundColor = .systemBackground
 
@@ -51,5 +51,34 @@ final class ImageWidgetView: WidgetView {
              imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
              imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         )
+    }
+
+    /// Updates a `ImageWidget`'s image with the `UIImage` passed as the parameter.
+    /// It also registers a new undo operation in the `UndoManager`. Updating of a
+    /// `ImageWidget`'s image should be done through this function to maintain the correct
+    /// order of operations in the `UndoManager`.
+    /// - parameter image: The new image to be set.
+    func updateImage(_ image: UIImage) {
+        let currentImage = self.image
+        self.image = image
+        self.imageView.image = image
+
+        undoManager?.registerUndo(withTarget: self, handler: { (target) in
+            target.updateImage(currentImage)
+        })
+    }
+
+    func undo() {
+        guard let undoManager = undoManager else { return }
+        if undoManager.canUndo {
+            undoManager.undo()
+        }
+    }
+
+    func redo() {
+        guard let undoManager = undoManager else { return }
+        if undoManager.canRedo {
+            undoManager.redo()
+        }
     }
 }
