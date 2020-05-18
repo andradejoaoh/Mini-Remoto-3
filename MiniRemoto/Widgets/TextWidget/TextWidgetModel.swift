@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-/// The Model used by the TextWidget's Controller.
+/// The Model used by the `TextWidget`'s Controller.
 struct TextWidgetModel {
     /// The title input from the user.
     var title: String
