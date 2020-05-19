@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-/// A representation of a TextWidgetView. This WidgetView
+/// A representation of a `TextWidgetView`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class TextWidgetView: WidgetView {
-    /// The representation of this TextWidget's title.
+    /// The representation of a `TextWidget`'s title.
     @AutoLayout private var titleTextField: UITextField
-    /// The representation of this TextWidget's body.
+    /// The representation of a `TextWidget`'s body.
     @AutoLayout private var bodyTextView: UITextView
 
     /// The Controller used by this type.
@@ -38,7 +38,7 @@ final class TextWidgetView: WidgetView {
     }
 
     /// Set the UI up with constraints so `titleTextField` and `bodyTextView`
-    /// occupy 15% and 85% of this TextWidget's frame, respectively.
+    /// occupy 15% and 85% of a `TextWidget`'s frame, respectively.
     /// Configures `titleTextField` and `bodyTextView`.
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -68,22 +68,61 @@ final class TextWidgetView: WidgetView {
              bodyTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor)]
         )
     }
+
+    func undo() {
+        guard let undoManager = undoManager else { return }
+        if undoManager.canUndo {
+            undoManager.undo()
+        }
+    }
+
+    func redo() {
+        guard let undoManager = undoManager else { return }
+        if undoManager.canRedo {
+            undoManager.redo()
+        }
+    }
 }
 
 extension TextWidgetView: UITextViewDelegate {
     /// Sends the current `bodyTextView`'s text to
     /// the Controller's body variable when the user ends
-    /// their editing.
+    /// their editing. Functions as a passthrough function
+    /// to enable safe recording of the operation.
     func textViewDidEndEditing(_ textView: UITextView) {
-        controller.body = bodyTextView.text
+        updateBody(textView.text)
+    }
+
+    /// Updates the body of a `TextWidget`. Records the operation
+    /// using `UndoManager` to allow undo and redo.
+    private func updateBody(_ text: String) {
+        let currentText = controller.body
+        controller.body = text
+
+        undoManager?.registerUndo(withTarget: self, handler: { (target) in
+            target.updateBody(currentText)
+        })
     }
 }
 
 extension TextWidgetView: UITextFieldDelegate {
     /// Sends the current `titleTextField`'s text to
     /// the Controller's title variable when the user ends
-    /// their editing.
+    /// their editing. Functions as a passthrough function
+    /// to enable safe recording of the operation.
     func textFieldDidEndEditing(_ textField: UITextField) {
-        controller.title = titleTextField.text ?? ""
+        guard let text = textField.text else { return }
+        updateTitle(text)
+    }
+
+    /// Updates the title of a `TextWidget`. Records the operation
+    /// using `UndoManager` to allow undo and redo.
+    private func updateTitle(_ text: String) {
+        let currentText = controller.body
+        controller.title = text
+
+        undoManager?.registerUndo(withTarget: self, handler: { (target) in
+            target.updateTitle(currentText)
+        })
     }
 }
