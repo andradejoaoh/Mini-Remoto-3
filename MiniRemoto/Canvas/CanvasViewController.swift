@@ -12,8 +12,13 @@ class CanvasViewController: UIViewController {
     
     var widgets = [WidgetView]()
     
+    let maxZoomOut: CGFloat = 4
+    let maxZoomIn: CGFloat = 1/2
+    
     var beginTouchLocation: CGPoint?
     var beginCanvasOrigin: CGPoint = CGPoint.zero
+    var beginCanvasScale: CGPoint = CGPoint(x: 1, y: 1)
+    var beginCanvasTransform: CGAffineTransform = CGAffineTransform()
     var beginWidgetPosition: CGPoint = CGPoint.zero
     var holdedWidget: WidgetView?
     var touchedView: UIView?
@@ -27,6 +32,7 @@ class CanvasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         canvasView = UIView(frame: self.view.frame)
         view.addSubview(canvasView)
         
@@ -34,6 +40,10 @@ class CanvasViewController: UIViewController {
         canvasView.clipsToBounds = true
         
         canvasView.backgroundColor = UIColor(patternImage: UIImage(named: "tiled_paper_texture")!)
+        canvasView.bounds = CGRect(x: canvasView.frame.origin.x, y: canvasView.frame.origin.y, width: canvasView.frame.width * maxZoomOut, height: canvasView.frame.height * maxZoomOut)
+        
+        view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(zoom(_:))))
+        view.backgroundColor = UIColor(red: 0.8, green: 0.7, blue: 0, alpha: 0.1)
         
         let widg1 = WidgetView()
         widg1.view.frame = CGRect(x: 20, y: 20, width: 200, height: 100)
@@ -66,6 +76,20 @@ class CanvasViewController: UIViewController {
         widgets.removeAll { (w) -> Bool in
             widget == w
         }
+    }
+    
+    @objc
+    func zoom(_ sender : UIPinchGestureRecognizer) {
+        
+        if sender.state == .began {
+            beginCanvasTransform = canvasView.transform
+        }
+        
+        let scaleResult = beginCanvasTransform.scaledBy(x: sender.scale, y: sender.scale)
+        guard scaleResult.a > 1/maxZoomOut, scaleResult.d > 1/maxZoomOut else { return }
+        guard scaleResult.a < 1/maxZoomIn, scaleResult.d < 1/maxZoomIn else { return }
+        canvasView.transform = scaleResult
+//        sender.scale = 1
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -128,7 +152,6 @@ class CanvasViewController: UIViewController {
         }
     }
     
-    // Methods to excract to widget views
     func selectWidget(widgetView: UIView) {
         selectedWidgetView = widgetView
     }
@@ -145,7 +168,7 @@ class CanvasViewController: UIViewController {
     
     func dragCanvas(by vector: CGPoint) {
         print("moving canvas")
-        canvasView.bounds.origin = beginCanvasOrigin - vector
+        canvasView.bounds.origin = beginCanvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
 
     public func receiveWidget(widget: WidgetView) {
