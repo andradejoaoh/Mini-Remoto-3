@@ -23,7 +23,6 @@ class CanvasViewController: UIViewController {
     var holdedWidget: WidgetView?
     var touchedView: UIView?
     var selectedWidgetView: UIView?
-    var moved = false
     
     /// This is the drawing view that contains every other view.
     /// self.view must be static just for handling user input
@@ -48,10 +47,11 @@ class CanvasViewController: UIViewController {
                                    height: newHeight)
         canvasView.bounds.origin = CGPoint(x: canvasView.frame.origin.x, y: canvasView.frame.origin.y)
         
+        canvasView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        canvasView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        canvasView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
+        
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(zoom(_:))))
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
-        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
-        view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
         
         // Placeholder objects
         let center = UIView(frame: CGRect(x: -5, y: -5, width: 10, height: 10))
@@ -62,14 +62,24 @@ class CanvasViewController: UIViewController {
         let widg1 = WidgetView()
         widg1.view.frame = CGRect(x: 20, y: 20, width: 200, height: 100)
         widg1.view.backgroundColor = .systemPink
+        widg1.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        widg1.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        widg1.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
         
         let widg2 = WidgetView()
-        widg2.view.frame = CGRect(x: 200, y: 500, width: 400, height: 2000)
+        widg2.view.frame = CGRect(x: 199, y: 500, width: 400, height: 2000)
+        widg2.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        widg2.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        widg2.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
+        
         widg2.view.backgroundColor = .systemBlue
         
         let widg3 = WidgetView()
         widg3.view.frame = CGRect(x: -200, y: -300, width: 300, height: 300)
         widg3.view.backgroundColor = .systemPurple
+        widg3.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        widg3.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        widg3.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
         
         addWidget(widget: widg1, to: canvasView)
         addWidget(widget: widg2, to: canvasView)
@@ -94,7 +104,13 @@ class CanvasViewController: UIViewController {
     
     @objc
     func tap(_ sender : UITapGestureRecognizer) {
-        
+        if widgets.contains(where: { (widgetView) -> Bool in
+            widgetView.view == sender.view
+        }) {
+            tapWidget(widgetView: sender.view!)
+            return
+        }
+        tapCanvas()
     }
     
     @objc
@@ -104,17 +120,30 @@ class CanvasViewController: UIViewController {
     
     @objc
     func drag(_ sender : UIPanGestureRecognizer) {
+        if sender.state == .began {
+            beginTouchLocation = sender.location(in: view)
+            beginCanvasOrigin = canvasView.bounds.origin
+            beginWidgetPosition = selectedWidgetView!.center
+        }
         
+        else if sender.state == .changed {
+            if widgets.contains(where: { (widgetView) -> Bool in
+                widgetView.view == sender.view
+            }) && sender.view == selectedWidgetView {
+                moveWidget(widgetView: selectedWidgetView!, by: sender.translation(in: view))
+            } else {
+                dragCanvas(by: sender.translation(in: view))
+            }
+        }
     }
     
     @objc
     func zoom(_ sender : UIPinchGestureRecognizer) {
-        
         if sender.state == .began {
             beginCanvasTransform = canvasView.transform
         }
         
-        if sender.state == .changed {
+        else if sender.state == .changed {
 
             let scaleResult = beginCanvasTransform.scaledBy(x: sender.scale, y: sender.scale)
             guard scaleResult.a > 1/maxZoomOut, scaleResult.d > 1/maxZoomOut else { return }
@@ -122,59 +151,54 @@ class CanvasViewController: UIViewController {
             
             canvasView.transform = scaleResult
         }
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        beginTouchLocation = touches.first!.location(in: view)
-        touchedView = touches.first!.view
         
-        if touchedView == selectedWidgetView {
-            beginWidgetPosition = selectedWidgetView!.center
-        } else {
-            beginCanvasOrigin = canvasView.bounds.origin
-        }
-        moved = false
+//        touchedView = touches.first!.view
+//
+//        if touchedView == selectedWidgetView {
+//            beginWidgetPosition = selectedWidgetView!.center
+//        } else {
+//            beginCanvasOrigin = canvasView.bounds.origin
+//        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let beginTouchLocation = beginTouchLocation else { print("WARNIGN: beginTouchLocation found nil"); return }
+//        guard let beginTouchLocation = beginTouchLocation else { print("WARNIGN: beginTouchLocation found nil"); return }
         
-        let newTouchLocation = touches.first!.location(in: view)
-        let diff = newTouchLocation - beginTouchLocation
-        
-        if selectedWidgetView == nil {
-            dragCanvas(by:  diff)
-        } else if touchedView == selectedWidgetView {
-            moveWidget(widgetView: selectedWidgetView!, by: diff)
-        } else {
-//            dragCanvas(by: diff)
-        }
-        moved = true
+//        let newTouchLocation = touches.first!.location(in: view)
+//        let diff = newTouchLocation - beginTouchLocation
+//
+//        if selectedWidgetView == nil {
+//            dragCanvas(by:  diff)
+//        } else if touchedView == selectedWidgetView {
+//            moveWidget(widgetView: selectedWidgetView!, by: diff)
+//        } else {
+////            dragCanvas(by: diff)
+//        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if moved { return }
-        if touchedView == canvasView {
-            // clicked canvas without dragging
-            selectedWidgetView?.backgroundColor = .gray
-            selectedWidgetView = nil
-        }
-        else if touchedView != canvasView {
-            // clicked widget
-            selectedWidgetView = touchedView
-            selectedWidgetView?.backgroundColor = .systemYellow
-        }
+//        if touchedView == canvasView {
+//            // clicked canvas without dragging
+//            selectedWidgetView?.backgroundColor = .gray
+//            selectedWidgetView = nil
+//        }
+//        else if touchedView != canvasView {
+//            // clicked widget
+//            selectedWidgetView = touchedView
+//            selectedWidgetView?.backgroundColor = .systemYellow
+//        }
     }
     
-    // "click" is the event of touching and releasing without moving the finger
-    func clickedCanvas() {
+    func tapCanvas() {
         if selectedWidgetView != nil {
             deselectWidget(widgetView: selectedWidgetView!)
         }
     }
     
-    func clickedWidget(widgetView: UIView) {
+    func tapWidget(widgetView: UIView) {
         if selectedWidgetView == nil {
             selectWidget(widgetView: widgetView)
         } else if selectedWidgetView == widgetView {
@@ -187,6 +211,7 @@ class CanvasViewController: UIViewController {
     
     func selectWidget(widgetView: UIView) {
         selectedWidgetView = widgetView
+        widgetView.backgroundColor = .systemYellow
     }
     
     func deselectWidget(widgetView: UIView) {
