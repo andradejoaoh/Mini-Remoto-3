@@ -40,10 +40,24 @@ class CanvasViewController: UIViewController {
         canvasView.clipsToBounds = true
         
         canvasView.backgroundColor = UIColor(patternImage: UIImage(named: "tiled_paper_texture")!)
-        canvasView.bounds = CGRect(x: canvasView.frame.origin.x, y: canvasView.frame.origin.y, width: canvasView.frame.width * maxZoomOut, height: canvasView.frame.height * maxZoomOut)
+        let newWidth = canvasView.bounds.width * maxZoomOut
+        let newHeight = canvasView.bounds.height * maxZoomOut
+        canvasView.bounds = CGRect(x: 0,
+                                   y: 0,
+                                   width: newWidth,
+                                   height: newHeight)
+        canvasView.bounds.origin = CGPoint(x: canvasView.frame.origin.x, y: canvasView.frame.origin.y)
         
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(zoom(_:))))
-        view.backgroundColor = UIColor(red: 0.8, green: 0.7, blue: 0, alpha: 0.1)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
+        
+        // Placeholder objects
+        let center = UIView(frame: CGRect(x: -5, y: -5, width: 10, height: 10))
+        center.backgroundColor = .yellow
+        canvasView.addSubview(center)
+        center.layer.zPosition = 100
         
         let widg1 = WidgetView()
         widg1.view.frame = CGRect(x: 20, y: 20, width: 200, height: 100)
@@ -79,17 +93,36 @@ class CanvasViewController: UIViewController {
     }
     
     @objc
+    func tap(_ sender : UITapGestureRecognizer) {
+        
+    }
+    
+    @objc
+    func longPress(_ sender: UILongPressGestureRecognizer) {
+        
+    }
+    
+    @objc
+    func drag(_ sender : UIPanGestureRecognizer) {
+        
+    }
+    
+    @objc
     func zoom(_ sender : UIPinchGestureRecognizer) {
         
         if sender.state == .began {
             beginCanvasTransform = canvasView.transform
         }
         
-        let scaleResult = beginCanvasTransform.scaledBy(x: sender.scale, y: sender.scale)
-        guard scaleResult.a > 1/maxZoomOut, scaleResult.d > 1/maxZoomOut else { return }
-        guard scaleResult.a < 1/maxZoomIn, scaleResult.d < 1/maxZoomIn else { return }
-        canvasView.transform = scaleResult
-//        sender.scale = 1
+        if sender.state == .changed {
+
+            let scaleResult = beginCanvasTransform.scaledBy(x: sender.scale, y: sender.scale)
+            guard scaleResult.a > 1/maxZoomOut, scaleResult.d > 1/maxZoomOut else { return }
+            guard scaleResult.a < 1/maxZoomIn, scaleResult.d < 1/maxZoomIn else { return }
+            
+            canvasView.transform = scaleResult
+        }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -115,7 +148,7 @@ class CanvasViewController: UIViewController {
         } else if touchedView == selectedWidgetView {
             moveWidget(widgetView: selectedWidgetView!, by: diff)
         } else {
-            dragCanvas(by: diff)
+//            dragCanvas(by: diff)
         }
         moved = true
     }
@@ -162,12 +195,10 @@ class CanvasViewController: UIViewController {
     }
     
     func moveWidget(widgetView: UIView, by vector: CGPoint) {
-        print("moving widget")
         widgetView.center = beginWidgetPosition + vector
     }
     
     func dragCanvas(by vector: CGPoint) {
-        print("moving canvas")
         canvasView.bounds.origin = beginCanvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
 
