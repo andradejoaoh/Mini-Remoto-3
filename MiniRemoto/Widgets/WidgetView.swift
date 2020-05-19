@@ -1,5 +1,5 @@
 //
-//  TextWidgetViewController.swift
+//  WidgetView.swift
 //  MiniRemoto
 //
 //  Created by Artur Carneiro on 14/05/20.
@@ -9,6 +9,6 @@
 import Foundation
 import UIKit
 
-final class TextWidgetViewController: WidgetViewController {
+class WidgetView: UIViewController {
 
 }
