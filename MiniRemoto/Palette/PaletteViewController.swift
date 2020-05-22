@@ -9,29 +9,9 @@
 import Foundation
 import UIKit
 
-protocol PaletteWidget {
-    var name: String { get }
-    var icon: UIImage { get }
-    var frame: CGRect { get set }
-}
-
-struct TextPaletteWidget: PaletteWidget {
-    var name: String
-    var icon: UIImage
-    var frame: CGRect
-
-    init(imageName: String) {
-        self.name = imageName
-        self.icon = UIImage(named: imageName) ?? UIImage()
-        self.frame = CGRect.zero
-    }
-
-    init() {
-        self.init(imageName: "placeholder")
-    }
-}
-
 final class PaletteViewController: UIViewController {
+    typealias PaletteWidget = WidgetData
+
     @AutoLayout public var carouselView: CarouselCollectionView
 
     init(avaiableWidgets widgets: [PaletteWidget]) {
@@ -155,7 +135,7 @@ extension PaletteViewController: UICollectionViewDataSource {
 //  Casts collection view cell as CarouselCellView and atributes image based on widgetOptions
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as? CarouselCellView else { return UICollectionViewCell()}
-        cell.image = widgetOptions[indexPath.item].icon
+        cell.image = widgetOptions[indexPath.item].iconImage
         return cell
     }
 }
@@ -169,7 +149,7 @@ extension PaletteViewController: UICollectionViewDragDelegate {
      */
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 
-        let item = NSString(string: widgetOptions[indexPath.item].name)
+        let item = NSString(string: "<NOMEAPP> Widget")
         let itemProvider = NSItemProvider(object: item)
         let dragItem = UIDragItem(itemProvider: itemProvider)
 
