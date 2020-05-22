@@ -32,7 +32,7 @@ struct TextPaletteWidget: PaletteWidget {
 }
 
 final class PaletteViewController: UIViewController {
-    @AutoLayout private var carouselView: CarouselCollectionView
+    @AutoLayout public var carouselView: CarouselCollectionView
 
     init(avaiableWidgets widgets: [PaletteWidget]) {
         widgetOptions = widgets
