@@ -138,9 +138,9 @@
 		A45626A2246DA71A006EEABF /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				A45626B4246DCDC7006EEABF /* WidgetView.swift */,
 				A45626AA246DA7B6006EEABF /* ImageWidget */,
 				A45626A3246DA720006EEABF /* TextWidget */,
-				A45626B4246DCDC7006EEABF /* WidgetView.swift */,
 				8CD2D0A72473116C007B17B4 /* Utilities */,
 			);
 			path = Widgets;
@@ -453,7 +453,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PVKHG959FC;
+				DEVELOPMENT_TEAM = RAZG7U3SR6;
 				INFOPLIST_FILE = MiniRemoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -471,7 +471,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PVKHG959FC;
+				DEVELOPMENT_TEAM = RAZG7U3SR6;
 				INFOPLIST_FILE = MiniRemoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
