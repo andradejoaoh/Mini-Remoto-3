@@ -13,6 +13,8 @@
 		610F9843245B6773003EFDA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 610F9842245B6773003EFDA8 /* Assets.xcassets */; };
 		610F9846245B6773003EFDA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 610F9844245B6773003EFDA8 /* LaunchScreen.storyboard */; };
 		616A26AF246DD2AD00BD2117 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26AE246DD2AD00BD2117 /* ImageManager.swift */; };
+		616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */; };
+		616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */; };
 		8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */; };
 		8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A82473116C007B17B4 /* CGExtensions.swift */; };
 		A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetView.swift */; };
@@ -34,6 +36,9 @@
 		A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */; };
 		A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B4246DCDC7006EEABF /* WidgetView.swift */; };
 		A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */; };
+		F26113BF247497120015D013 /* CarouselCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26113BC247497120015D013 /* CarouselCellView.swift */; };
+		F26113C0247497120015D013 /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26113BD247497120015D013 /* CarouselCollectionView.swift */; };
+		F26113C1247497120015D013 /* PaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26113BE247497120015D013 /* PaletteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +50,8 @@
 		610F9845245B6773003EFDA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		610F9847245B6773003EFDA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		616A26AE246DD2AD00BD2117 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewController.swift; sourceTree = "<group>"; };
+		616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewCell.swift; sourceTree = "<group>"; };
 		8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		8CD2D0A82473116C007B17B4 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		A45626A4246DA73F006EEABF /* TextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetView.swift; sourceTree = "<group>"; };
@@ -66,6 +73,9 @@
 		A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetView.swift; sourceTree = "<group>"; };
 		A45626B4246DCDC7006EEABF /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutPropertyWrapper.swift; sourceTree = "<group>"; };
+		F26113BC247497120015D013 /* CarouselCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCellView.swift; sourceTree = "<group>"; };
+		F26113BD247497120015D013 /* CarouselCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
+		F26113BE247497120015D013 /* PaletteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,7 @@
 				8CD2D0A2247310E4007B17B4 /* Canvas */,
 				616A26AD246DD29300BD2117 /* Managers */,
 				A45626A2246DA71A006EEABF /* Widgets */,
+				F26113BB247497120015D013 /* Palette */,
 				610F9839245B6770003EFDA8 /* AppDelegate.swift */,
 				610F983B245B6770003EFDA8 /* SceneDelegate.swift */,
 				610F983D245B6770003EFDA8 /* ViewController.swift */,
@@ -197,6 +208,16 @@
 			path = ImageWidget;
 			sourceTree = "<group>";
 		};
+		F26113BB247497120015D013 /* Palette */ = {
+			isa = PBXGroup;
+			children = (
+				F26113BC247497120015D013 /* CarouselCellView.swift */,
+				F26113BD247497120015D013 /* CarouselCollectionView.swift */,
+				F26113BE247497120015D013 /* PaletteViewController.swift */,
+			);
+			path = Palette;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -276,7 +297,6 @@
 				616A26E1247321AB00BD2117 /* CoreDataManager.swift in Sources */,
 				61DBE0A124746E0B00937FB9 /* ImageWidget+CoreDataProperties.swift in Sources */,
 				A45626A9246DA79C006EEABF /* TextWidgetModel.swift in Sources */,
-
 				61DBE0A324746E0B00937FB9 /* Canvas+CoreDataProperties.swift in Sources */,
 				61DBE0A524746E0B00937FB9 /* TextWidget+CoreDataProperties.swift in Sources */,
 				A462573E246C8D1F00CE2B96 /* WidgetProtocol.swift in Sources */,
@@ -288,6 +308,7 @@
 				A45626AE246DA7E9006EEABF /* ImageWidgetViewModel.swift in Sources */,
 				A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */,
 				610F983A245B6770003EFDA8 /* AppDelegate.swift in Sources */,
+				F26113C1247497120015D013 /* PaletteViewController.swift in Sources */,
 				610F983C245B6770003EFDA8 /* SceneDelegate.swift in Sources */,
 				61DBE0A424746E0B00937FB9 /* TextWidget+CoreDataClass.swift in Sources */,
 				61DBE0A024746E0B00937FB9 /* ImageWidget+CoreDataClass.swift in Sources */,
