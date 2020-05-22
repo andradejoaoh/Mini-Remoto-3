@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Canvas" representedClassName="Canvas" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="imageWidgets" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageWidget" inverseName="imageOwner" inverseEntity="ImageWidget"/>
+        <relationship name="textWidgets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TextWidget" inverseName="textOwner" inverseEntity="TextWidget"/>
+    </entity>
+    <entity name="ImageWidget" representedClassName="ImageWidget" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="imageOwner" maxCount="1" deletionRule="Nullify" destinationEntity="Canvas" inverseName="imageWidgets" inverseEntity="Canvas"/>
+    </entity>
+    <entity name="TextWidget" representedClassName="TextWidget" syncable="YES">
+        <attribute name="color" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="text" attributeType="String"/>
+        <relationship name="textOwner" maxCount="1" deletionRule="Nullify" destinationEntity="Canvas" inverseName="textWidgets" inverseEntity="Canvas"/>
+    </entity>
+    <elements>
+        <element name="Canvas" positionX="0" positionY="63" width="128" height="88"/>
+        <element name="TextWidget" positionX="-36" positionY="9" width="128" height="88"/>
+        <element name="ImageWidget" positionX="-18" positionY="63" width="128" height="73"/>
+    </elements>
+</model>
