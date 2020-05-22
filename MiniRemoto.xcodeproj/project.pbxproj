@@ -35,6 +35,7 @@
 		F2BEF7FE24784CCA00F83E7F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7E224784CCA00F83E7F /* DataModel.xcdatamodeld */; };
 		F2BEF80524784CCA00F83E7F /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7EF24784CCA00F83E7F /* SnapshotController.swift */; };
 		F2BEF808247859CA00F83E7F /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF807247859CA00F83E7F /* WidgetData.swift */; };
+		F2BEF80A24786D0300F83E7F /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF80924786D0300F83E7F /* ContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		F2BEF7E324784CCA00F83E7F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		F2BEF7EF24784CCA00F83E7F /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		F2BEF807247859CA00F83E7F /* WidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetData.swift; sourceTree = "<group>"; };
+		F2BEF80924786D0300F83E7F /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				F2BEF7D624784CCA00F83E7F /* Managers */,
 				F2BEF7D224784CC900F83E7F /* Palette */,
 				610F9839245B6770003EFDA8 /* AppDelegate.swift */,
+				F2BEF80924786D0300F83E7F /* ContainerViewController.swift */,
 				610F983B245B6770003EFDA8 /* SceneDelegate.swift */,
 				610F983D245B6770003EFDA8 /* ViewController.swift */,
 				A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */,
@@ -298,6 +301,7 @@
 				F2BEF7FB24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift in Sources */,
 				A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */,
 				F2BEF7F824784CCA00F83E7F /* TextWidget+CoreDataClass.swift in Sources */,
+				F2BEF80A24786D0300F83E7F /* ContainerViewController.swift in Sources */,
 				F2BEF7F724784CCA00F83E7F /* ImageManager.swift in Sources */,
 				610F983E245B6770003EFDA8 /* ViewController.swift in Sources */,
 				F2BEF7FD24784CCA00F83E7F /* Canvas+CoreDataProperties.swift in Sources */,
