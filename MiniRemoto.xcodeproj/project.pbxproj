@@ -12,33 +12,29 @@
 		610F983E245B6770003EFDA8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F983D245B6770003EFDA8 /* ViewController.swift */; };
 		610F9843245B6773003EFDA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 610F9842245B6773003EFDA8 /* Assets.xcassets */; };
 		610F9846245B6773003EFDA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 610F9844245B6773003EFDA8 /* LaunchScreen.storyboard */; };
-		616A26AF246DD2AD00BD2117 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26AE246DD2AD00BD2117 /* ImageManager.swift */; };
 		616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */; };
 		616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */; };
 		8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */; };
 		8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A82473116C007B17B4 /* CGExtensions.swift */; };
 		A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetView.swift */; };
 		A45626A7246DA787006EEABF /* TextWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TextWidgetController.swift */; };
-		616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */; };
-		616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */; };
-		616A26DD2473176300BD2117 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 616A26DB2473176300BD2117 /* DataModel.xcdatamodeld */; };
-		616A26E1247321AB00BD2117 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26E0247321AB00BD2117 /* CoreDataManager.swift */; };
-		61DBE0A024746E0B00937FB9 /* ImageWidget+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBE09A24746E0B00937FB9 /* ImageWidget+CoreDataClass.swift */; };
-		61DBE0A124746E0B00937FB9 /* ImageWidget+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBE09B24746E0B00937FB9 /* ImageWidget+CoreDataProperties.swift */; };
-		61DBE0A224746E0B00937FB9 /* Canvas+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBE09C24746E0B00937FB9 /* Canvas+CoreDataClass.swift */; };
-		61DBE0A324746E0B00937FB9 /* Canvas+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBE09D24746E0B00937FB9 /* Canvas+CoreDataProperties.swift */; };
-		61DBE0A424746E0B00937FB9 /* TextWidget+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBE09E24746E0B00937FB9 /* TextWidget+CoreDataClass.swift */; };
-		61DBE0A524746E0B00937FB9 /* TextWidget+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBE09F24746E0B00937FB9 /* TextWidget+CoreDataProperties.swift */; };
-		A45626A5246DA73F006EEABF /* TextWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetViewController.swift */; };
-		A45626A7246DA787006EEABF /* TextWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TextWidgetViewModel.swift */; };
-    616A26AF246DD2AD00BD2117 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26AE246DD2AD00BD2117 /* ImageManager.swift */; };
 		A45626A9246DA79C006EEABF /* TextWidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A8246DA79C006EEABF /* TextWidgetModel.swift */; };
 		A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */; };
 		A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B4246DCDC7006EEABF /* WidgetView.swift */; };
 		A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */; };
-		F26113BF247497120015D013 /* CarouselCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26113BC247497120015D013 /* CarouselCellView.swift */; };
-		F26113C0247497120015D013 /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26113BD247497120015D013 /* CarouselCollectionView.swift */; };
-		F26113C1247497120015D013 /* PaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26113BE247497120015D013 /* PaletteViewController.swift */; };
+		F2BEF7F324784CCA00F83E7F /* CarouselCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */; };
+		F2BEF7F424784CCA00F83E7F /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D424784CCA00F83E7F /* CarouselCollectionView.swift */; };
+		F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D524784CCA00F83E7F /* PaletteViewController.swift */; };
+		F2BEF7F624784CCA00F83E7F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D724784CCA00F83E7F /* CoreDataManager.swift */; };
+		F2BEF7F724784CCA00F83E7F /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D824784CCA00F83E7F /* ImageManager.swift */; };
+		F2BEF7F824784CCA00F83E7F /* TextWidget+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7DB24784CCA00F83E7F /* TextWidget+CoreDataClass.swift */; };
+		F2BEF7F924784CCA00F83E7F /* Canvas+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7DC24784CCA00F83E7F /* Canvas+CoreDataClass.swift */; };
+		F2BEF7FA24784CCA00F83E7F /* ImageWidget+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7DD24784CCA00F83E7F /* ImageWidget+CoreDataProperties.swift */; };
+		F2BEF7FB24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7DE24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift */; };
+		F2BEF7FC24784CCA00F83E7F /* TextWidget+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7DF24784CCA00F83E7F /* TextWidget+CoreDataProperties.swift */; };
+		F2BEF7FD24784CCA00F83E7F /* Canvas+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7E024784CCA00F83E7F /* Canvas+CoreDataProperties.swift */; };
+		F2BEF7FE24784CCA00F83E7F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7E224784CCA00F83E7F /* DataModel.xcdatamodeld */; };
+		F2BEF80524784CCA00F83E7F /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7EF24784CCA00F83E7F /* SnapshotController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,33 +45,29 @@
 		610F9842245B6773003EFDA8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		610F9845245B6773003EFDA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		610F9847245B6773003EFDA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		616A26AE246DD2AD00BD2117 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewController.swift; sourceTree = "<group>"; };
 		616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewCell.swift; sourceTree = "<group>"; };
 		8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		8CD2D0A82473116C007B17B4 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		A45626A4246DA73F006EEABF /* TextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetView.swift; sourceTree = "<group>"; };
 		A45626A6246DA787006EEABF /* TextWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetController.swift; sourceTree = "<group>"; };
-		616A26AE246DD2AD00BD2117 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
-		616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewController.swift; sourceTree = "<group>"; };
-		616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewCell.swift; sourceTree = "<group>"; };
-		616A26DC2473176300BD2117 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		616A26E0247321AB00BD2117 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		61DBE09A24746E0B00937FB9 /* ImageWidget+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageWidget+CoreDataClass.swift"; sourceTree = "<group>"; };
-		61DBE09B24746E0B00937FB9 /* ImageWidget+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageWidget+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		61DBE09C24746E0B00937FB9 /* Canvas+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+CoreDataClass.swift"; sourceTree = "<group>"; };
-		61DBE09D24746E0B00937FB9 /* Canvas+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		61DBE09E24746E0B00937FB9 /* TextWidget+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextWidget+CoreDataClass.swift"; sourceTree = "<group>"; };
-		61DBE09F24746E0B00937FB9 /* TextWidget+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextWidget+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		A45626A4246DA73F006EEABF /* TextWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetViewController.swift; sourceTree = "<group>"; };
-		A45626A6246DA787006EEABF /* TextWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetViewModel.swift; sourceTree = "<group>"; };
 		A45626A8246DA79C006EEABF /* TextWidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetModel.swift; sourceTree = "<group>"; };
 		A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetView.swift; sourceTree = "<group>"; };
 		A45626B4246DCDC7006EEABF /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutPropertyWrapper.swift; sourceTree = "<group>"; };
-		F26113BC247497120015D013 /* CarouselCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCellView.swift; sourceTree = "<group>"; };
-		F26113BD247497120015D013 /* CarouselCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
-		F26113BE247497120015D013 /* PaletteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteViewController.swift; sourceTree = "<group>"; };
+		F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCellView.swift; sourceTree = "<group>"; };
+		F2BEF7D424784CCA00F83E7F /* CarouselCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
+		F2BEF7D524784CCA00F83E7F /* PaletteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteViewController.swift; sourceTree = "<group>"; };
+		F2BEF7D724784CCA00F83E7F /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		F2BEF7D824784CCA00F83E7F /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		F2BEF7DB24784CCA00F83E7F /* TextWidget+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TextWidget+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F2BEF7DC24784CCA00F83E7F /* Canvas+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvas+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F2BEF7DD24784CCA00F83E7F /* ImageWidget+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageWidget+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F2BEF7DE24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageWidget+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F2BEF7DF24784CCA00F83E7F /* TextWidget+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TextWidget+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F2BEF7E024784CCA00F83E7F /* Canvas+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvas+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F2BEF7E324784CCA00F83E7F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		F2BEF7EF24784CCA00F83E7F /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,11 +100,12 @@
 		610F9838245B6770003EFDA8 /* MiniRemoto */ = {
 			isa = PBXGroup;
 			children = (
-				616A26DA2473174E00BD2117 /* CoreData */,
 				8CD2D0A2247310E4007B17B4 /* Canvas */,
-				616A26AD246DD29300BD2117 /* Managers */,
+				F2BEF7D924784CCA00F83E7F /* CoreData */,
+				F2BEF7EE24784CCA00F83E7F /* Snapshot */,
 				A45626A2246DA71A006EEABF /* Widgets */,
-				F26113BB247497120015D013 /* Palette */,
+				F2BEF7D624784CCA00F83E7F /* Managers */,
+				F2BEF7D224784CC900F83E7F /* Palette */,
 				610F9839245B6770003EFDA8 /* AppDelegate.swift */,
 				610F983B245B6770003EFDA8 /* SceneDelegate.swift */,
 				610F983D245B6770003EFDA8 /* ViewController.swift */,
@@ -126,43 +119,6 @@
 			path = MiniRemoto;
 			sourceTree = "<group>";
 		};
-		616A26AD246DD29300BD2117 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				616A26AE246DD2AD00BD2117 /* ImageManager.swift */,
-				616A26E0247321AB00BD2117 /* CoreDataManager.swift */,
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
-		616A26DA2473174E00BD2117 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				616A26DF24731A0900BD2117 /* Model */,
-				616A26DE247319FD00BD2117 /* Data */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
-		616A26DE247319FD00BD2117 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				616A26DB2473176300BD2117 /* DataModel.xcdatamodeld */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		616A26DF24731A0900BD2117 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				61DBE09A24746E0B00937FB9 /* ImageWidget+CoreDataClass.swift */,
-				61DBE09B24746E0B00937FB9 /* ImageWidget+CoreDataProperties.swift */,
-				61DBE09C24746E0B00937FB9 /* Canvas+CoreDataClass.swift */,
-				61DBE09D24746E0B00937FB9 /* Canvas+CoreDataProperties.swift */,
-				61DBE09E24746E0B00937FB9 /* TextWidget+CoreDataClass.swift */,
-				61DBE09F24746E0B00937FB9 /* TextWidget+CoreDataProperties.swift */,
-			);
-			path = Model;
 		8CD2D0A2247310E4007B17B4 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,14 +164,61 @@
 			path = ImageWidget;
 			sourceTree = "<group>";
 		};
-		F26113BB247497120015D013 /* Palette */ = {
+		F2BEF7D224784CC900F83E7F /* Palette */ = {
 			isa = PBXGroup;
 			children = (
-				F26113BC247497120015D013 /* CarouselCellView.swift */,
-				F26113BD247497120015D013 /* CarouselCollectionView.swift */,
-				F26113BE247497120015D013 /* PaletteViewController.swift */,
+				F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */,
+				F2BEF7D424784CCA00F83E7F /* CarouselCollectionView.swift */,
+				F2BEF7D524784CCA00F83E7F /* PaletteViewController.swift */,
 			);
 			path = Palette;
+			sourceTree = "<group>";
+		};
+		F2BEF7D624784CCA00F83E7F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				F2BEF7D724784CCA00F83E7F /* CoreDataManager.swift */,
+				F2BEF7D824784CCA00F83E7F /* ImageManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		F2BEF7D924784CCA00F83E7F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F2BEF7DA24784CCA00F83E7F /* Model */,
+				F2BEF7E124784CCA00F83E7F /* Data */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		F2BEF7DA24784CCA00F83E7F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F2BEF7DB24784CCA00F83E7F /* TextWidget+CoreDataClass.swift */,
+				F2BEF7DC24784CCA00F83E7F /* Canvas+CoreDataClass.swift */,
+				F2BEF7DD24784CCA00F83E7F /* ImageWidget+CoreDataProperties.swift */,
+				F2BEF7DE24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift */,
+				F2BEF7DF24784CCA00F83E7F /* TextWidget+CoreDataProperties.swift */,
+				F2BEF7E024784CCA00F83E7F /* Canvas+CoreDataProperties.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F2BEF7E124784CCA00F83E7F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F2BEF7E224784CCA00F83E7F /* DataModel.xcdatamodeld */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F2BEF7EE24784CCA00F83E7F /* Snapshot */ = {
+			isa = PBXGroup;
+			children = (
+				F2BEF7EF24784CCA00F83E7F /* SnapshotController.swift */,
+			);
+			path = Snapshot;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,32 +292,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */,
+				F2BEF7FA24784CCA00F83E7F /* ImageWidget+CoreDataProperties.swift in Sources */,
+				F2BEF7FC24784CCA00F83E7F /* TextWidget+CoreDataProperties.swift in Sources */,
+				F2BEF80524784CCA00F83E7F /* SnapshotController.swift in Sources */,
+				F2BEF7FB24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift in Sources */,
 				A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */,
+				F2BEF7F824784CCA00F83E7F /* TextWidget+CoreDataClass.swift in Sources */,
+				F2BEF7F724784CCA00F83E7F /* ImageManager.swift in Sources */,
 				610F983E245B6770003EFDA8 /* ViewController.swift in Sources */,
+				F2BEF7FD24784CCA00F83E7F /* Canvas+CoreDataProperties.swift in Sources */,
 				8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */,
 				A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */,
 				A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */,
-				616A26E1247321AB00BD2117 /* CoreDataManager.swift in Sources */,
-				61DBE0A124746E0B00937FB9 /* ImageWidget+CoreDataProperties.swift in Sources */,
+				F2BEF7F624784CCA00F83E7F /* CoreDataManager.swift in Sources */,
 				A45626A9246DA79C006EEABF /* TextWidgetModel.swift in Sources */,
-				61DBE0A324746E0B00937FB9 /* Canvas+CoreDataProperties.swift in Sources */,
-				61DBE0A524746E0B00937FB9 /* TextWidget+CoreDataProperties.swift in Sources */,
-				A462573E246C8D1F00CE2B96 /* WidgetProtocol.swift in Sources */,
-				A45626B0246DA805006EEABF /* ImageWidgetModel.swift in Sources */,
-				61DBE0A224746E0B00937FB9 /* Canvas+CoreDataClass.swift in Sources */,
 				616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */,
 				616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */,
-				616A26DD2473176300BD2117 /* DataModel.xcdatamodeld in Sources */,
-				A45626AE246DA7E9006EEABF /* ImageWidgetViewModel.swift in Sources */,
 				A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */,
 				610F983A245B6770003EFDA8 /* AppDelegate.swift in Sources */,
-				F26113C1247497120015D013 /* PaletteViewController.swift in Sources */,
+				F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */,
 				610F983C245B6770003EFDA8 /* SceneDelegate.swift in Sources */,
-				61DBE0A424746E0B00937FB9 /* TextWidget+CoreDataClass.swift in Sources */,
-				61DBE0A024746E0B00937FB9 /* ImageWidget+CoreDataClass.swift in Sources */,
-				A45626A7246DA787006EEABF /* TextWidgetViewModel.swift in Sources */,
+				F2BEF7F424784CCA00F83E7F /* CarouselCollectionView.swift in Sources */,
+				F2BEF7F324784CCA00F83E7F /* CarouselCellView.swift in Sources */,
 				A45626A7246DA787006EEABF /* TextWidgetController.swift in Sources */,
-				616A26AF246DD2AD00BD2117 /* ImageManager.swift in Sources */,
+				F2BEF7FE24784CCA00F83E7F /* DataModel.xcdatamodeld in Sources */,
+				F2BEF7F924784CCA00F83E7F /* Canvas+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,12 +508,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		616A26DB2473176300BD2117 /* DataModel.xcdatamodeld */ = {
+		F2BEF7E224784CCA00F83E7F /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				616A26DC2473176300BD2117 /* DataModel.xcdatamodel */,
+				F2BEF7E324784CCA00F83E7F /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 616A26DC2473176300BD2117 /* DataModel.xcdatamodel */;
+			currentVersion = F2BEF7E324784CCA00F83E7F /* DataModel.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
