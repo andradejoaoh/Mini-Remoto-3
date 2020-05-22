@@ -59,31 +59,31 @@ class CanvasViewController: UIViewController {
         canvasView.addSubview(center)
         center.layer.zPosition = 100
 
-        let widg1 = WidgetView()
-        widg1.view.frame = CGRect(x: 20, y: 20, width: 200, height: 100)
-        widg1.view.backgroundColor = .systemPink
-        widg1.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
-        widg1.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
-        widg1.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
-
-        let widg2 = WidgetView()
-        widg2.view.frame = CGRect(x: 199, y: 500, width: 400, height: 2000)
-        widg2.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
-        widg2.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
-        widg2.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
-
-        widg2.view.backgroundColor = .systemBlue
-
-        let widg3 = WidgetView()
-        widg3.view.frame = CGRect(x: -200, y: -300, width: 300, height: 300)
-        widg3.view.backgroundColor = .systemPurple
-        widg3.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
-        widg3.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
-        widg3.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
-
-        addWidget(widget: widg1, to: canvasView)
-        addWidget(widget: widg2, to: canvasView)
-        addWidget(widget: widg3, to: canvasView)
+        //        let widg1 = WidgetView()
+        //        widg1.view.frame = CGRect(x: 20, y: 20, width: 200, height: 100)
+        //        widg1.view.backgroundColor = .systemPink
+        //        widg1.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        //        widg1.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        //        widg1.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
+        //
+        //        let widg2 = WidgetView()
+        //        widg2.view.frame = CGRect(x: 199, y: 500, width: 400, height: 2000)
+        //        widg2.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        //        widg2.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        //        widg2.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
+        //
+        //        widg2.view.backgroundColor = .systemBlue
+        //
+        //        let widg3 = WidgetView()
+        //        widg3.view.frame = CGRect(x: -200, y: -300, width: 300, height: 300)
+        //        widg3.view.backgroundColor = .systemPurple
+        //        widg3.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        //        widg3.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        //        widg3.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
+        //
+        //        addWidget(widget: widg1, to: canvasView)
+        //        addWidget(widget: widg2, to: canvasView)
+        //        addWidget(widget: widg3, to: canvasView)
     }
 
     func addWidget(widget: WidgetView, to view: UIView) {
@@ -91,6 +91,9 @@ class CanvasViewController: UIViewController {
         self.addChild(widget)
         widget.didMove(toParent: self)
         widgets.append(widget)
+        widget.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
+        widget.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
+        widget.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
     }
 
     func removeWidget(widget: WidgetView) {
@@ -120,6 +123,19 @@ class CanvasViewController: UIViewController {
 
     @objc
     func drag(_ sender : UIPanGestureRecognizer) {
+        if holdedWidget != nil {
+            if sender.state == .began {
+                holdedWidget?.view.layer.opacity = 0.5
+            }
+            holdedWidget!.view.center = sender.location(in: self.view)
+            if sender.state == .ended
+            {
+                holdedWidget?.view.layer.opacity = 1
+                addWidget(widget: holdedWidget!, to: self.view)
+                holdedWidget = nil
+            }
+            return
+        }
         if sender.state == .began {
             beginTouchLocation = sender.location(in: view)
             beginCanvasOrigin = canvasView.bounds.origin
@@ -190,7 +206,7 @@ class CanvasViewController: UIViewController {
         canvasView.bounds.origin = beginCanvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
 
-    public func receiveWidget(widget: WidgetView) {
-        holdedWidget = widget
+    public func receiveWidget(widget: WidgetData) {
+        holdedWidget = widget.make()
     }
 }
