@@ -11,7 +11,10 @@ import UIKit
 
 /// A representation of an `ImageWidget`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
-final class ImageWidgetView: WidgetView {
+final class ImageWidgetView: UIViewController, WidgetView {
+    /// The state of a `WidgetState`.
+    var state: WidgetState
+
     /// The UIImageView used to display a `ImageWidget`'s image.
     /// This UIImageView will fill the entirety of a `ImageWidget`'s frame.
     @AutoLayout private var imageView: UIImageView
@@ -24,6 +27,7 @@ final class ImageWidgetView: WidgetView {
     /// - parameter image: the image to be displayed.
     init(image: UIImage) {
         self.image = image
+        self.state = .idle
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -58,7 +62,7 @@ final class ImageWidgetView: WidgetView {
     /// `ImageWidget`'s image should be done through this function to maintain the correct
     /// order of operations in the `UndoManager`.
     /// - parameter image: The new image to be set.
-    func updateImage(_ image: UIImage) {
+    private func updateImage(_ image: UIImage) {
         let currentImage = self.image
         self.image = image
         self.imageView.image = image
@@ -68,17 +72,49 @@ final class ImageWidgetView: WidgetView {
         })
     }
 
-    func undo() {
-        guard let undoManager = undoManager else { return }
-        if undoManager.canUndo {
-            undoManager.undo()
+    func edit() {
+        state = .editing
+        let actionSheet = UIAlertController(title: "Escolha uma Foto", message: "Selecione o local da foto.", preferredStyle: .actionSheet)
+        let photoAction = UIAlertAction(title: "Galeria", style: .default) { [weak self] (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+                let photoPicker = UIImagePickerController()
+                photoPicker.delegate = self
+                photoPicker.sourceType = .photoLibrary
+                photoPicker.allowsEditing = false
+                self?.present(photoPicker, animated: true, completion: nil)
+            }
         }
-    }
+        actionSheet.addAction(photoAction)
 
-    func redo() {
-        guard let undoManager = undoManager else { return }
-        if undoManager.canRedo {
-            undoManager.redo()
+
+        let cameraAction = UIAlertAction(title: "Câmera", style: .default) { [weak self] (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                let cameraPicker = UIImagePickerController()
+                cameraPicker.delegate = self
+                cameraPicker.sourceType = .camera
+
+                self?.present(cameraPicker, animated: true, completion: nil)
+            }
         }
+        actionSheet.addAction(cameraAction)
+
+        let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+
+        self.present(actionSheet, animated: true, completion: nil)
     }
+}
+
+extension ImageWidgetView: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+
+        guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
+        }
+        self.updateImage(selectedImage)
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImageWidgetView: UINavigationControllerDelegate {
 }
