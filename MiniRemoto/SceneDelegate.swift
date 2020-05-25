@@ -23,7 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         let masterViewController = CanvasCollectionViewController()
         let detailViewController = ContainerViewController()
-        window?.rootViewController = RootSplitViewController(master: masterViewController, detail: detailViewController)
+        let splitViewController = RootSplitViewController(master: masterViewController, detail: detailViewController)
+        window?.rootViewController = splitViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -29,7 +29,12 @@ class CanvasCollectionViewController: UIViewController {
 }
 
 extension CanvasCollectionViewController: UICollectionViewDelegate {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let splitView = self.splitViewController as? RootSplitViewController {
+            let detail = splitView.detail
+            splitView.showDetailViewController(detail, sender: nil)
+        }
+    }
 }
 
 extension CanvasCollectionViewController: UICollectionViewDataSource {
@@ -41,9 +46,7 @@ extension CanvasCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "canvasCollectionViewCell", for: indexPath) as! CanvasCollectionViewCell
         
-        cell.layer.borderColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-        cell.layer.borderWidth = 1
-        cell.layer.cornerRadius = 4
+        cell.contentView.backgroundColor = UIColor.systemRed
         
         return cell
     }

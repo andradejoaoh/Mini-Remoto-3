@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 final class ContainerViewController: UIViewController {
-    private let canvas: CanvasViewController = {
+    private var canvas: CanvasViewController = {
         let canvasController = CanvasViewController(nibName: nil, bundle: nil)
         canvasController.view.translatesAutoresizingMaskIntoConstraints = false
         return canvasController
