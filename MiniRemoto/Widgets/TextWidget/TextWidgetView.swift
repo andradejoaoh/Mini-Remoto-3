@@ -12,6 +12,12 @@ import UIKit
 /// A representation of a `TextWidgetView`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class TextWidgetView: UIViewController, WidgetView {
+    var snapshot: TextWidgetModel {
+        return TextWidgetModel(frame: self.view.frame,
+                               title: controller.title,
+                               body: controller.body)
+    }
+    
     /// The state of a `TextWidget`. Changes in the UI/funcionality
     /// of a `TextWidget` should be called through the `didSet`.
     var state: WidgetState = .idle {
