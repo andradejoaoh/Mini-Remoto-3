@@ -18,10 +18,10 @@
 		8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A82473116C007B17B4 /* CGExtensions.swift */; };
 		A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetView.swift */; };
 		A45626A7246DA787006EEABF /* TextWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TextWidgetController.swift */; };
-		A45626A9246DA79C006EEABF /* TextWidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A8246DA79C006EEABF /* TextWidgetModel.swift */; };
 		A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */; };
 		A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B4246DCDC7006EEABF /* WidgetView.swift */; };
 		A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */; };
+		F21E6E2F247C51DE0073BE75 /* RootSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */; };
 		F2BEF7F324784CCA00F83E7F /* CarouselCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */; };
 		F2BEF7F424784CCA00F83E7F /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D424784CCA00F83E7F /* CarouselCollectionView.swift */; };
 		F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D524784CCA00F83E7F /* PaletteViewController.swift */; };
@@ -35,6 +35,8 @@
 		F2BEF7FD24784CCA00F83E7F /* Canvas+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7E024784CCA00F83E7F /* Canvas+CoreDataProperties.swift */; };
 		F2BEF7FE24784CCA00F83E7F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7E224784CCA00F83E7F /* DataModel.xcdatamodeld */; };
 		F2BEF80524784CCA00F83E7F /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7EF24784CCA00F83E7F /* SnapshotController.swift */; };
+		F2BEF808247859CA00F83E7F /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF807247859CA00F83E7F /* WidgetData.swift */; };
+		F2BEF80A24786D0300F83E7F /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF80924786D0300F83E7F /* ContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,10 +53,10 @@
 		8CD2D0A82473116C007B17B4 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		A45626A4246DA73F006EEABF /* TextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetView.swift; sourceTree = "<group>"; };
 		A45626A6246DA787006EEABF /* TextWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetController.swift; sourceTree = "<group>"; };
-		A45626A8246DA79C006EEABF /* TextWidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetModel.swift; sourceTree = "<group>"; };
 		A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetView.swift; sourceTree = "<group>"; };
 		A45626B4246DCDC7006EEABF /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutPropertyWrapper.swift; sourceTree = "<group>"; };
+		F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSplitViewController.swift; sourceTree = "<group>"; };
 		F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCellView.swift; sourceTree = "<group>"; };
 		F2BEF7D424784CCA00F83E7F /* CarouselCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
 		F2BEF7D524784CCA00F83E7F /* PaletteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,8 @@
 		F2BEF7E024784CCA00F83E7F /* Canvas+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvas+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F2BEF7E324784CCA00F83E7F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		F2BEF7EF24784CCA00F83E7F /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
+		F2BEF807247859CA00F83E7F /* WidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetData.swift; sourceTree = "<group>"; };
+		F2BEF80924786D0300F83E7F /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 				F2BEF7D624784CCA00F83E7F /* Managers */,
 				F2BEF7D224784CC900F83E7F /* Palette */,
 				610F9839245B6770003EFDA8 /* AppDelegate.swift */,
+				F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */,
+				F2BEF80924786D0300F83E7F /* ContainerViewController.swift */,
 				610F983B245B6770003EFDA8 /* SceneDelegate.swift */,
 				610F983D245B6770003EFDA8 /* ViewController.swift */,
 				A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */,
@@ -138,9 +144,10 @@
 		A45626A2246DA71A006EEABF /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				A45626B4246DCDC7006EEABF /* WidgetView.swift */,
+				F2BEF807247859CA00F83E7F /* WidgetData.swift */,
 				A45626AA246DA7B6006EEABF /* ImageWidget */,
 				A45626A3246DA720006EEABF /* TextWidget */,
-				A45626B4246DCDC7006EEABF /* WidgetView.swift */,
 				8CD2D0A72473116C007B17B4 /* Utilities */,
 			);
 			path = Widgets;
@@ -151,7 +158,6 @@
 			children = (
 				A45626A4246DA73F006EEABF /* TextWidgetView.swift */,
 				A45626A6246DA787006EEABF /* TextWidgetController.swift */,
-				A45626A8246DA79C006EEABF /* TextWidgetModel.swift */,
 			);
 			path = TextWidget;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				F2BEF7FB24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift in Sources */,
 				A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */,
 				F2BEF7F824784CCA00F83E7F /* TextWidget+CoreDataClass.swift in Sources */,
+				F2BEF80A24786D0300F83E7F /* ContainerViewController.swift in Sources */,
 				F2BEF7F724784CCA00F83E7F /* ImageManager.swift in Sources */,
 				610F983E245B6770003EFDA8 /* ViewController.swift in Sources */,
 				F2BEF7FD24784CCA00F83E7F /* Canvas+CoreDataProperties.swift in Sources */,
@@ -305,11 +312,12 @@
 				A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */,
 				A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */,
 				F2BEF7F624784CCA00F83E7F /* CoreDataManager.swift in Sources */,
-				A45626A9246DA79C006EEABF /* TextWidgetModel.swift in Sources */,
 				616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */,
 				616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */,
 				A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */,
 				610F983A245B6770003EFDA8 /* AppDelegate.swift in Sources */,
+				F21E6E2F247C51DE0073BE75 /* RootSplitViewController.swift in Sources */,
+				F2BEF808247859CA00F83E7F /* WidgetData.swift in Sources */,
 				F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */,
 				610F983C245B6770003EFDA8 /* SceneDelegate.swift in Sources */,
 				F2BEF7F424784CCA00F83E7F /* CarouselCollectionView.swift in Sources */,
@@ -453,7 +461,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PVKHG959FC;
+				DEVELOPMENT_TEAM = RAZG7U3SR6;
 				INFOPLIST_FILE = MiniRemoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -471,7 +479,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PVKHG959FC;
+				DEVELOPMENT_TEAM = RAZG7U3SR6;
 				INFOPLIST_FILE = MiniRemoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

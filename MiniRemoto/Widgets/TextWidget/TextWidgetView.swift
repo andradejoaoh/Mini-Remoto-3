@@ -11,7 +11,29 @@ import UIKit
 
 /// A representation of a `TextWidgetView`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
-final class TextWidgetView: WidgetView {
+final class TextWidgetView: UIViewController, WidgetView {
+    var snapshot: TextWidgetModel {
+        return TextWidgetModel(frame: self.view.frame,
+                               title: controller.title,
+                               body: controller.body)
+    }
+    
+    /// The state of a `TextWidget`. Changes in the UI/funcionality
+    /// of a `TextWidget` should be called through the `didSet`.
+    var state: WidgetState = .idle {
+        didSet {
+            switch self.state {
+            case .editing:
+                titleTextField.isEnabled = true
+                bodyTextView.isEditable = true
+            case .idle:
+                titleTextField.isEnabled = false
+                bodyTextView.isEditable = false
+                view.resignFirstResponder()
+            }
+        }
+    }
+
     /// The representation of a `TextWidget`'s title.
     @AutoLayout private var titleTextField: UITextField
     /// The representation of a `TextWidget`'s body.
@@ -33,8 +55,24 @@ final class TextWidgetView: WidgetView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         setupUI()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        NSLayoutConstraint.activate(
+            [titleTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+             titleTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+             titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.2),
+             titleTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
+        )
+
+        NSLayoutConstraint.activate(
+            [bodyTextView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+             bodyTextView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.50),
+             bodyTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor),
+             bodyTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
+        )
     }
 
     /// Set the UI up with constraints so `titleTextField` and `bodyTextView`
@@ -43,11 +81,13 @@ final class TextWidgetView: WidgetView {
     private func setupUI() {
         view.backgroundColor = .systemBackground
 
+        titleTextField.isEnabled = false
         titleTextField.font = .preferredFont(forTextStyle: .headline)
         titleTextField.backgroundColor = .systemBackground
         titleTextField.placeholder = "Title"
         titleTextField.delegate = self
 
+        bodyTextView.isEditable = false
         bodyTextView.font = .preferredFont(forTextStyle: .body)
         bodyTextView.backgroundColor = .systemBackground
         bodyTextView.isScrollEnabled = true
@@ -55,32 +95,10 @@ final class TextWidgetView: WidgetView {
 
         view.addSubview(titleTextField)
         view.addSubview(bodyTextView)
-
-        NSLayoutConstraint.activate(
-            [titleTextField.widthAnchor.constraint(equalTo: view.widthAnchor),
-             titleTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15),
-             titleTextField.topAnchor.constraint(equalTo: view.topAnchor)]
-        )
-
-        NSLayoutConstraint.activate(
-            [bodyTextView.widthAnchor.constraint(equalTo: view.widthAnchor),
-             bodyTextView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.85),
-             bodyTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor)]
-        )
     }
 
-    func undo() {
-        guard let undoManager = undoManager else { return }
-        if undoManager.canUndo {
-            undoManager.undo()
-        }
-    }
-
-    func redo() {
-        guard let undoManager = undoManager else { return }
-        if undoManager.canRedo {
-            undoManager.redo()
-        }
+    func edit() {
+        state = .editing
     }
 }
 
