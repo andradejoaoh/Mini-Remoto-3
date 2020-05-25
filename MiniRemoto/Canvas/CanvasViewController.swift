@@ -206,7 +206,10 @@ class CanvasViewController: UIViewController {
         canvasView.bounds.origin = beginCanvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
 
-    public func receiveWidget(widget: WidgetData) {
+    public func receiveWidget(widget: WidgetData, location: CGPoint) {
         holdedWidget = widget.make()
+        holdedWidget?.view.center = location
+        addWidget(widget: holdedWidget!, to: self.canvasView)
+        holdedWidget = nil
     }
 }

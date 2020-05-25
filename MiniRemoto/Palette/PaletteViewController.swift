@@ -13,14 +13,13 @@ final class PaletteViewController: UIViewController {
     typealias PaletteWidget = WidgetData
 
     @AutoLayout public var carouselView: CarouselCollectionView
+    var canvas: CanvasViewController?
+    var chosenWidget: WidgetData?
 
-    init(avaiableWidgets widgets: [PaletteWidget]) {
+    init(avaiableWidgets widgets: [PaletteWidget] = [], canvas: CanvasViewController? = nil) {
         widgetOptions = widgets
+        self.canvas = canvas
         super.init(nibName: nil, bundle: nil)
-    }
-
-    convenience init() {
-        self.init(avaiableWidgets: [])
     }
 
     required init?(coder: NSCoder) {
@@ -153,8 +152,15 @@ extension PaletteViewController: UICollectionViewDragDelegate {
         let itemProvider = NSItemProvider(object: item)
         let dragItem = UIDragItem(itemProvider: itemProvider)
 
+        chosenWidget = widgetOptions[indexPath.item]
         dragItem.localObject = widgetOptions[indexPath.item]
 
         return [dragItem]
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
+        guard let widget = chosenWidget, let canvasView = canvas?.canvasView else { return }
+        let location = session.location(in: canvasView)
+        canvas?.receiveWidget(widget: widget, location: location)
     }
 }
