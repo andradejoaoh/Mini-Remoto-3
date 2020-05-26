@@ -147,10 +147,17 @@ class CanvasViewController: UIViewController {
                 if widgets.contains(where: { (widgetView) -> Bool in
                     widgetView.view == sender.view
                 }) && sender.view == selectedWidgetView.view {
-                    moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: view))
+                    moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: canvasView))
                 } else {
                     dragCanvas(by: sender.translation(in: view))
                 }
+            }
+        } else {
+            if sender.state == .began {
+                lastTouchLocation = sender.location(in: view)
+                canvasOrigin = canvasView.bounds.origin
+            } else if sender.state == .changed {
+                dragCanvas(by: sender.translation(in: view))
             }
         }
     }
@@ -294,7 +301,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         guard let first = session.items.first else { return }
         if let widget = first.localObject as AnyObject as? WidgetData {
-            receive(widget: widget, at: session.location(in: view))
+            receive(widget: widget, at: session.location(in: canvasView))
         }
     }
 }
