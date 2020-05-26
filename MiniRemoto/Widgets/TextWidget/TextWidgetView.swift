@@ -79,15 +79,14 @@ final class TextWidgetView: UIViewController, WidgetView {
     /// occupy 15% and 85% of a `TextWidget`'s frame, respectively.
     /// Configures `titleTextField` and `bodyTextView`.
     private func setupUI() {
+        state = .idle
         view.backgroundColor = .systemBackground
 
-        titleTextField.isEnabled = false
         titleTextField.font = .preferredFont(forTextStyle: .headline)
         titleTextField.backgroundColor = .systemBackground
         titleTextField.placeholder = "Title"
         titleTextField.delegate = self
 
-        bodyTextView.isEditable = false
         bodyTextView.font = .preferredFont(forTextStyle: .body)
         bodyTextView.backgroundColor = .systemBackground
         bodyTextView.isScrollEnabled = true
@@ -98,7 +97,7 @@ final class TextWidgetView: UIViewController, WidgetView {
     }
 
     func edit() {
-        state = .editing
+        state.toggle()
     }
 }
 
