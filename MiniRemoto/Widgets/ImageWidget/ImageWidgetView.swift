@@ -19,7 +19,16 @@ final class ImageWidgetView: UIViewController, WidgetView {
     }
     
     /// The state of a `WidgetState`.
-    var state: WidgetState
+    var state: WidgetState {
+        didSet {
+            switch self.state {
+            case .idle:
+                break
+            case .editing:
+                edit()
+            }
+        }
+    }
 
     /// The UIImageView used to display a `ImageWidget`'s image.
     /// This UIImageView will fill the entirety of a `ImageWidget`'s frame.
@@ -79,7 +88,6 @@ final class ImageWidgetView: UIViewController, WidgetView {
     }
 
     func edit() {
-        state = .editing
         let actionSheet = UIAlertController(title: "Escolha uma Foto", message: "Selecione o local da foto.", preferredStyle: .actionSheet)
         let photoAction = UIAlertAction(title: "Galeria", style: .default) { [weak self] (action) in
             if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
