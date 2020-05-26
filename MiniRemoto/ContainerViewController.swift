@@ -53,7 +53,7 @@ final class ContainerViewController: UIViewController {
 
     private func positionPalette() {
         NSLayoutConstraint.activate([
-            palette.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
+            palette.view.heightAnchor.constraint(equalToConstant: 125),
             palette.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             palette.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             palette.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)

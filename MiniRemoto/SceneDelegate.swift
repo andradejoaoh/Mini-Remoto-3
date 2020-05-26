@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let masterViewController = CanvasCollectionViewController()
         let detailViewController = ContainerViewController()
         let splitViewController = RootSplitViewController(master: masterViewController, detail: detailViewController)
-        window?.rootViewController = splitViewController
+        window?.rootViewController = detailViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

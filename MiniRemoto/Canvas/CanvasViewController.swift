@@ -29,7 +29,7 @@ class CanvasViewController: UIViewController {
     lazy var canvasView: UIView = {
         let view = UIView(frame: .zero)
         view.clipsToBounds = true
-        view.backgroundColor = .systemGray
+        view.backgroundColor = .systemGray6
         return view
     }()
 
@@ -47,14 +47,14 @@ class CanvasViewController: UIViewController {
     }
 
     /**
-    Places tap, pan and long press gesture recognizers on the view and add it to the parent view.
-    + Parameters:
-       + view: The view which will receive the gesture recognizers and be placed.
-       + to: The view which will receive the other view.
+     Places tap, pan and long press gesture recognizers on the view and add it to the parent view.
+     + Parameters:
+     + view: The view which will receive the gesture recognizers and be placed.
+     + to: The view which will receive the other view.
 
-    - Author:
-    Rafael Galdino
-    */
+     - Author:
+     Rafael Galdino
+     */
     private func addInteractable(view: UIView, to parentView: UIView) {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
@@ -65,15 +65,15 @@ class CanvasViewController: UIViewController {
     /**
      Configure the canvasView to the specifications of the View Controller
 
-    - Author:
+     - Author:
      Rafael Galdino
-    */
+     */
     private func configureCanvasView() {
-        canvasView = UIView(frame: self.view.frame)
+        canvasView.frame = self.view.frame
 
         addInteractable(view: canvasView, to: self.view)
 
-        if let backgroundTexture = UIImage(named: "tiled_paper_texture") {
+        if let backgroundTexture = UIImage(named: "dotPattern") {
             canvasView.backgroundColor = UIColor(patternImage: backgroundTexture)
         }
 
@@ -91,9 +91,9 @@ class CanvasViewController: UIViewController {
     /**
      Removes a widget from the canvas
 
-    - Author:
+     - Author:
      Alex Nascimento
-    */
+     */
     func removeWidget(widget: WidgetView) {
         widget.willMove(toParent: nil)
         widget.removeFromParent()
@@ -125,31 +125,32 @@ class CanvasViewController: UIViewController {
 
     @objc
     func drag(_ sender : UIPanGestureRecognizer) {
-        guard let selectedWidgetView = selectedWidgetView else { return }
-        if heldWidget != nil {
+        if let selectedWidgetView = selectedWidgetView {
+            if heldWidget != nil {
+                if sender.state == .began {
+                    heldWidget?.view.layer.opacity = 0.5
+                }
+                heldWidget?.view.center = sender.location(in: self.view)
+                if sender.state == .ended {
+                    heldWidget?.view.layer.opacity = 1
+                    addWidget(widget: heldWidget!, to: self.view)
+                    heldWidget = nil
+                }
+                return
+            }
             if sender.state == .began {
-                heldWidget?.view.layer.opacity = 0.5
-            }
-            heldWidget?.view.center = sender.location(in: self.view)
-            if sender.state == .ended {
-                heldWidget?.view.layer.opacity = 1
-                addWidget(widget: heldWidget!, to: self.view)
-                heldWidget = nil
-            }
-            return
-        }
-        if sender.state == .began {
-            lastTouchLocation = sender.location(in: view)
-            canvasOrigin = canvasView.bounds.origin
-            let wpos = selectedWidgetView.view.center
-            currentWidgetPosition = wpos
-        } else if sender.state == .changed {
-            if widgets.contains(where: { (widgetView) -> Bool in
-                widgetView.view == sender.view
-            }) && sender.view == selectedWidgetView.view {
-                moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: view))
-            } else {
-                dragCanvas(by: sender.translation(in: view))
+                lastTouchLocation = sender.location(in: view)
+                canvasOrigin = canvasView.bounds.origin
+                let wpos = selectedWidgetView.view.center
+                currentWidgetPosition = wpos
+            } else if sender.state == .changed {
+                if widgets.contains(where: { (widgetView) -> Bool in
+                    widgetView.view == sender.view
+                }) && sender.view == selectedWidgetView.view {
+                    moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: view))
+                } else {
+                    dragCanvas(by: sender.translation(in: view))
+                }
             }
         }
     }
@@ -171,15 +172,21 @@ class CanvasViewController: UIViewController {
     /**
      Removes a widget from the canvas
 
-    - Author:
+     - Author:
      Alex Nascimento
-    */
+     */
     func tapCanvas() {
         if selectedWidgetView != nil {
             deselectWidget(widgetView: selectedWidgetView!)
         }
     }
 
+    /**
+    Makes the widget selected or desselected
+
+    - Author:
+    Alex Nascimento
+    */
     func tapWidget(widgetView: WidgetView) {
         if selectedWidgetView == nil {
             selectWidget(widgetView: widgetView)
@@ -191,22 +198,46 @@ class CanvasViewController: UIViewController {
         }
     }
 
+    /**
+    Selects the specified widget
+
+    - Author:
+    Alex Nascimento
+    */
     func selectWidget(widgetView: WidgetView) {
         selectedWidgetView = widgetView
         widgetView.state.toggle()
-        widgetView.view.backgroundColor = .systemYellow
+        widgetView.view.backgroundColor = .systemPink
     }
 
+    /**
+    Desselectes the specified widget
+
+    - Author:
+    Alex Nascimento
+    */
     func deselectWidget(widgetView: WidgetView) {
         selectedWidgetView?.view.backgroundColor = .gray
         widgetView.state.toggle()
         selectedWidgetView = nil
     }
 
+    /**
+    Moves the specified widget
+
+    - Author:
+    Alex Nascimento
+    */
     func moveWidget(widgetView: UIView, by vector: CGPoint) {
         widgetView.center = currentWidgetPosition + vector
     }
 
+    /**
+    Drags the canvas
+
+    - Author:
+    Alex Nascimento
+    */
     func dragCanvas(by vector: CGPoint) {
         canvasView.bounds.origin = canvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
