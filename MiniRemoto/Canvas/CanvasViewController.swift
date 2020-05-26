@@ -15,12 +15,12 @@ class CanvasViewController: UIViewController {
     let maxZoomOut: CGFloat = 4
     let maxZoomIn: CGFloat = 1/2
 
-    var beginTouchLocation: CGPoint?
-    var beginCanvasOrigin: CGPoint = CGPoint.zero
-    var beginCanvasScale: CGPoint = CGPoint(x: 1, y: 1)
-    var beginCanvasTransform: CGAffineTransform = CGAffineTransform()
-    var beginWidgetPosition: CGPoint = CGPoint.zero
-    var holdedWidget: WidgetView?
+    var lastTouchLocation: CGPoint?
+    var canvasOrigin: CGPoint = CGPoint.zero
+    var canvasScale: CGPoint = CGPoint(x: 1, y: 1)
+    var canvasTransform: CGAffineTransform = CGAffineTransform()
+    var currentWidgetPosition: CGPoint = CGPoint.zero
+    var heldWidget: WidgetView?
     var touchedView: UIView?
     var selectedWidgetView: UIView?
 
@@ -37,12 +37,6 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         view.clipsToBounds = true
         configureCanvasView()
-
-        // Placeholder objects
-        let center = UIView(frame: CGRect(x: -5, y: -5, width: 10, height: 10))
-        center.backgroundColor = .yellow
-        canvasView.addSubview(center)
-        center.layer.zPosition = 100
     }
 
     func addWidget(widget: WidgetView, to view: UIView) {
@@ -52,13 +46,28 @@ class CanvasViewController: UIViewController {
         widgets.append(widget)
     }
 
-    private func addInteractable(view: UIView, to parent: UIView) {
-        parent.addSubview(view)
+    /**
+    Places tap, pan and long press gesture recognizers on the view and add it to the parent view.
+    + Parameters:
+       + view: The view which will receive the gesture recognizers and be placed.
+       + to: The view which will receive the other view.
+
+    - Author:
+    Rafael Galdino
+    */
+    private func addInteractable(view: UIView, to parentView: UIView) {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
         view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
+        parentView.addSubview(view)
     }
 
+    /**
+     Configure the canvasView to the specifications of the View Controller
+
+    - Author:
+     Rafael Galdino
+    */
     private func configureCanvasView() {
         canvasView = UIView(frame: self.view.frame)
 
@@ -79,6 +88,12 @@ class CanvasViewController: UIViewController {
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(zoom(_:))))
     }
 
+    /**
+     Removes a widget from the canvas
+
+    - Author:
+     Alex Nascimento
+    */
     func removeWidget(widget: WidgetView) {
         widget.willMove(toParent: nil)
         widget.removeFromParent()
@@ -106,23 +121,23 @@ class CanvasViewController: UIViewController {
 
     @objc
     func drag(_ sender : UIPanGestureRecognizer) {
-        if holdedWidget != nil {
+        if heldWidget != nil {
             if sender.state == .began {
-                holdedWidget?.view.layer.opacity = 0.5
+                heldWidget?.view.layer.opacity = 0.5
             }
-            holdedWidget!.view.center = sender.location(in: self.view)
+            heldWidget?.view.center = sender.location(in: self.view)
             if sender.state == .ended {
-                holdedWidget?.view.layer.opacity = 1
-                addWidget(widget: holdedWidget!, to: self.view)
-                holdedWidget = nil
+                heldWidget?.view.layer.opacity = 1
+                addWidget(widget: heldWidget!, to: self.view)
+                heldWidget = nil
             }
             return
         }
         if sender.state == .began {
-            beginTouchLocation = sender.location(in: view)
-            beginCanvasOrigin = canvasView.bounds.origin
+            lastTouchLocation = sender.location(in: view)
+            canvasOrigin = canvasView.bounds.origin
             if let wpos = selectedWidgetView?.center {
-                beginWidgetPosition = wpos
+                currentWidgetPosition = wpos
             }
         } else if sender.state == .changed {
             if widgets.contains(where: { (widgetView) -> Bool in
@@ -138,17 +153,23 @@ class CanvasViewController: UIViewController {
     @objc
     func zoom(_ sender : UIPinchGestureRecognizer) {
         if sender.state == .began {
-            beginCanvasTransform = canvasView.transform
+            canvasTransform = canvasView.transform
         }
 
         else if sender.state == .changed {
-            let scaleResult = beginCanvasTransform.scaledBy(x: sender.scale, y: sender.scale)
+            let scaleResult = canvasTransform.scaledBy(x: sender.scale, y: sender.scale)
             guard scaleResult.a > 1/maxZoomOut, scaleResult.d > 1/maxZoomOut else { return }
             guard scaleResult.a < 1/maxZoomIn, scaleResult.d < 1/maxZoomIn else { return }
             canvasView.transform = scaleResult
         }
     }
 
+    /**
+     Removes a widget from the canvas
+
+    - Author:
+     Alex Nascimento
+    */
     func tapCanvas() {
         if selectedWidgetView != nil {
             deselectWidget(widgetView: selectedWidgetView!)
@@ -177,29 +198,52 @@ class CanvasViewController: UIViewController {
     }
 
     func moveWidget(widgetView: UIView, by vector: CGPoint) {
-        widgetView.center = beginWidgetPosition + vector
+        widgetView.center = currentWidgetPosition + vector
     }
 
     func dragCanvas(by vector: CGPoint) {
-        canvasView.bounds.origin = beginCanvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
+        canvasView.bounds.origin = canvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
 
-    public func receiveWidget(widget: WidgetData, location: CGPoint) {
-        holdedWidget = widget.make()
-        holdedWidget?.view.center = location
-        addWidget(widget: holdedWidget!, to: self.canvasView)
-        holdedWidget = nil
+    /**
+     Creates a widget on the canvas based on the `WidgetData` received.
+     + Parameters:
+        + widget: The widget data blueprint used to create the widget
+        + location: The location of the widget will be placed on the canvas
+        + withSize: Defines the size of the widget
+
+     - Author:
+     Rafael Galdino
+     */
+    public func receive(widget widgetBlueprint: WidgetData, at location: CGPoint, withSize size: CGSize = CGSize(width: 200, height: 200)) {
+        let newWidget = widgetBlueprint.make()
+        newWidget.view.frame.size = size
+        newWidget.view.center = location
+        addWidget(widget: newWidget, to: self.canvasView)
     }
 }
 
+// CanvasViewController extends UIDropInteractionDelegate
+// so it can receive widgets from the pallete. This can
+// further be expanded to receive objects from outside the
+// app and create widgets based on them.
 extension CanvasViewController: UIDropInteractionDelegate {
+
+    //  This method especifies that only NSString items can be dragged into the app.
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self)
+    }
+
+    //  This method specifies that it will only accept items
+    //  were dropped into the `canvasView` view AND were
+    //  dragged from within the app.
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         let dropLocation = session.location(in: view)
 
         let operation: UIDropOperation
 
-        if canvasView.frame.contains(dropLocation) {
-            operation = session.localDragSession == nil ? .copy : .move
+        if canvasView.frame.contains(dropLocation) && session.localDragSession != nil {
+            operation = .copy
         } else {
             operation = .cancel
         }
@@ -207,11 +251,13 @@ extension CanvasViewController: UIDropInteractionDelegate {
         return UIDropProposal(operation: operation)
     }
 
+    //  This method checks if the dragged item has a localObject
+    //  of the type `WidgetData` and calls the widgetCanvas
+    //  constructor.
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         guard let first = session.items.first else { return }
         if let widget = first.localObject as AnyObject as? WidgetData {
-            let dropLocation = session.location(in: view)
-            receiveWidget(widget: widget, location: dropLocation)
+            receive(widget: widget, at: session.location(in: view))
         }
     }
 }

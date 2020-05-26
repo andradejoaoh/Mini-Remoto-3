@@ -12,23 +12,21 @@ import UIKit
 final class PaletteViewController: UIViewController {
     typealias PaletteWidget = WidgetData
 
+//MARK: Attributes
+    /**
+    The carousel collection view of that displays the palette.
+
+    - Author:
+    Rafael Galdino
+    */
     @AutoLayout public var carouselView: CarouselCollectionView
-
-    init(avaiableWidgets widgets: [PaletteWidget] = []) {
-        widgetOptions = widgets
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
 
     /**
      Collection of avaiable widget options on the palette.
 
      - Author:
-       Rafael Galdino
-    */
+     Rafael Galdino
+     */
     public var widgetOptions: [PaletteWidget] = [] {
         didSet{
             carouselView.reloadData()
@@ -39,33 +37,45 @@ final class PaletteViewController: UIViewController {
      Collection of avaiable widget options on the palette.
 
      - Author:
-       Rafael Galdino
-    */
+     Rafael Galdino
+     */
     public var itemPadding: Double = 10 {
         didSet{
             carouselView.reloadData()
         }
     }
 
-//    Override of viewDidLoad for palette setup.
+//MARK: Initializers
+    init(avaiableWidgets widgets: [PaletteWidget] = []) {
+        widgetOptions = widgets
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+//MARK: Overrides
+    //    Override of viewDidLoad for palette setup.
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
         addCarouselView()
     }
 
-//    Override of viewWillTransition to resize collectionView
+    //    Override of viewWillTransition to resize collectionView
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         carouselView.reloadData()
     }
 
-/**
- Performs basic CarouselView configuration
+//MARK: Carousel View Configuration
+    /**
+     Performs basic CarouselView configuration
 
- - Author:
-   Rafael Galdino
-*/
+     - Author:
+     Rafael Galdino
+     */
     private func addCarouselView() {
         carouselView.dataSource = self
         carouselView.delegate = self
@@ -74,12 +84,12 @@ final class PaletteViewController: UIViewController {
         positionCarouselView()
     }
 
-/**
- Configure CarouselView Auto Layout to fill the ViewController
+    /**
+     Configure CarouselView Auto Layout to fill the ViewController
 
- - Author:
-   Rafael Galdino
-*/
+     - Author:
+     Rafael Galdino
+     */
 
     private func positionCarouselView() {
         let carouselGuide = carouselView.safeAreaLayoutGuide
@@ -93,22 +103,25 @@ final class PaletteViewController: UIViewController {
     }
 }
 
+//MARK: FlowLayout Extension
 extension PaletteViewController: UICollectionViewDelegateFlowLayout {
 
-/** Creates a `CGSize` with equal height and witdh based on the Palette's height.
-     - parameters:
-       - withPadding: Reduces the total size by the determined value.
+    /**
+     Creates a `CGSize` with equal height and witdh based on the Palette's height.
+
+     - Parameters:
+        - withPadding:Reduces the size all sides by this value.
 
      - Author:
      Rafael Galdino
-*/
+     */
     private func squareItemSize(withPadding padding: Double) -> CGSize {
         let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
         let side = viewHeight - CGFloat(padding)
         return CGSize(width: side, height: side)
     }
 
-//    Defines the size of the items in the palette as square minus `itemSpacing`.
+    //    Defines the size of the items in the palette as squared size minus itemSpacing.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return squareItemSize(withPadding: itemPadding)
     }
@@ -122,13 +135,14 @@ extension PaletteViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: DataSource Extension
 extension PaletteViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return widgetOptions.count
     }
 
-//  Casts collection view cell as CarouselCellView and atributes image based on widgetOptions
+    //  Casts collection view cell as CarouselCellView and atributes image based on widgetOptions
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as? CarouselCellView else { return UICollectionViewCell()}
         cell.image = widgetOptions[indexPath.item].iconImage
@@ -136,9 +150,10 @@ extension PaletteViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: Drag Extension
 extension PaletteViewController: UICollectionViewDragDelegate {
     /**
-     Creates  a `UIDragItem` with the selected `PaletteWidget` as the `localObject` and it's name as an item for `NSItemProvider`
+     Creates  a `UIDragItem` with the selected `WidgetData` as the `localObject` and it's name as an item for `NSItemProvider`
 
      - Author:
      Rafael Galdino

@@ -38,7 +38,6 @@ final class ContainerViewController: UIViewController {
         add(controller: canvas)
         positionCanvas()
         add(controller: palette)
-        palette.canvas = canvas
         positionPalette()
         mockUpData()
     }
