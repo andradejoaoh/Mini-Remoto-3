@@ -301,7 +301,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         guard let first = session.items.first else { return }
         if let widget = first.localObject as AnyObject as? WidgetData {
-            receive(widget: widget, at: session.location(in: view))
+            receive(widget: widget, at: session.location(in: canvasView))
         }
     }
 }
