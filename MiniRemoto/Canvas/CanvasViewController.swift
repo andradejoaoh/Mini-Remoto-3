@@ -22,7 +22,7 @@ class CanvasViewController: UIViewController {
     var currentWidgetPosition: CGPoint = CGPoint.zero
     var heldWidget: WidgetView?
     var touchedView: UIView?
-    var selectedWidgetView: UIView?
+    var selectedWidgetView: WidgetView?
 
     /// This is the drawing view that contains every other view.
     /// self.view must be static just for handling user input
@@ -105,10 +105,14 @@ class CanvasViewController: UIViewController {
 
     @objc
     func tap(_ sender : UITapGestureRecognizer) {
+        var tappedWidget: WidgetView?
         if widgets.contains(where: { (widgetView) -> Bool in
-            widgetView.view == sender.view
+            if (widgetView.view == sender.view) {
+                tappedWidget = widgetView
+                return true
+            } else { return false }
         }) {
-            tapWidget(widgetView: sender.view!)
+            tapWidget(widgetView: tappedWidget!)
             return
         }
         tapCanvas()
@@ -121,6 +125,7 @@ class CanvasViewController: UIViewController {
 
     @objc
     func drag(_ sender : UIPanGestureRecognizer) {
+        guard let selectedWidgetView = selectedWidgetView else { return }
         if heldWidget != nil {
             if sender.state == .began {
                 heldWidget?.view.layer.opacity = 0.5
@@ -136,14 +141,13 @@ class CanvasViewController: UIViewController {
         if sender.state == .began {
             lastTouchLocation = sender.location(in: view)
             canvasOrigin = canvasView.bounds.origin
-            if let wpos = selectedWidgetView?.center {
-                currentWidgetPosition = wpos
-            }
+            let wpos = selectedWidgetView.view.center
+            currentWidgetPosition = wpos
         } else if sender.state == .changed {
             if widgets.contains(where: { (widgetView) -> Bool in
                 widgetView.view == sender.view
-            }) && sender.view == selectedWidgetView {
-                moveWidget(widgetView: selectedWidgetView!, by: sender.translation(in: view))
+            }) && sender.view == selectedWidgetView.view {
+                moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: view))
             } else {
                 dragCanvas(by: sender.translation(in: view))
             }
@@ -176,10 +180,10 @@ class CanvasViewController: UIViewController {
         }
     }
 
-    func tapWidget(widgetView: UIView) {
+    func tapWidget(widgetView: WidgetView) {
         if selectedWidgetView == nil {
             selectWidget(widgetView: widgetView)
-        } else if selectedWidgetView == widgetView {
+        } else if selectedWidgetView! == widgetView {
             deselectWidget(widgetView: widgetView)
         } else {
             deselectWidget(widgetView: selectedWidgetView!)
@@ -187,13 +191,15 @@ class CanvasViewController: UIViewController {
         }
     }
 
-    func selectWidget(widgetView: UIView) {
+    func selectWidget(widgetView: WidgetView) {
         selectedWidgetView = widgetView
-        widgetView.backgroundColor = .systemYellow
+        widgetView.state.toggle()
+        widgetView.view.backgroundColor = .systemYellow
     }
 
-    func deselectWidget(widgetView: UIView) {
-        selectedWidgetView?.backgroundColor = .gray
+    func deselectWidget(widgetView: WidgetView) {
+        selectedWidgetView?.view.backgroundColor = .gray
+        widgetView.state.toggle()
         selectedWidgetView = nil
     }
 
