@@ -147,7 +147,7 @@ class CanvasViewController: UIViewController {
                 if widgets.contains(where: { (widgetView) -> Bool in
                     widgetView.view == sender.view
                 }) && sender.view == selectedWidgetView.view {
-                    moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: view))
+                    moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: canvasView))
                 } else {
                     dragCanvas(by: sender.translation(in: view))
                 }
