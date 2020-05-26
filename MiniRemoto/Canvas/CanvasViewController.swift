@@ -152,6 +152,13 @@ class CanvasViewController: UIViewController {
                     dragCanvas(by: sender.translation(in: view))
                 }
             }
+        } else {
+            if sender.state == .began {
+                lastTouchLocation = sender.location(in: view)
+                canvasOrigin = canvasView.bounds.origin
+            } else if sender.state == .changed {
+                dragCanvas(by: sender.translation(in: view))
+            }
         }
     }
 
