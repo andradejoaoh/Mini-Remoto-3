@@ -146,7 +146,7 @@ extension PaletteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as? CarouselCellView else { return UICollectionViewCell()}
         cell.image = widgetOptions[indexPath.item].iconImage
-        cell.tintColor = .systemPink
+        cell.tintColor = .main
         return cell
     }
 }
