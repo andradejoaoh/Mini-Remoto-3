@@ -81,7 +81,7 @@ final class TextWidgetView: UIViewController, WidgetView {
     private func setupUI() {
         state = .idle
         view.backgroundColor = .systemBackground
-        view.layer.cornerRadius = view.frame.height * 0.02
+        view.layer.cornerRadius = view.frame.height * 0.005
         view.clipsToBounds = true
 
         titleTextField.font = .preferredFont(forTextStyle: .headline)

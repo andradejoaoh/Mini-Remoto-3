@@ -58,7 +58,7 @@ final class ImageWidgetView: UIViewController, WidgetView {
     /// Set the UI up with constraints to match a `ImageWidget`'s frame.
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        view.layer.cornerRadius = view.frame.height * 0.02
+        view.layer.cornerRadius = view.frame.height * 0.005
         view.clipsToBounds = true
 
         imageView.contentMode = .scaleAspectFit
@@ -67,8 +67,8 @@ final class ImageWidgetView: UIViewController, WidgetView {
         view.addSubview(imageView)
 
         NSLayoutConstraint.activate(
-            [imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
-             imageView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            [imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+             imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.9),
              imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
              imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         )
