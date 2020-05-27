@@ -214,7 +214,7 @@ class CanvasViewController: UIViewController {
     func selectWidget(widgetView: WidgetView) {
         selectedWidgetView = widgetView
         widgetView.state.toggle()
-        widgetView.view.backgroundColor = .systemPink
+        widgetView.view.backgroundColor = .main
     }
 
     /**
@@ -224,7 +224,7 @@ class CanvasViewController: UIViewController {
     Alex Nascimento
     */
     func deselectWidget(widgetView: WidgetView) {
-        selectedWidgetView?.view.backgroundColor = .gray
+        selectedWidgetView?.view.backgroundColor = .systemBackground
         widgetView.state.toggle()
         selectedWidgetView = nil
     }
