@@ -58,6 +58,8 @@ final class ImageWidgetView: UIViewController, WidgetView {
     /// Set the UI up with constraints to match a `ImageWidget`'s frame.
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = view.frame.height * 0.02
+        view.clipsToBounds = true
 
         imageView.contentMode = .scaleAspectFit
         imageView.image = image

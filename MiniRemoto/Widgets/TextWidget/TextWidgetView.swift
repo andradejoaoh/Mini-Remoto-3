@@ -63,14 +63,14 @@ final class TextWidgetView: UIViewController, WidgetView {
         NSLayoutConstraint.activate(
             [titleTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
              titleTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-             titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.2),
+             titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.05),
              titleTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         )
 
         NSLayoutConstraint.activate(
             [bodyTextView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-             bodyTextView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.50),
              bodyTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor),
+             bodyTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(view.frame.height * 0.05)),
              bodyTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         )
     }
@@ -81,11 +81,14 @@ final class TextWidgetView: UIViewController, WidgetView {
     private func setupUI() {
         state = .idle
         view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = view.frame.height * 0.02
+        view.clipsToBounds = true
 
         titleTextField.font = .preferredFont(forTextStyle: .headline)
         titleTextField.backgroundColor = .systemBackground
         titleTextField.placeholder = "Title"
         titleTextField.delegate = self
+        titleTextField.textAlignment = .center
 
         bodyTextView.font = .preferredFont(forTextStyle: .body)
         bodyTextView.backgroundColor = .systemBackground
