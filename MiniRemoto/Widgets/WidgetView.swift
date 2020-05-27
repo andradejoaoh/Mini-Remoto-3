@@ -25,13 +25,25 @@ extension WidgetState {
     }
 }
 
+
 protocol WidgetView: UIViewController {
     var state: WidgetState { get set }
     func edit()
+    func select()
+    func deselect()
     func delete()
 }
 
 extension WidgetView {
+    
+    func select() {
+        self.view.backgroundColor = .systemPink
+    }
+    
+    func deselect() {
+        self.view.backgroundColor = .white
+    }
+    
     func delete(){
         self.removeFromParent()
     }

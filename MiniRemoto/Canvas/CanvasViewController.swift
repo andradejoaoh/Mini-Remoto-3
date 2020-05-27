@@ -10,7 +10,7 @@ import UIKit
 
 class CanvasViewController: UIViewController {
 
-    var widgets = [WidgetView]()
+    var widgets = Array<WidgetView>()
 
     let maxZoomOut: CGFloat = 4
     let maxZoomIn: CGFloat = 1/2
@@ -40,10 +40,25 @@ class CanvasViewController: UIViewController {
     }
 
     func addWidget(widget: WidgetView, to view: UIView) {
-        addInteractable(view: widget.view, to: view)
+        addInteractions(view: widget.view, to: view)
         self.addChild(widget)
         widget.didMove(toParent: self)
         widgets.append(widget)
+    }
+    
+    /**
+     Removes a widget from the canvas
+
+     - Author:
+     Alex Nascimento
+     */
+    func removeWidget(widget: WidgetView) {
+        widget.willMove(toParent: nil)
+        widget.removeFromParent()
+        widget.view.removeFromSuperview()
+        widgets.removeAll { (w) -> Bool in
+            widget == w
+        }
     }
 
     /**
@@ -55,7 +70,7 @@ class CanvasViewController: UIViewController {
      - Author:
      Rafael Galdino
      */
-    private func addInteractable(view: UIView, to parentView: UIView) {
+    private func addInteractions(view: UIView, to parentView: UIView) {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
         view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
@@ -71,7 +86,7 @@ class CanvasViewController: UIViewController {
     private func configureCanvasView() {
         canvasView.frame = self.view.frame
 
-        addInteractable(view: canvasView, to: self.view)
+        addInteractions(view: canvasView, to: self.view)
 
         if let backgroundTexture = UIImage(named: "dotPattern") {
             canvasView.backgroundColor = UIColor(patternImage: backgroundTexture)
@@ -88,39 +103,21 @@ class CanvasViewController: UIViewController {
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(zoom(_:))))
     }
 
-    /**
-     Removes a widget from the canvas
-
-     - Author:
-     Alex Nascimento
-     */
-    func removeWidget(widget: WidgetView) {
-        widget.willMove(toParent: nil)
-        widget.removeFromParent()
-        widget.view.removeFromSuperview()
-        widgets.removeAll { (w) -> Bool in
-            widget == w
-        }
-    }
-
     @objc
-    func tap(_ sender : UITapGestureRecognizer) {
-        var tappedWidget: WidgetView?
-        if widgets.contains(where: { (widgetView) -> Bool in
-            if (widgetView.view == sender.view) {
-                tappedWidget = widgetView
-                return true
-            } else { return false }
-        }) {
-            tapWidget(widgetView: tappedWidget!)
-            return
+    func tap(_ sender: UITapGestureRecognizer) {
+        if let widgetView = widgets.contains(view: sender.view) {
+            tapWidget(widgetView: widgetView)
+        } else {
+            tapCanvas()
         }
-        tapCanvas()
     }
 
     @objc
     func longPress(_ sender: UILongPressGestureRecognizer) {
-
+        if let widgetView = widgets.contains(view: sender.view) {
+            selectWidget(widgetView: widgetView)
+            editWidget(widgetView: widgetView)
+        }
     }
 
     @objc
@@ -212,9 +209,8 @@ class CanvasViewController: UIViewController {
     Alex Nascimento
     */
     func selectWidget(widgetView: WidgetView) {
+        widgetView.select()
         selectedWidgetView = widgetView
-        widgetView.state.toggle()
-        widgetView.view.backgroundColor = .systemPink
     }
 
     /**
@@ -224,11 +220,14 @@ class CanvasViewController: UIViewController {
     Alex Nascimento
     */
     func deselectWidget(widgetView: WidgetView) {
-        selectedWidgetView?.view.backgroundColor = .gray
-        widgetView.state.toggle()
+        widgetView.deselect()
         selectedWidgetView = nil
     }
-
+    
+    func editWidget(widgetView: WidgetView) {
+        widgetView.edit()
+    }
+    
     /**
     Moves the specified widget
 
@@ -303,5 +302,19 @@ extension CanvasViewController: UIDropInteractionDelegate {
         if let widget = first.localObject as AnyObject as? WidgetData {
             receive(widget: widget, at: session.location(in: canvasView))
         }
+    }
+}
+
+extension Array where Element == WidgetView {
+    
+    func contains(view: UIView?) -> WidgetView? {
+        var foundWidgetView: WidgetView?
+        self.contains(where: { (widgetView) -> Bool in
+            if (widgetView.view == view) {
+                foundWidgetView = widgetView
+                return true
+            } else { return false }
+        })
+        return foundWidgetView
     }
 }

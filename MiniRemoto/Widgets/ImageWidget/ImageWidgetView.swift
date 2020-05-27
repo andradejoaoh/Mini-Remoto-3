@@ -12,6 +12,7 @@ import UIKit
 /// A representation of an `ImageWidget`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: UIViewController, WidgetView {
+    
     var snapshot: ImageWidgetModel {
         /// - TODO: Remove coalesce using ??
         return ImageWidgetModel(frame: self.view.frame,
