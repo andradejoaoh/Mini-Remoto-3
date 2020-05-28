@@ -70,8 +70,9 @@ struct ImageWidgetModel: WidgetData {
     }
 
     func make() -> WidgetView {
-        return ImageWidgetView(image: Data())
+        return ImageWidgetView(image: Data(), id: id)
     }
 
 }
+
 

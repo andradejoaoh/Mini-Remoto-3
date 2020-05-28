@@ -13,10 +13,9 @@ import UIKit
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: UIViewController, WidgetView {
     var snapshot: WidgetData {
-        return ImageWidgetModel(frame: Frame(rect: self.view.frame),
-                                image: self.image.pngData()?.base64EncodedString() ?? "")
+        return ImageWidgetModel(frame: Frame(rect: self.view.frame), id: imageID)
     }
-    
+
     /// The state of a `WidgetState`.
     var state: WidgetState {
         didSet {
@@ -36,12 +35,14 @@ final class ImageWidgetView: UIViewController, WidgetView {
     /// The image being displayed. It is assumed that
     /// the Canvas will provide an UIImage ready to be used.
     private var image: UIImage
+    private var imageID: String
 
     /// Initialise a new instace of this type:
     /// - parameter image: the image to be displayed.
-    init(image: Data) {
+    init(image: Data, id: String) {
         self.image = UIImage(data: image) ?? UIImage()
         self.state = .idle
+        self.imageID = id
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -81,6 +82,7 @@ final class ImageWidgetView: UIViewController, WidgetView {
     private func updateImage(_ image: UIImage) {
         let currentImage = self.image
         self.image = image
+        self.imageID = UUID().uuidString
         self.imageView.image = image
 
         undoManager?.registerUndo(withTarget: self, handler: { (target) in
