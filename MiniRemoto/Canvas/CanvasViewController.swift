@@ -15,11 +15,12 @@ class CanvasViewController: UIViewController {
     let maxZoomOut: CGFloat = 4
     let maxZoomIn: CGFloat = 1/2
 
-    var lastTouchLocation: CGPoint?
     var canvasOrigin: CGPoint = CGPoint.zero
     var canvasTransform: CGAffineTransform = CGAffineTransform()
     var currentWidgetPosition: CGPoint = CGPoint.zero
     var selectedWidgetView: WidgetView?
+    
+    var transformHandles = [TransformHandle]()
 
     /// This is the drawing view that contains every other view.
     /// self.view must be static just for handling user input
@@ -37,7 +38,7 @@ class CanvasViewController: UIViewController {
     }
 
     func addWidget(widget: WidgetView, to view: UIView) {
-        addInteractions(view: widget.view, to: view)
+        addWidgetInteractions(widget: widget, to: view)
         self.addChild(widget)
         widget.didMove(toParent: self)
         widgets.append(widget)
@@ -67,11 +68,11 @@ class CanvasViewController: UIViewController {
      - Author:
      Rafael Galdino
      */
-    private func addInteractions(view: UIView, to parentView: UIView) {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
-        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(drag(_:))))
-        view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
-        parentView.addSubview(view)
+    private func addWidgetInteractions(widget: WidgetView, to parentView: UIView) {
+        widget.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedWidget(_:))))
+        widget.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(draggedWidget(_:))))
+        widget.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressedWidget(_:))))
+        parentView.addSubview(widget.view)
     }
 
     /**
@@ -83,7 +84,10 @@ class CanvasViewController: UIViewController {
     private func configureCanvasView() {
         canvasView.frame = self.view.frame
 
-        addInteractions(view: canvasView, to: self.view)
+        canvasView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedCanvas(_:))))
+        canvasView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(draggedCanvas(_:))))
+        canvasView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressedCanvas(_:))))
+        view.addSubview(canvasView)
 
         if let backgroundTexture = UIImage(named: "dotPattern") {
             canvasView.backgroundColor = UIColor(patternImage: backgroundTexture)
@@ -99,18 +103,20 @@ class CanvasViewController: UIViewController {
 
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(zoom(_:))))
     }
-
+    
+    
+    // Widget gestures
     @objc
-    func tap(_ sender: UITapGestureRecognizer) {
+    func tappedWidget(_ sender: UITapGestureRecognizer) {
+        print(sender.state.rawValue)
         if let widgetView = widgets.contains(view: sender.view) {
+            
             tapWidget(widgetView: widgetView)
-        } else {
-            tapCanvas()
         }
     }
 
     @objc
-    func longPress(_ sender: UILongPressGestureRecognizer) {
+    func longPressedWidget(_ sender: UILongPressGestureRecognizer) {
         if let widgetView = widgets.contains(view: sender.view) {
             selectWidget(widgetView: widgetView)
             editWidget(widgetView: widgetView)
@@ -118,40 +124,45 @@ class CanvasViewController: UIViewController {
     }
 
     @objc
-    func drag(_ sender : UIPanGestureRecognizer) {
+    func draggedWidget(_ sender : UIPanGestureRecognizer) {
         if let selectedWidgetView = selectedWidgetView {
             if sender.state == .began {
-                lastTouchLocation = sender.location(in: view)
                 canvasOrigin = canvasView.bounds.origin
-                let wpos = selectedWidgetView.view.center
-                currentWidgetPosition = wpos
+                currentWidgetPosition = selectedWidgetView.view.center
             }
             
             else if sender.state == .changed {
-                if widgets.contains(where: { (widgetView) -> Bool in
-                    widgetView.view == sender.view
-                }) && sender.view == selectedWidgetView.view {
+                if widgets.contains(view: sender.view) != nil
+                    && sender.view === selectedWidgetView.view {
                     moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: canvasView))
                 } else {
-                    dragCanvas(by: sender.translation(in: view))
+                    dragCanvas(from: canvasOrigin, by: sender.translation(in: view))
                 }
-            }
-        } else {
-            if sender.state == .began {
-                lastTouchLocation = sender.location(in: view)
-                canvasOrigin = canvasView.bounds.origin
-            } else if sender.state == .changed {
-                dragCanvas(by: sender.translation(in: view))
             }
         }
     }
     
+    // canvas gestures
     @objc
-    func resizeWidget(_ sender: UIPanGestureRecognizer) {
-        sender.view?.center = sender.location(in: canvasView)
+    func tappedCanvas(_ sender: UITapGestureRecognizer) {
+        tapCanvas()
+    }
+    
+    @objc
+    func draggedCanvas(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .began {
+            canvasOrigin = canvasView.bounds.origin
+        } else if sender.state == .changed {
+            dragCanvas(from: canvasOrigin, by: sender.translation(in: view))
+        }
+    }
+    
+    @objc
+    func longPressedCanvas(_ sender: UILongPressGestureRecognizer) {
         
     }
 
+    // view gestures
     @objc
     func zoom(_ sender : UIPinchGestureRecognizer) {
         if sender.state == .began {
@@ -187,7 +198,7 @@ class CanvasViewController: UIViewController {
     func tapWidget(widgetView: WidgetView) {
         if selectedWidgetView == nil {
             selectWidget(widgetView: widgetView)
-        } else if selectedWidgetView! == widgetView {
+        } else if selectedWidgetView! === widgetView {
             deselectWidget(widgetView: widgetView)
         } else {
             deselectWidget(widgetView: selectedWidgetView!)
@@ -202,21 +213,38 @@ class CanvasViewController: UIViewController {
     Alex Nascimento
     */
     func selectWidget(widgetView: WidgetView) {
+        if selectedWidgetView === widgetView {
+            return
+        }
+        
+        if let selectedWidgetView = selectedWidgetView {
+            deselectWidget(widgetView: selectedWidgetView)
+        }
         widgetView.select()
         selectedWidgetView = widgetView
         placeTransformHandles(widgetView: widgetView)
     }
     
     func placeTransformHandles(widgetView: WidgetView) {
+        if !transformHandles.isEmpty {
+            transformHandles.removeAll()
+        }
         let size = CGSize(width: 40, height: 40)
         for c in Corner.allCases {
             var origin = widgetView.view.frame.getCornerPosition(c)
             origin.x -= size.width/2
             origin.y -= size.height/2
-            let handleView = TransformHandle(frame: CGRect(origin: origin, size: size), reference: widgetView.view, corner: c)
-            handleView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(resizeWidget(_:))))
+            let handleView = TransformHandle(frame: CGRect(origin: origin, size: size), reference: widgetView.view, corner: c, canvas: self)
+            handleView.addGestureRecognizer(UIPanGestureRecognizer(target: handleView, action: #selector(handleView.dragHandle(_:))))
             handleView.backgroundColor = .systemTeal
+            transformHandles.append(handleView)
             canvasView.addSubview(handleView)
+        }
+    }
+    
+    func updateTransformHandles() {
+        transformHandles.forEach { (transformHandle) in
+            transformHandle.updatePosition()
         }
     }
     
@@ -228,6 +256,10 @@ class CanvasViewController: UIViewController {
     */
     func deselectWidget(widgetView: WidgetView) {
         widgetView.deselect()
+        transformHandles.forEach { (transformHandle) in
+            transformHandle.removeFromSuperview()
+        }
+        transformHandles.removeAll()
         selectedWidgetView = nil
     }
     
@@ -243,6 +275,7 @@ class CanvasViewController: UIViewController {
     */
     func moveWidget(widgetView: UIView, by vector: CGPoint) {
         widgetView.center = currentWidgetPosition + vector
+        updateTransformHandles()
     }
 
     /**
@@ -251,8 +284,8 @@ class CanvasViewController: UIViewController {
     - Author:
     Alex Nascimento
     */
-    func dragCanvas(by vector: CGPoint) {
-        canvasView.bounds.origin = canvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
+    func dragCanvas(from origin: CGPoint, by vector: CGPoint) {
+        canvasView.bounds.origin = origin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
     
     /**

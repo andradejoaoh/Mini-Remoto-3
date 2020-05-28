@@ -18,7 +18,6 @@
 		8C45B987247EF642005B30F8 /* TransformHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C45B986247EF642005B30F8 /* TransformHandle.swift */; };
 		8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */; };
 		8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A82473116C007B17B4 /* CGExtensions.swift */; };
-		8CDD8BD6247F0B530008EDB5 /* WidgetResizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD8BD5247F0B530008EDB5 /* WidgetResizeDelegate.swift */; };
 		A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetView.swift */; };
 		A45626A7246DA787006EEABF /* TextWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TextWidgetController.swift */; };
 		A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */; };
@@ -57,7 +56,6 @@
 		8C45B986247EF642005B30F8 /* TransformHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformHandle.swift; sourceTree = "<group>"; };
 		8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		8CD2D0A82473116C007B17B4 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
-		8CDD8BD5247F0B530008EDB5 /* WidgetResizeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetResizeDelegate.swift; sourceTree = "<group>"; };
 		A45626A4246DA73F006EEABF /* TextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetView.swift; sourceTree = "<group>"; };
 		A45626A6246DA787006EEABF /* TextWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetController.swift; sourceTree = "<group>"; };
 		A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetView.swift; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */,
-				8CDD8BD5247F0B530008EDB5 /* WidgetResizeDelegate.swift */,
 				8C45B986247EF642005B30F8 /* TransformHandle.swift */,
 			);
 			path = Canvas;
@@ -315,7 +312,6 @@
 				F2BEF80524784CCA00F83E7F /* SnapshotController.swift in Sources */,
 				F2BEF7FB24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift in Sources */,
 				A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */,
-				8CDD8BD6247F0B530008EDB5 /* WidgetResizeDelegate.swift in Sources */,
 				A47C4733247EAE2C0071B3E9 /* UIColor+Extensions.swift in Sources */,
 				F2BEF7F824784CCA00F83E7F /* TextWidget+CoreDataClass.swift in Sources */,
 				F2BEF80A24786D0300F83E7F /* ContainerViewController.swift in Sources */,
@@ -477,7 +473,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RAZG7U3SR6;
+				DEVELOPMENT_TEAM = PVKHG959FC;
 				INFOPLIST_FILE = MiniRemoto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
