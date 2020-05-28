@@ -80,6 +80,7 @@ final class PaletteViewController: UIViewController {
         carouselView.dataSource = self
         carouselView.delegate = self
         carouselView.dragDelegate = self
+        carouselView.setMinimumPressDuration(to: 0)
         self.view.addSubview(carouselView)
         positionCarouselView()
     }
