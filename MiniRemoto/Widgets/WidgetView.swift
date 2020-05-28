@@ -37,7 +37,7 @@ protocol WidgetView: UIViewController {
 extension WidgetView {
     
     func select() {
-        self.view.backgroundColor = .systemPink
+        self.view.backgroundColor = UIColor.main
     }
     
     func deselect() {
@@ -46,5 +46,19 @@ extension WidgetView {
     
     func delete(){
         self.removeFromParent()
+    }
+}
+
+extension Array where Element == WidgetView {
+    
+    func contains(view: UIView?) -> WidgetView? {
+        var foundWidgetView: WidgetView?
+        self.contains(where: { (widgetView) -> Bool in
+            if (widgetView.view == view) {
+                foundWidgetView = widgetView
+                return true
+            } else { return false }
+        })
+        return foundWidgetView
     }
 }

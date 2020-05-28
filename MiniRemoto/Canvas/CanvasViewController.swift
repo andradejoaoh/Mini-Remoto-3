@@ -17,11 +17,8 @@ class CanvasViewController: UIViewController {
 
     var lastTouchLocation: CGPoint?
     var canvasOrigin: CGPoint = CGPoint.zero
-    var canvasScale: CGPoint = CGPoint(x: 1, y: 1)
     var canvasTransform: CGAffineTransform = CGAffineTransform()
     var currentWidgetPosition: CGPoint = CGPoint.zero
-    var heldWidget: WidgetView?
-    var touchedView: UIView?
     var selectedWidgetView: WidgetView?
 
     /// This is the drawing view that contains every other view.
@@ -123,24 +120,14 @@ class CanvasViewController: UIViewController {
     @objc
     func drag(_ sender : UIPanGestureRecognizer) {
         if let selectedWidgetView = selectedWidgetView {
-            if heldWidget != nil {
-                if sender.state == .began {
-                    heldWidget?.view.layer.opacity = 0.5
-                }
-                heldWidget?.view.center = sender.location(in: self.view)
-                if sender.state == .ended {
-                    heldWidget?.view.layer.opacity = 1
-                    addWidget(widget: heldWidget!, to: self.view)
-                    heldWidget = nil
-                }
-                return
-            }
             if sender.state == .began {
                 lastTouchLocation = sender.location(in: view)
                 canvasOrigin = canvasView.bounds.origin
                 let wpos = selectedWidgetView.view.center
                 currentWidgetPosition = wpos
-            } else if sender.state == .changed {
+            }
+            
+            else if sender.state == .changed {
                 if widgets.contains(where: { (widgetView) -> Bool in
                     widgetView.view == sender.view
                 }) && sender.view == selectedWidgetView.view {
@@ -157,6 +144,12 @@ class CanvasViewController: UIViewController {
                 dragCanvas(by: sender.translation(in: view))
             }
         }
+    }
+    
+    @objc
+    func resizeWidget(_ sender: UIPanGestureRecognizer) {
+        sender.view?.center = sender.location(in: canvasView)
+        
     }
 
     @objc
@@ -211,8 +204,22 @@ class CanvasViewController: UIViewController {
     func selectWidget(widgetView: WidgetView) {
         widgetView.select()
         selectedWidgetView = widgetView
+        placeTransformHandles(widgetView: widgetView)
     }
-
+    
+    func placeTransformHandles(widgetView: WidgetView) {
+        let size = CGSize(width: 40, height: 40)
+        for c in Corner.allCases {
+            var origin = widgetView.view.frame.getCornerPosition(c)
+            origin.x -= size.width/2
+            origin.y -= size.height/2
+            let handleView = TransformHandle(frame: CGRect(origin: origin, size: size), reference: widgetView.view, corner: c)
+            handleView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(resizeWidget(_:))))
+            handleView.backgroundColor = .systemTeal
+            canvasView.addSubview(handleView)
+        }
+    }
+    
     /**
     Desselectes the specified widget
 
@@ -247,7 +254,7 @@ class CanvasViewController: UIViewController {
     func dragCanvas(by vector: CGPoint) {
         canvasView.bounds.origin = canvasOrigin - CGPoint(x: vector.x / canvasView.transform.a,y: vector.y / canvasView.transform.d)
     }
-
+    
     /**
      Creates a widget on the canvas based on the `WidgetData` received.
      + Parameters:
@@ -302,19 +309,5 @@ extension CanvasViewController: UIDropInteractionDelegate {
         if let widget = first.localObject as AnyObject as? WidgetData {
             receive(widget: widget, at: session.location(in: canvasView))
         }
-    }
-}
-
-extension Array where Element == WidgetView {
-    
-    func contains(view: UIView?) -> WidgetView? {
-        var foundWidgetView: WidgetView?
-        self.contains(where: { (widgetView) -> Bool in
-            if (widgetView.view == view) {
-                foundWidgetView = widgetView
-                return true
-            } else { return false }
-        })
-        return foundWidgetView
     }
 }
