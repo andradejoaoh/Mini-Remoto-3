@@ -12,10 +12,9 @@ import UIKit
 /// A representation of an `ImageWidget`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: UIViewController, WidgetView {
-    var snapshot: ImageWidgetModel {
-        /// - TODO: Remove coalesce using ??
-        return ImageWidgetModel(frame: self.view.frame,
-                                image: self.image)
+    var snapshot: WidgetData {
+        return ImageWidgetModel(frame: Frame(rect: self.view.frame),
+                                image: self.image.pngData()?.base64EncodedString() ?? "")
     }
     
     /// The state of a `WidgetState`.
@@ -40,8 +39,8 @@ final class ImageWidgetView: UIViewController, WidgetView {
 
     /// Initialise a new instace of this type:
     /// - parameter image: the image to be displayed.
-    init(image: UIImage) {
-        self.image = image
+    init(image: Data) {
+        self.image = UIImage(data: image) ?? UIImage()
         self.state = .idle
         super.init(nibName: nil, bundle: nil)
     }

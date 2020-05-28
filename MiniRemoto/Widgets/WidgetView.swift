@@ -26,6 +26,7 @@ extension WidgetState {
 }
 
 protocol WidgetView: UIViewController {
+    var snapshot: WidgetData { get }
     var state: WidgetState { get set }
     func edit()
     func delete()

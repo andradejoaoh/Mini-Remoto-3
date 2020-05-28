@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 final class ContainerViewController: UIViewController {
+    @AutoLayout var saveBtn: UIButton
+
     private var canvas: CanvasViewController = {
         let canvasController = CanvasViewController(nibName: nil, bundle: nil)
         canvasController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +34,19 @@ final class ContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
+        saveBtn.backgroundColor = .systemRed
+        saveBtn.addTarget(self, action: #selector(test_save), for: .touchUpInside)
+        view.addSubview(saveBtn)
+        NSLayoutConstraint.activate(
+            [saveBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+             saveBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+             saveBtn.widthAnchor.constraint(equalToConstant: 50),
+             saveBtn.heightAnchor.constraint(equalToConstant: 50)]
+        )
+    }
+
+    @objc func test_save() {
+        print(canvas.snapshot)
     }
 
     private func setupController() {
