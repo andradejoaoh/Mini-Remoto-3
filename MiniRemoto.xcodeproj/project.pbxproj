@@ -14,6 +14,8 @@
 		610F9846245B6773003EFDA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 610F9844245B6773003EFDA8 /* LaunchScreen.storyboard */; };
 		616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */; };
 		616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */; };
+		8C45B985247EF585005B30F8 /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C45B984247EF585005B30F8 /* CGRect+Extensions.swift */; };
+		8C45B987247EF642005B30F8 /* TransformHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C45B986247EF642005B30F8 /* TransformHandle.swift */; };
 		8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */; };
 		8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A82473116C007B17B4 /* CGExtensions.swift */; };
 		A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetView.swift */; };
@@ -50,6 +52,8 @@
 		610F9847245B6773003EFDA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewController.swift; sourceTree = "<group>"; };
 		616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewCell.swift; sourceTree = "<group>"; };
+		8C45B984247EF585005B30F8 /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
+		8C45B986247EF642005B30F8 /* TransformHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformHandle.swift; sourceTree = "<group>"; };
 		8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		8CD2D0A82473116C007B17B4 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		A45626A4246DA73F006EEABF /* TextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetView.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 				610F9847245B6773003EFDA8 /* Info.plist */,
 				610F9842245B6773003EFDA8 /* Assets.xcassets */,
 				A47C4732247EAE2C0071B3E9 /* UIColor+Extensions.swift */,
+				8C45B984247EF585005B30F8 /* CGRect+Extensions.swift */,
 			);
 			path = MiniRemoto;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */,
+				8C45B986247EF642005B30F8 /* TransformHandle.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -319,7 +325,9 @@
 				616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */,
 				616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */,
 				A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */,
+				8C45B985247EF585005B30F8 /* CGRect+Extensions.swift in Sources */,
 				610F983A245B6770003EFDA8 /* AppDelegate.swift in Sources */,
+				8C45B987247EF642005B30F8 /* TransformHandle.swift in Sources */,
 				F21E6E2F247C51DE0073BE75 /* RootSplitViewController.swift in Sources */,
 				F2BEF808247859CA00F83E7F /* WidgetData.swift in Sources */,
 				F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */,
@@ -465,7 +473,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RAZG7U3SR6;
+				DEVELOPMENT_TEAM = PVKHG959FC;
 				INFOPLIST_FILE = MiniRemoto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

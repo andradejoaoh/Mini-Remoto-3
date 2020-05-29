@@ -12,6 +12,7 @@ import UIKit
 /// A representation of an `ImageWidget`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: UIViewController, WidgetView {
+    
     var snapshot: ImageWidgetModel {
         /// - TODO: Remove coalesce using ??
         return ImageWidgetModel(frame: self.view.frame,
@@ -90,8 +91,8 @@ final class ImageWidgetView: UIViewController, WidgetView {
     }
 
     func edit() {
-        let actionSheet = UIAlertController(title: "Escolha uma Foto", message: "Selecione o local da foto.", preferredStyle: .actionSheet)
-        let photoAction = UIAlertAction(title: "Galeria", style: .default) { [weak self] (action) in
+        let actionSheet = UIAlertController(title: "Choose a Picture", message: "Select the photo's source", preferredStyle: .actionSheet)
+        let photoAction = UIAlertAction(title: "Gallery", style: .default) { [weak self] (action) in
             if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
                 let photoPicker = UIImagePickerController()
                 photoPicker.delegate = self
@@ -103,7 +104,7 @@ final class ImageWidgetView: UIViewController, WidgetView {
         actionSheet.addAction(photoAction)
 
 
-        let cameraAction = UIAlertAction(title: "Câmera", style: .default) { [weak self] (action) in
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { [weak self] (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 let cameraPicker = UIImagePickerController()
                 cameraPicker.delegate = self
@@ -114,7 +115,7 @@ final class ImageWidgetView: UIViewController, WidgetView {
         }
         actionSheet.addAction(cameraAction)
 
-        let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         actionSheet.addAction(cancelAction)
 
         self.present(actionSheet, animated: true, completion: nil)
