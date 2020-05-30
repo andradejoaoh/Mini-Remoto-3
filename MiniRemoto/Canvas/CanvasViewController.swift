@@ -216,7 +216,7 @@ class CanvasViewController: UIViewController {
         if selectedWidgetView === widgetView {
             return
         }
-        
+        UISelectionFeedbackGenerator().selectionChanged()
         if let selectedWidgetView = selectedWidgetView {
             deselectWidget(widgetView: selectedWidgetView)
         }
