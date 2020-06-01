@@ -18,13 +18,70 @@ class CanvasCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupCollectionView()
+    }
+
+    private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(CanvasCollectionViewCell.self, forCellWithReuseIdentifier: "canvasCollectionViewCell")
         collectionView.backgroundColor = .clear
+        addBarButtons()
 
         self.view.addSubview(collectionView)
+
+        positionCollectionView()
+    }
+
+    private func positionCollectionView() {
+        let carouselGuide = collectionView.safeAreaLayoutGuide
+        let viewGuide = self.view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            carouselGuide.topAnchor.constraint(equalTo:viewGuide.topAnchor),
+            carouselGuide.bottomAnchor.constraint(equalTo:viewGuide.bottomAnchor),
+            carouselGuide.trailingAnchor.constraint(equalTo:viewGuide.trailingAnchor),
+            carouselGuide.leadingAnchor.constraint(equalTo:viewGuide.leadingAnchor)
+        ])
+    }
+
+    private func addBarButtons() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editTapped))
+    }
+
+    @objc
+    func addTapped() {
+        present(newCanvasAlert(), animated: true, completion: nil)
+    }
+
+    @objc
+    func editTapped() {
+        print("edit mode on")
+        print("edit mode off")
+    }
+
+    private func newCanvasAlert() -> UIAlertController {
+        let alertVC = UIAlertController(title: "New Canvas", message: "Please type the name of the canvas", preferredStyle: .alert)
+        alertVC.addTextField { (textField) in
+            textField.placeholder = "i.e. MyCanvas"
+        }
+
+        let createAction = UIAlertAction(title: "Create", style: .default) { [weak self] (alertAction) in
+            if let answer = alertVC.textFields?.first {
+                self?.createCanvas(named: answer.text ?? "nil value")
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        alertVC.addAction(createAction)
+        alertVC.addAction(cancelAction)
+        
+        return alertVC
+    }
+
+    private func createCanvas(named name: String) {
+        print("\(name) created with success!")
     }
 }
 
