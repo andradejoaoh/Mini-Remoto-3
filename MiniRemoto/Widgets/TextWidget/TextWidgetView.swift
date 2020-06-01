@@ -14,9 +14,18 @@ import UIKit
 final class TextWidgetView: UIViewController, WidgetView {
 
     var snapshot: WidgetData {
-        return TextWidgetModel(frame: Frame(rect: self.view.frame),
+        return TextWidgetModel(frame: Frame(rect: self.frame),
                                title: controller.title,
                                body: controller.body)
+    }
+
+    var frame: CGRect {
+        var _frame = CGRect.zero
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            _frame = self.view.frame
+        }
+        return _frame
     }
     
     /// The state of a `TextWidget`. Changes in the UI/funcionality
@@ -51,7 +60,8 @@ final class TextWidgetView: UIViewController, WidgetView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        self.controller = TextWidgetController()
+        super.init(coder: coder)
     }
 
     override func viewDidLoad() {

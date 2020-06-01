@@ -108,7 +108,6 @@
 			children = (
 				8CD2D0A2247310E4007B17B4 /* Canvas */,
 				F2BEF7D924784CCA00F83E7F /* CoreData */,
-				F2BEF7EE24784CCA00F83E7F /* Snapshot */,
 				A45626A2246DA71A006EEABF /* Widgets */,
 				F2BEF7D624784CCA00F83E7F /* Managers */,
 				F2BEF7D224784CC900F83E7F /* Palette */,
@@ -221,13 +220,6 @@
 				F2BEF7E224784CCA00F83E7F /* DataModel.xcdatamodeld */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		F2BEF7EE24784CCA00F83E7F /* Snapshot */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Snapshot;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
