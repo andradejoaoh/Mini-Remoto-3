@@ -17,6 +17,7 @@
 		8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */; };
 		8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A82473116C007B17B4 /* CGExtensions.swift */; };
 		A4393272248048A300882F3E /* CanvasModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4393271248048A300882F3E /* CanvasModel.swift */; };
+		A43C6EC8248591AD0079F46B /* ImageWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43C6EC7248591AD0079F46B /* ImageWidgetController.swift */; };
 		A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetView.swift */; };
 		A45626A7246DA787006EEABF /* TextWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TextWidgetController.swift */; };
 		A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */; };
@@ -53,6 +54,7 @@
 		8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		8CD2D0A82473116C007B17B4 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		A4393271248048A300882F3E /* CanvasModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasModel.swift; sourceTree = "<group>"; };
+		A43C6EC7248591AD0079F46B /* ImageWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetController.swift; sourceTree = "<group>"; };
 		A45626A4246DA73F006EEABF /* TextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetView.swift; sourceTree = "<group>"; };
 		A45626A6246DA787006EEABF /* TextWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetController.swift; sourceTree = "<group>"; };
 		A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetView.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */,
+				A43C6EC7248591AD0079F46B /* ImageWidgetController.swift */,
 			);
 			path = ImageWidget;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */,
 				F2BEF7FA24784CCA00F83E7F /* ImageWidget+CoreDataProperties.swift in Sources */,
 				F2BEF7FC24784CCA00F83E7F /* TextWidget+CoreDataProperties.swift in Sources */,
+				A43C6EC8248591AD0079F46B /* ImageWidgetController.swift in Sources */,
 				F2BEF7FB24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift in Sources */,
 				A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */,
 				A47C4733247EAE2C0071B3E9 /* UIColor+Extensions.swift in Sources */,

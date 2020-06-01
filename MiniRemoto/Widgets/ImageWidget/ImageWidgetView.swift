@@ -46,6 +46,8 @@ final class ImageWidgetView: UIViewController, WidgetView {
     private var image: UIImage
     private var imageID: String
 
+    private let controller = ImageWidgetController()
+
     /// Initialise a new instace of this type:
     /// - parameter image: the image to be displayed.
     init(image: Data, id: String) {
@@ -94,7 +96,8 @@ final class ImageWidgetView: UIViewController, WidgetView {
     private func updateImage(_ image: UIImage) {
         let currentImage = self.image
         self.image = image
-        self.imageID = UUID().uuidString
+        controller.imageData = image.pngData()
+        controller.imageID = imageID
         self.imageView.image = image
 
         undoManager?.registerUndo(withTarget: self, handler: { (target) in

@@ -30,15 +30,11 @@ protocol WidgetView: UIViewController {
     var state: WidgetState { get set }
     func edit()
     func delete()
-    func save(completion: @escaping (WidgetData) -> Void)
 }
 
 extension WidgetView {
     func delete(){
         self.removeFromParent()
-    }
-
-    func save(completion: @escaping (WidgetData) -> Void) {
-        completion(self.snapshot)
+        self.view.removeFromSuperview()
     }
 }
