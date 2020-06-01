@@ -31,6 +31,7 @@ class CanvasCollectionViewController: UIViewController {
 extension CanvasCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let splitView = self.splitViewController as? RootSplitViewController {
+            UISelectionFeedbackGenerator().selectionChanged()
             let detail = splitView.detail
             splitView.showDetailViewController(detail, sender: nil)
         }
