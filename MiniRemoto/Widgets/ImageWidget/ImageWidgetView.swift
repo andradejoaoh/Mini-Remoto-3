@@ -13,17 +13,10 @@ import UIKit
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: UIViewController, WidgetView {
     var snapshot: WidgetData {
-        return ImageWidgetModel(frame: Frame(rect: frame), id: imageID)
+        return ImageWidgetModel(frame: Frame(rect: internalFrame), id: imageID)
     }
 
-    var frame: CGRect {
-        var _frame = CGRect.zero
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            _frame = self.view.frame
-        }
-        return _frame
-    }
+    var internalFrame: CGRect = CGRect.zero
 
     /// The state of a `WidgetState`.
     var state: WidgetState {

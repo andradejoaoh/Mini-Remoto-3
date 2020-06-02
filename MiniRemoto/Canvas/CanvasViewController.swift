@@ -6,6 +6,7 @@
 //  Copyright © 2020 João Henrique Andrade. All rights reserved.
 //
 
+
 import UIKit
 
 class CanvasViewController: UIViewController {
@@ -20,10 +21,30 @@ class CanvasViewController: UIViewController {
             }
         }
 
-        return CanvasModel(name: "Canvas", lastModifiedAt: "AGORA", createdAt: "ONTEM", textWidgets: textWidgetSnapshots, imageWidgets: imageWidgetSnapshots)
+        return CanvasModel(name: model.name, lastModifiedAt: model.lastModifiedAt, createdAt: model.createdAt, textWidgets: textWidgetSnapshots, imageWidgets: imageWidgetSnapshots)
     }
 
     var widgets = Array<WidgetView>()
+
+    var model: CanvasModel = CanvasModel(name: "", lastModifiedAt: "", createdAt: "") {
+        didSet {
+            model.imageWidgets.forEach { [weak self] (widget) in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let _widget = widget.make()
+                    _widget.view.frame = CGRect(frame: widget.frame)
+                    self.addWidget(widget: _widget, to: self.canvasView)
+                }
+            }
+
+            model.textWidgets.forEach { [weak self] (widget) in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.addWidget(widget: widget.make(), to: self.canvasView)
+                }
+            }
+        }
+    }
 
     let maxZoomOut: CGFloat = 4
     let maxZoomIn: CGFloat = 1/2
@@ -54,6 +75,7 @@ class CanvasViewController: UIViewController {
         addWidgetInteractions(widget: widget, to: view)
         self.addChild(widget)
         widget.didMove(toParent: self)
+        widget.internalFrame = widget.view.frame
         widgets.append(widget)
     }
     
@@ -247,7 +269,7 @@ class CanvasViewController: UIViewController {
             var origin = widgetView.view.frame.getCornerPosition(c)
             origin.x -= size.width/2
             origin.y -= size.height/2
-            let handleView = TransformHandle(frame: CGRect(origin: origin, size: size), reference: widgetView.view, corner: c, canvas: self)
+            let handleView = TransformHandle(frame: CGRect(origin: origin, size: size), reference: widgetView, corner: c, canvas: self)
             handleView.addGestureRecognizer(UIPanGestureRecognizer(target: handleView, action: #selector(handleView.dragHandle(_:))))
             handleView.backgroundColor = .systemTeal
             transformHandles.append(handleView)
@@ -316,6 +338,16 @@ class CanvasViewController: UIViewController {
         newWidget.view.frame.size = size
         newWidget.view.center = location
         addWidget(widget: newWidget, to: self.canvasView)
+    }
+
+    func restore(_ model: CanvasModel) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            for widget in self.widgets {
+                self.removeWidget(widget: widget)
+            }
+            self.model = model
+        }
     }
 }
 

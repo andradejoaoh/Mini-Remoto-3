@@ -14,4 +14,16 @@ struct CanvasModel: Codable {
     let createdAt: String
     let textWidgets: [TextWidgetModel]
     let imageWidgets: [ImageWidgetModel]
+
+    init(name: String,
+         lastModifiedAt: String,
+         createdAt: String,
+         textWidgets: [TextWidgetModel] = [],
+         imageWidgets: [ImageWidgetModel] = []) {
+        self.name = name
+        self.lastModifiedAt = lastModifiedAt
+        self.createdAt = createdAt
+        self.textWidgets = textWidgets
+        self.imageWidgets = imageWidgets
+    }
 }

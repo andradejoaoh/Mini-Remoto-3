@@ -12,20 +12,13 @@ import UIKit
 /// A representation of a `TextWidgetView`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class TextWidgetView: UIViewController, WidgetView {
+    var internalFrame: CGRect = CGRect.zero
+
 
     var snapshot: WidgetData {
-        return TextWidgetModel(frame: Frame(rect: self.frame),
+        return TextWidgetModel(frame: Frame(rect: internalFrame),
                                title: controller.title,
                                body: controller.body)
-    }
-
-    var frame: CGRect {
-        var _frame = CGRect.zero
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            _frame = self.view.frame
-        }
-        return _frame
     }
     
     /// The state of a `TextWidget`. Changes in the UI/funcionality
@@ -111,7 +104,7 @@ final class TextWidgetView: UIViewController, WidgetView {
     }
 
     func edit() {
-        state.toggle()
+        state = .editing
     }
 }
 

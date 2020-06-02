@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+
 final class PaletteViewController: UIViewController {
     typealias PaletteWidget = WidgetData
 

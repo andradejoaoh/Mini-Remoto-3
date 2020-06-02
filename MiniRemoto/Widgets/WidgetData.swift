@@ -41,6 +41,12 @@ extension Frame {
     }
 }
 
+extension CGRect {
+    init(frame: Frame) {
+        self.init(x: CGFloat(frame.x), y: CGFloat(frame.y), width: CGFloat(frame.width), height: CGFloat(frame.height))
+    }
+}
+
 struct TextWidgetModel: WidgetData {
     let frame: Frame
     var title: String
@@ -70,7 +76,9 @@ struct ImageWidgetModel: WidgetData {
     }
 
     func make() -> WidgetView {
-        return ImageWidgetView(image: Data(), id: id)
+        let widget = ImageWidgetView(image: Data(), id: id)
+        widget.view.frame = CGRect(frame: self.frame)
+        return widget
     }
 
 }
