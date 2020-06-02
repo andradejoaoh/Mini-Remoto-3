@@ -25,6 +25,7 @@
 		A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */; };
 		A47C4733247EAE2C0071B3E9 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47C4732247EAE2C0071B3E9 /* UIColor+Extensions.swift */; };
 		F21E6E2F247C51DE0073BE75 /* RootSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */; };
+		F27B3EA52486700B004D1681 /* CanvasCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27B3EA42486700B004D1681 /* CanvasCollectionView.swift */; };
 		F2BEF7F324784CCA00F83E7F /* CarouselCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */; };
 		F2BEF7F424784CCA00F83E7F /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D424784CCA00F83E7F /* CarouselCollectionView.swift */; };
 		F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D524784CCA00F83E7F /* PaletteViewController.swift */; };
@@ -63,6 +64,7 @@
 		A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutPropertyWrapper.swift; sourceTree = "<group>"; };
 		A47C4732247EAE2C0071B3E9 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSplitViewController.swift; sourceTree = "<group>"; };
+		F27B3EA42486700B004D1681 /* CanvasCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionView.swift; sourceTree = "<group>"; };
 		F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCellView.swift; sourceTree = "<group>"; };
 		F2BEF7D424784CCA00F83E7F /* CarouselCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
 		F2BEF7D524784CCA00F83E7F /* PaletteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteViewController.swift; sourceTree = "<group>"; };
@@ -116,14 +118,13 @@
 				A45626A2246DA71A006EEABF /* Widgets */,
 				F2BEF7D624784CCA00F83E7F /* Managers */,
 				F2BEF7D224784CC900F83E7F /* Palette */,
+				F2358A2724858D33003CD94B /* Canvas Collection */,
 				610F9839245B6770003EFDA8 /* AppDelegate.swift */,
 				F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */,
 				F2BEF80924786D0300F83E7F /* ContainerViewController.swift */,
 				610F983B245B6770003EFDA8 /* SceneDelegate.swift */,
 				610F983D245B6770003EFDA8 /* ViewController.swift */,
 				A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */,
-				616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */,
-				616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */,
 				610F9844245B6773003EFDA8 /* LaunchScreen.storyboard */,
 				610F9847245B6773003EFDA8 /* Info.plist */,
 				610F9842245B6773003EFDA8 /* Assets.xcassets */,
@@ -177,6 +178,16 @@
 				A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */,
 			);
 			path = ImageWidget;
+			sourceTree = "<group>";
+		};
+		F2358A2724858D33003CD94B /* Canvas Collection */ = {
+			isa = PBXGroup;
+			children = (
+				616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */,
+				F27B3EA42486700B004D1681 /* CanvasCollectionView.swift */,
+				616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */,
+			);
+			path = "Canvas Collection";
 			sourceTree = "<group>";
 		};
 		F2BEF7D224784CC900F83E7F /* Palette */ = {
@@ -330,6 +341,7 @@
 				8C45B987247EF642005B30F8 /* TransformHandle.swift in Sources */,
 				F21E6E2F247C51DE0073BE75 /* RootSplitViewController.swift in Sources */,
 				F2BEF808247859CA00F83E7F /* WidgetData.swift in Sources */,
+				F27B3EA52486700B004D1681 /* CanvasCollectionView.swift in Sources */,
 				F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */,
 				610F983C245B6770003EFDA8 /* SceneDelegate.swift in Sources */,
 				F2BEF7F424784CCA00F83E7F /* CarouselCollectionView.swift in Sources */,
@@ -483,7 +495,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.jha.MiniRemoto;
 				PRODUCT_NAME = dotd.;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -502,7 +514,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.jha.MiniRemoto;
 				PRODUCT_NAME = dotd.;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
