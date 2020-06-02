@@ -29,9 +29,12 @@ final class CarouselCollectionView: UICollectionView {
 
         super.init(frame: frame, collectionViewLayout: layout)
         
-        self.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 0.3)
+        self.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.systemGray.cgColor
         self.register(CarouselCellView.self, forCellWithReuseIdentifier: "default")
         self.dragInteractionEnabled = true
+        layer.cornerRadius = 10
     }
 
     required init?(coder: NSCoder) {

@@ -143,6 +143,19 @@ extension PaletteViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return itemPadding >= 0 ? CGFloat(itemPadding) : 0
     }
+
+    func centerItemsInCollectionView(cellWidth: Double, numberOfItems items: Int, spaceBetweenCell: Double, collectionView: UICollectionView) -> UIEdgeInsets {
+        let numberOfItems = Double(items)
+        let totalWidth = cellWidth * numberOfItems
+        let totalSpacingWidth = spaceBetweenCell * (numberOfItems - 1)
+        let leftInset = (collectionView.frame.width - CGFloat(totalWidth + totalSpacingWidth)) / 2
+        let rightInset = leftInset
+        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return centerItemsInCollectionView(cellWidth: Double(squareItemSize(withPadding: itemPadding).width), numberOfItems: widgetOptions.count, spaceBetweenCell: itemPadding, collectionView: collectionView)
+    }
 }
 
 //MARK: DataSource Extension
