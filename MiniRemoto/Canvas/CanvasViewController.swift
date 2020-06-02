@@ -9,6 +9,19 @@
 import UIKit
 
 class CanvasViewController: UIViewController {
+    var snapshot: CanvasModel {
+        var imageWidgetSnapshots: [ImageWidgetModel] = []
+        var textWidgetSnapshots: [TextWidgetModel] = []
+        for widget in widgets {
+            if let textWidget = widget.snapshot as? TextWidgetModel {
+                textWidgetSnapshots.append(textWidget)
+            } else if let imageWidget = widget.snapshot as? ImageWidgetModel {
+                imageWidgetSnapshots.append(imageWidget)
+            }
+        }
+
+        return CanvasModel(name: "Canvas", lastModifiedAt: "AGORA", createdAt: "ONTEM", textWidgets: textWidgetSnapshots, imageWidgets: imageWidgetSnapshots)
+    }
 
     var widgets = Array<WidgetView>()
 

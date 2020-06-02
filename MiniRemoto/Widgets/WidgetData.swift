@@ -9,16 +9,9 @@
 import Foundation
 import UIKit
 
-enum WidgetType: String {
-    case text = "text"
-    case image = "image"
-    case placeholder = "placeholder"
-}
-
-protocol WidgetData {
-    var type: WidgetType { get }
-    var frame: CGRect { get set }
-    var iconPath: String { get set }
+protocol WidgetData: Codable {
+    var frame: Frame { get }
+    var iconPath: String { get }
     func make() -> WidgetView
 }
 
@@ -28,15 +21,33 @@ extension WidgetData {
     }
 }
 
+struct Frame: Codable {
+    let x: Float
+    let y: Float
+    let width: Float
+    let height: Float
+}
+
+extension Frame {
+    static let zero: Frame = {
+        return Frame(x: 0, y: 0, width: 0, height: 0)
+    }()
+
+    init(rect: CGRect) {
+        self.x = Float(rect.origin.x)
+        self.y = Float(rect.origin.y)
+        self.width = Float(rect.width)
+        self.height = Float(rect.height)
+    }
+}
+
 struct TextWidgetModel: WidgetData {
-    var type: WidgetType
-    var frame: CGRect
+    let frame: Frame
     var title: String
     var body: String
-    var iconPath: String = "pencil.circle.fill"
+    let iconPath: String = "pencil.circle.fill"
 
-    init(frame: CGRect = CGRect.zero, title: String = "", body: String = "") {
-        self.type = WidgetType.text
+    init(frame: Frame = Frame.zero, title: String = "", body: String = "") {
         self.frame = frame
         self.title = title
         self.body = body
@@ -49,20 +60,19 @@ struct TextWidgetModel: WidgetData {
 }
 
 struct ImageWidgetModel: WidgetData {
-    var type: WidgetType
-    var frame: CGRect
-    var image: UIImage
-    var iconPath: String = "camera.on.rectangle.fill"
+    let id: String
+    let frame: Frame
+    let iconPath: String = "camera.on.rectangle.fill"
 
-    init(frame: CGRect = CGRect.zero, image: UIImage = UIImage()) {
-        self.type = WidgetType.text
+    init(frame: Frame = Frame.zero, id: String = UUID().uuidString ) {
         self.frame = frame
-        self.image = image
+        self.id = id
     }
 
     func make() -> WidgetView {
-        return ImageWidgetView(image: self.image)
+        return ImageWidgetView(image: Data(), id: id)
     }
 
 }
+
 
