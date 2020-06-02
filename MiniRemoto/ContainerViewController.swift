@@ -8,8 +8,17 @@
 
 import Foundation
 import UIKit
+import os.log
 
 final class ContainerViewController: UIViewController {
+    private lazy var queue: DispatchQueue = {
+        let queue = DispatchQueue(label: "dotd.container", qos: .userInitiated)
+        return queue
+    }()
+
+    @AutoLayout var saveBtn: UIButton
+    @AutoLayout var loadBtn: UIButton
+
     private var canvas: CanvasViewController = {
         let canvasController = CanvasViewController(nibName: nil, bundle: nil)
         canvasController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +41,67 @@ final class ContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
+        saveBtn.backgroundColor = .systemRed
+        loadBtn.backgroundColor = .systemBlue
+        saveBtn.addTarget(self, action: #selector(test_save), for: .touchUpInside)
+        loadBtn.addTarget(self, action: #selector(test_load), for: .touchUpInside)
+        view.addSubview(saveBtn)
+        view.addSubview(loadBtn)
+        NSLayoutConstraint.activate(
+            [saveBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+             saveBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+             saveBtn.widthAnchor.constraint(equalToConstant: 50),
+             saveBtn.heightAnchor.constraint(equalToConstant: 50)]
+        )
+
+        NSLayoutConstraint.activate(
+            [loadBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+             loadBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+             loadBtn.widthAnchor.constraint(equalToConstant: 50),
+             loadBtn.heightAnchor.constraint(equalToConstant: 50)]
+        )
+    }
+
+    @objc func test_save() {
+        save()
+    }
+
+    @objc func test_load() {
+        load(canvas: "Canvas")
+    }
+
+    private func save() {
+
+        let url = FileManager.userDocumentDirectory
+
+        queue.async { [weak self] in
+            if let canvas = self?.canvas.snapshot {
+                let fileURL = url.appendingPathComponent(canvas.name).appendingPathExtension("json")
+                do {
+                    let data = try JSONEncoder().encode(canvas)
+                    try data.write(to: fileURL, options: .atomicWrite)
+                    os_log("Canvas saved successfully", log: OSLog.persistenceCycle, type: .debug)
+                } catch {
+                    os_log("Failed to save canvas", log: OSLog.persistenceCycle, type: .error)
+                }
+            }
+        }
+    }
+
+    private func load(canvas fileName: String) {
+
+        let url = FileManager.userDocumentDirectory
+
+        let fileURL = url.appendingPathComponent(fileName).appendingPathExtension("json")
+
+        queue.async {
+            do {
+                let data = try Data(contentsOf: fileURL)
+                os_log("Canvas loaded successfully", log: OSLog.persistenceCycle, type: .debug)
+            } catch {
+                os_log("Failed to load canvas", log: OSLog.persistenceCycle, type: .error)
+            }
+        }
     }
 
     private func setupController() {

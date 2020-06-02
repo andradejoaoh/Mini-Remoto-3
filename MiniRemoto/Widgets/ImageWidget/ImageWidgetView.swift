@@ -12,13 +12,27 @@ import UIKit
 /// A representation of an `ImageWidget`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: UIViewController, WidgetView {
+<<<<<<< HEAD
+    var snapshot: WidgetData {
+        return ImageWidgetModel(frame: Frame(rect: frame), id: imageID)
+=======
     
     var snapshot: ImageWidgetModel {
         /// - TODO: Remove coalesce using ??
         return ImageWidgetModel(frame: self.view.frame,
                                 image: self.image)
+>>>>>>> f7c426648da1180bfdbbad338d9e8de9d536ebf5
     }
-    
+
+    var frame: CGRect {
+        var _frame = CGRect.zero
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            _frame = self.view.frame
+        }
+        return _frame
+    }
+
     /// The state of a `WidgetState`.
     var state: WidgetState {
         didSet {
@@ -38,17 +52,24 @@ final class ImageWidgetView: UIViewController, WidgetView {
     /// The image being displayed. It is assumed that
     /// the Canvas will provide an UIImage ready to be used.
     private var image: UIImage
+    private var imageID: String
+
+    private let controller = ImageWidgetController()
 
     /// Initialise a new instace of this type:
     /// - parameter image: the image to be displayed.
-    init(image: UIImage) {
-        self.image = image
+    init(image: Data, id: String) {
+        self.image = UIImage(data: image) ?? UIImage()
         self.state = .idle
+        self.imageID = id
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        self.state = .idle
+        self.image = UIImage()
+        self.imageID = ""
+        super.init(coder: coder)
     }
 
     override func viewDidLoad() {
@@ -83,6 +104,8 @@ final class ImageWidgetView: UIViewController, WidgetView {
     private func updateImage(_ image: UIImage) {
         let currentImage = self.image
         self.image = image
+        controller.imageData = image.pngData()
+        controller.imageID = imageID
         self.imageView.image = image
 
         undoManager?.registerUndo(withTarget: self, handler: { (target) in
