@@ -8,12 +8,7 @@
 
 import Foundation
 import UIKit
-
-extension FileManager {
-    static var userDocumentDirectory: URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }
-}
+import os.log
 
 final class ContainerViewController: UIViewController {
     private lazy var queue: DispatchQueue = {
@@ -85,8 +80,9 @@ final class ContainerViewController: UIViewController {
                 do {
                     let data = try JSONEncoder().encode(canvas)
                     try data.write(to: fileURL, options: .atomicWrite)
+                    os_log("Canvas saved successfully", log: OSLog.persistenceCycle, type: .debug)
                 } catch {
-                    print(error)
+                    os_log("Failed to save canvas", log: OSLog.persistenceCycle, type: .error)
                 }
             }
         }
@@ -101,8 +97,9 @@ final class ContainerViewController: UIViewController {
         queue.async {
             do {
                 let data = try Data(contentsOf: fileURL)
+                os_log("Canvas loaded successfully", log: OSLog.persistenceCycle, type: .debug)
             } catch {
-                print(error)
+                os_log("Failed to load canvas", log: OSLog.persistenceCycle, type: .error)
             }
         }
     }

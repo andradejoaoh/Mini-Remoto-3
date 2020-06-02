@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 final class ImageWidgetController {
 
     var imageData: Data? {
