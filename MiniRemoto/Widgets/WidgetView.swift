@@ -25,16 +25,42 @@ extension WidgetState {
     }
 }
 
+
 protocol WidgetView: UIViewController {
     var snapshot: WidgetData { get }
     var state: WidgetState { get set }
     func edit()
+    func select()
+    func deselect()
     func delete()
 }
 
 extension WidgetView {
+    
+    func select() {
+        self.view.backgroundColor = UIColor.main
+    }
+    
+    func deselect() {
+        self.view.backgroundColor = .white
+    }
+    
     func delete(){
         self.removeFromParent()
         self.view.removeFromSuperview()
+    }
+}
+
+extension Array where Element == WidgetView {
+    
+    func contains(view: UIView?) -> WidgetView? {
+        var foundWidgetView: WidgetView?
+        self.contains(where: { (widgetView) -> Bool in
+            if (widgetView.view == view) {
+                foundWidgetView = widgetView
+                return true
+            } else { return false }
+        })
+        return foundWidgetView
     }
 }

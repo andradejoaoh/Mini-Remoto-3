@@ -37,4 +37,22 @@ final class CarouselCollectionView: UICollectionView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+
+    /**
+    Changes minimum period fingers must press on the cell for the gesture to be recognized.
+
+    - Parameters:
+       - to:The duration in seconds of the press
+
+    - Author:
+    Rafael Galdino
+    */
+
+    public func setMinimumPressDuration(to duration: Double = 0.5) {
+        self.gestureRecognizers?.forEach { (recognizer) in
+            if let longPressRecognizer = recognizer as? UILongPressGestureRecognizer {
+                longPressRecognizer.minimumPressDuration = duration
+            }
+        }
+    }
 }
