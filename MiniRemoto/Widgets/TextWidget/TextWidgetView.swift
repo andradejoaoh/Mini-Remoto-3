@@ -93,10 +93,12 @@ final class TextWidgetView: UIViewController, WidgetView {
         titleTextField.placeholder = "Title"
         titleTextField.delegate = self
         titleTextField.textAlignment = .center
+        titleTextField.text = controller.title
 
         bodyTextView.font = .preferredFont(forTextStyle: .body)
         bodyTextView.backgroundColor = .systemBackground
         bodyTextView.isScrollEnabled = true
+        bodyTextView.text = controller.body
         bodyTextView.delegate = self
 
         view.addSubview(titleTextField)
@@ -142,7 +144,7 @@ extension TextWidgetView: UITextFieldDelegate {
     /// Updates the title of a `TextWidget`. Records the operation
     /// using `UndoManager` to allow undo and redo.
     private func updateTitle(_ text: String) {
-        let currentText = controller.body
+        let currentText = controller.title
         controller.title = text
 
         undoManager?.registerUndo(withTarget: self, handler: { (target) in

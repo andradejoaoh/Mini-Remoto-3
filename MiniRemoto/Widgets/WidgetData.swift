@@ -60,7 +60,7 @@ struct TextWidgetModel: WidgetData {
     }
 
     func make() -> WidgetView {
-        let controller = TextWidgetController()
+        let controller = TextWidgetController(model: self)
         return TextWidgetView(controller: controller)
     }
 }

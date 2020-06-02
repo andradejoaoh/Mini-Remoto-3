@@ -29,8 +29,6 @@ final class ContainerViewController: UIViewController {
         }
     }
 
-    @AutoLayout var saveBtn: UIButton
-
     func update(_ model: ContainerModel) {
         self.model = model
     }
@@ -61,21 +59,14 @@ final class ContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
-
-        saveBtn.backgroundColor = .red
-        saveBtn.addTarget(self, action: #selector(save), for: .touchUpInside)
-
-        view.addSubview(saveBtn)
-
-        NSLayoutConstraint.activate(
-            [saveBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-             saveBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-             saveBtn.widthAnchor.constraint(equalToConstant: 50),
-             saveBtn.heightAnchor.constraint(equalToConstant: 50)]
-        )
     }
 
-    @objc private func save() {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        save()
+    }
+
+    private func save() {
 
         let url = FileManager.userDocumentDirectory
 

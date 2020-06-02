@@ -40,7 +40,9 @@ class CanvasViewController: UIViewController {
             model.textWidgets.forEach { [weak self] (widget) in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
-                    self.addWidget(widget: widget.make(), to: self.canvasView)
+                    let _widget = widget.make()
+                    _widget.view.frame = CGRect(frame: widget.frame)
+                    self.addWidget(widget: _widget, to: self.canvasView)
                 }
             }
         }
