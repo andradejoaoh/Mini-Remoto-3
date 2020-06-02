@@ -11,14 +11,17 @@ import UIKit
 
 final class RootSplitViewController: UISplitViewController {
     let master: UIViewController
-    let detail: ContainerViewController
+    let detail: ContainerViewController?
 
     init(master masterVC: UIViewController, detail detailVC: ContainerViewController) {
         self.master = masterVC
         self.detail = detailVC
+
         super.init(nibName: nil, bundle: nil)
+
+        self.preferredPrimaryColumnWidthFraction = 0.15
         let navMaster = UINavigationController(rootViewController: self.master)
-        let navDetail = UINavigationController(rootViewController: self.detail)
+        let navDetail = UINavigationController(rootViewController: self.detail!)
         self.viewControllers = [navMaster, navDetail]
     }
 
@@ -28,6 +31,6 @@ final class RootSplitViewController: UISplitViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.preferredDisplayMode = .automatic
+        self.preferredDisplayMode = .primaryHidden
     }
 }
