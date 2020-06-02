@@ -12,13 +12,13 @@ import UIKit
 final class PaletteViewController: UIViewController {
     typealias PaletteWidget = WidgetData
 
-//MARK: Attributes
+    //MARK: Attributes
     /**
-    The carousel collection view of that displays the palette.
+     The carousel collection view of that displays the palette.
 
-    - Author:
-    Rafael Galdino
-    */
+     - Author:
+     Rafael Galdino
+     */
     @AutoLayout public var carouselView: CarouselCollectionView
 
     /**
@@ -45,7 +45,16 @@ final class PaletteViewController: UIViewController {
         }
     }
 
-//MARK: Initializers
+    /**
+     Feedback generator responsible for drag haptics.
+     Only in existence when user initiates contact with palette.
+
+     - Author:
+     Rafael Galdino
+     */
+    private var tapticGenerator: UISelectionFeedbackGenerator? = nil
+
+    //MARK: Initializers
     init(avaiableWidgets widgets: [PaletteWidget] = []) {
         widgetOptions = widgets
         super.init(nibName: nil, bundle: nil)
@@ -55,7 +64,7 @@ final class PaletteViewController: UIViewController {
         super.init(coder: coder)
     }
 
-//MARK: Overrides
+    //MARK: Overrides
     //    Override of viewDidLoad for palette setup.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +78,7 @@ final class PaletteViewController: UIViewController {
         carouselView.reloadData()
     }
 
-//MARK: Carousel View Configuration
+    //MARK: Carousel View Configuration
     /**
      Performs basic CarouselView configuration
 
@@ -111,7 +120,7 @@ extension PaletteViewController: UICollectionViewDelegateFlowLayout {
      Creates a `CGSize` with equal height and witdh based on the Palette's height.
 
      - Parameters:
-        - withPadding:Reduces the size all sides by this value.
+     - withPadding:Reduces the size all sides by this value.
 
      - Author:
      Rafael Galdino
@@ -143,7 +152,7 @@ extension PaletteViewController: UICollectionViewDataSource {
         return widgetOptions.count
     }
 
-    //  Casts collection view cell as CarouselCellView and atributes image based on widgetOptions
+    //    Casts collection view cell as CarouselCellView and atributes image based on widgetOptions
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as? CarouselCellView else { return UICollectionViewCell()}
         cell.image = widgetOptions[indexPath.item].iconImage
@@ -154,20 +163,42 @@ extension PaletteViewController: UICollectionViewDataSource {
 
 //MARK: Drag Extension
 extension PaletteViewController: UICollectionViewDragDelegate {
-    /**
-     Creates  a `UIDragItem` with the selected `WidgetData` as the `localObject` and it's name as an item for `NSItemProvider`
 
-     - Author:
-     Rafael Galdino
-     */
+    //    The collection view calls this method once when a new drag begins within its bounds
+    //    Creates  a `UIDragItem` with the selected `WidgetData` as the `localObject`.
+    //    Creates a tapticGenerator(if necessary), triggers a taptic response and prepares for another.
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        if tapticGenerator == nil {
+            tapticGenerator = UISelectionFeedbackGenerator()
+        }
+        tapticGenerator?.selectionChanged()
+        tapticGenerator?.prepare()
 
-        let item = NSString(string: "<NOMEAPP> Widget")
+        let item = NSString(string: "dotd. Widget")
         let itemProvider = NSItemProvider(object: item)
         let dragItem = UIDragItem(itemProvider: itemProvider)
 
         dragItem.localObject = widgetOptions[indexPath.item]
 
         return [dragItem]
+    }
+
+    //    The collection view calls this method when a drag session is about to begin for the collection view.
+    //    Triggers a taptic response and prepares for another.
+    func collectionView(_ collectionView: UICollectionView, dragSessionWillBegin session: UIDragSession) {
+        tapticGenerator?.selectionChanged()
+        tapticGenerator?.prepare()
+    }
+
+    //    The collection view calls this method when a drag session is about to begin for the collection view.
+    //    Triggers a taptic response and destroys the tapticGenerator.
+    func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
+        tapticGenerator?.selectionChanged()
+        tapticGenerator = nil
+    }
+
+    //    Limits so that the source app and destination app must be the same for a drag session.
+    func collectionView(_ collectionView: UICollectionView, dragSessionIsRestrictedToDraggingApplication session: UIDragSession) -> Bool {
+        return true
     }
 }
