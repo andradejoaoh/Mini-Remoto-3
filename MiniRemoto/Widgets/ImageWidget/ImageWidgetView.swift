@@ -68,17 +68,17 @@ final class ImageWidgetView: UIViewController, WidgetView {
         view.layer.cornerRadius = view.frame.height * 0.005
         view.clipsToBounds = true
 
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.image = image
 
         view.addSubview(imageView)
 
-        NSLayoutConstraint.activate(
-            [imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-             imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.9),
-             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-        )
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     /// Updates a `ImageWidget`'s image with the `UIImage` passed as the parameter.

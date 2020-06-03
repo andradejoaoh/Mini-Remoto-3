@@ -287,17 +287,8 @@ class CanvasViewController: UIViewController {
         if !transformHandles.isEmpty {
             transformHandles.removeAll()
         }
-        let size = CGSize(width: 40, height: 40)
-        for c in Corner.allCases {
-            var origin = widgetView.view.frame.getCornerPosition(c)
-            origin.x -= size.width/2
-            origin.y -= size.height/2
-            let handleView = TransformHandle(frame: CGRect(origin: origin, size: size), reference: widgetView, corner: c, canvas: self)
-            handleView.addGestureRecognizer(UIPanGestureRecognizer(target: handleView, action: #selector(handleView.dragHandle(_:))))
-            handleView.backgroundColor = .systemTeal
-            transformHandles.append(handleView)
-            canvasView.addSubview(handleView)
-        }
+        TransformHandle.makeTransformHandles(on: widgetView.view, handlesArray: &transformHandles, canvas: self)
+        transformHandles[0].setNeedsDisplay()
     }
     
     func updateTransformHandles() {

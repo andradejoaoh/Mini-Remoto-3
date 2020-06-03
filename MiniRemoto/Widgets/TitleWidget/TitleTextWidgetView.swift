@@ -78,12 +78,12 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
 
         view.addSubview(titleTextField)
 
-        NSLayoutConstraint.activate(
-                   [titleTextField.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor),
-                    titleTextField.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-                    titleTextField.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-                    titleTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-        )
+        NSLayoutConstraint.activate([
+            titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            titleTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8),
+            titleTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8),
+            titleTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
+        ])
     }
 
     func edit() {

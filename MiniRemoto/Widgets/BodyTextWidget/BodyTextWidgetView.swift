@@ -67,12 +67,12 @@ final class BodyTextWidgetView: UIViewController, WidgetView {
 
         view.addSubview(bodyTextView)
 
-        NSLayoutConstraint.activate(
-            [bodyTextView.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor),
-             bodyTextView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-             bodyTextView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-             bodyTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-        )
+        NSLayoutConstraint.activate([
+            bodyTextView.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 8),
+            bodyTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8),
+            bodyTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8),
+            bodyTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
+        ])
     }
 
     func edit() {
