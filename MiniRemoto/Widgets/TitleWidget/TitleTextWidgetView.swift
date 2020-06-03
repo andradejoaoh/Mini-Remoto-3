@@ -27,6 +27,7 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
             switch self.state {
             case .editing:
                 titleTextField.isEnabled = true
+                view.becomeFirstResponder()
             case .idle:
                 titleTextField.isEnabled = false
                 view.resignFirstResponder()
@@ -88,6 +89,11 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
 
     func edit() {
         state = .editing
+    }
+    
+    func deselect() {
+        state = .idle
+        view.backgroundColor = .white
     }
 }
 

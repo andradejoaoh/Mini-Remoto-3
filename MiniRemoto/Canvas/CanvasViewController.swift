@@ -166,7 +166,6 @@ class CanvasViewController: UIViewController {
     // Widget gestures
     @objc
     func tappedWidget(_ sender: UITapGestureRecognizer) {
-        print(sender.state.rawValue)
         if let widgetView = widgets.contains(view: sender.view) {
             
             tapWidget(widgetView: widgetView)

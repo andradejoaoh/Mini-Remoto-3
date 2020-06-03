@@ -14,8 +14,8 @@ final class TransformHandle: UIView {
     weak var canvas: CanvasViewController?
     var corner: Corner
     
-    let minHeight: CGFloat = 120
-    let minWidth: CGFloat = 120
+    let minHeight: CGFloat = 60
+    let minWidth: CGFloat = 60
     
     init(reference: UIView, corner: Corner, canvas: CanvasViewController) {
         self.referenceView = reference

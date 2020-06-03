@@ -81,7 +81,7 @@ final class ImageWidgetView: UIViewController, WidgetView {
         ])
     }
 
-    /// Updates a `ImageWidget`'s image with the `UIImage` passed as the parameter.
+    /// Updates an `ImageWidget`'s image with the `UIImage` passed as the parameter.
     /// It also registers a new undo operation in the `UndoManager`. Updating of a
     /// `ImageWidget`'s image should be done through this function to maintain the correct
     /// order of operations in the `UndoManager`.
