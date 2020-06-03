@@ -88,14 +88,11 @@ class CanvasCollectionViewController: UIViewController {
     @objc
     func deleteCanvases() {
         present(deleteCanvasAlert(), animated: true, completion: nil)
+        defaultMode()
     }
 
     @objc
     func doneEditing() {
-        print(collectionView.indexPathsForSelectedItems ?? [])
-        for indexPath in collectionView.indexPathsForSelectedItems ?? [] {
-            collectionView.deselectItem(at: indexPath, animated: false)
-        }
         defaultMode()
     }
 
@@ -109,8 +106,11 @@ class CanvasCollectionViewController: UIViewController {
     }
 
     private func deleteCanvas() {
-        //TODO: Delete new Canvas
-        #warning("Canvas deletion mocked. Actual implementation pending")
+        for index in collectionView.indexPathsForSelectedItems ?? [] {
+            let canvasName = containers[index.item].canvas.name
+            deleteCanvasFile(named: canvasName)
+            containers.remove(at: index.item)
+        }
     }
 
     private func newCanvasAlert() -> UIAlertController {
@@ -138,10 +138,10 @@ class CanvasCollectionViewController: UIViewController {
 
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (alertAction) in
             self?.deleteCanvas()
+            self?.defaultMode()
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
         alertVC.addAction(deleteAction)
         alertVC.addAction(cancelAction)
 
@@ -170,6 +170,16 @@ class CanvasCollectionViewController: UIViewController {
             } catch {
                 os_log("Failed to load canvas", log: OSLog.persistenceCycle, type: .error)
             }
+        }
+    }
+
+    func deleteCanvasFile(named: String) {
+        let canvasURL = FileManager.userDocumentDirectory.appendingPathComponent("canvases").appendingPathComponent(named).appendingPathExtension("json")
+        do {
+            try FileManager.default.removeItem(at: canvasURL)
+            os_log("Canvas deleted successfully", log: OSLog.persistenceCycle, type: .debug)
+        } catch {
+            os_log("Failed to delete canvas", log: OSLog.persistenceCycle, type: .error)
         }
     }
 
