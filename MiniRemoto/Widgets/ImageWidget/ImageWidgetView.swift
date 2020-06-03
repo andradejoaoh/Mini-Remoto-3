@@ -61,6 +61,12 @@ final class ImageWidgetView: UIViewController, WidgetView {
         super.viewDidLoad()
         setupUI()
     }
+    
+    func setInteractions(canvas: CanvasViewController) {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: canvas, action: #selector(canvas.tappedWidget(_:))))
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: canvas, action: #selector(canvas.draggedWidget(_:))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: canvas, action: #selector(canvas.longPressedWidget(_:))))
+    }
 
     /// Set the UI up with constraints to match a `ImageWidget`'s frame.
     private func setupUI() {
@@ -68,20 +74,20 @@ final class ImageWidgetView: UIViewController, WidgetView {
         view.layer.cornerRadius = view.frame.height * 0.005
         view.clipsToBounds = true
 
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.image = image
 
         view.addSubview(imageView)
 
-        NSLayoutConstraint.activate(
-            [imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-             imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.9),
-             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-        )
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
-    /// Updates a `ImageWidget`'s image with the `UIImage` passed as the parameter.
+    /// Updates an `ImageWidget`'s image with the `UIImage` passed as the parameter.
     /// It also registers a new undo operation in the `UndoManager`. Updating of a
     /// `ImageWidget`'s image should be done through this function to maintain the correct
     /// order of operations in the `UndoManager`.
