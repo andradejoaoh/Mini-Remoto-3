@@ -17,7 +17,7 @@ protocol WidgetData: Codable {
 
 extension WidgetData {
     var iconImage: UIImage {
-        return UIImage(systemName: self.iconPath) ?? UIImage()
+        return UIImage(named: self.iconPath) ?? UIImage()
     }
 }
 
@@ -50,7 +50,7 @@ extension CGRect {
 struct TitleTextWidgetModel: WidgetData {
     var frame: Frame
     var title: String
-    var iconPath: String = "pencil.circle.fill"
+    var iconPath: String = "TitleWidgetIcon-main"
 
     init(frame: Frame = Frame.zero, title: String = "") {
         self.frame = frame
@@ -66,7 +66,7 @@ struct TitleTextWidgetModel: WidgetData {
 struct BodyTextWidgetModel: WidgetData {
     var frame: Frame
     var body: String
-    var iconPath: String = "3.circle.fill"
+    var iconPath: String = "TextWidgetIcon-main"
 
     init(frame: Frame = Frame.zero, body: String = "") {
         self.frame = frame
@@ -83,7 +83,7 @@ struct BodyTextWidgetModel: WidgetData {
 struct ImageWidgetModel: WidgetData {
     let id: String
     let frame: Frame
-    let iconPath: String = "camera.on.rectangle.fill"
+    let iconPath: String = "ImageWidgetIcon-main"
 
     init(frame: Frame = Frame.zero, id: String = UUID().uuidString ) {
         self.frame = frame

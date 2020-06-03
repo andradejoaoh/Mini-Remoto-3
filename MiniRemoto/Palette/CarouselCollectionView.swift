@@ -32,7 +32,7 @@ final class CarouselCollectionView: UICollectionView {
         self.backgroundColor = .dotdBackground
         layer.borderWidth = 2
         layer.borderColor = UIColor.dotdGrey.cgColor
-        self.register(CarouselCellView.self, forCellWithReuseIdentifier: "default")
+        self.register(CarouselCellView.self, forCellWithReuseIdentifier: "carouselCellView")
         self.dragInteractionEnabled = true
         layer.cornerRadius = 10
     }
