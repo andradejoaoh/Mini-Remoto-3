@@ -147,7 +147,7 @@ class CanvasViewController: UIViewController {
         canvasView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressedCanvas(_:))))
         view.addSubview(canvasView)
 
-        if let backgroundTexture = UIImage(named: "dotPattern") {
+        if let backgroundTexture = UIImage(named: "Background_Pattern_PDF") {
             canvasView.backgroundColor = UIColor(patternImage: backgroundTexture)
         }
 
@@ -195,11 +195,12 @@ class CanvasViewController: UIViewController {
             }
             
             else if sender.state == .changed {
-                if widgets.contains(view: sender.view) != nil
-                    && sender.view === selectedWidgetView.view {
-                    moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: canvasView))
-                } else {
-                    dragCanvas(from: canvasOrigin, by: sender.translation(in: view))
+                if let v = widgets.contains(view: sender.view) {
+                    if v is BodyTextWidgetView || sender.view === selectedWidgetView.view {
+                        moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: canvasView))
+                    } else {
+                        dragCanvas(from: canvasOrigin, by: sender.translation(in: view))
+                    }
                 }
             }
         }

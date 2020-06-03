@@ -1,0 +1,32 @@
+{
+  "images" : [
+    {
+      "filename" : "Background_Pattern_SVG.pdf",
+      "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 75,
+          "left" : 74,
+          "right" : 75,
+          "top" : 74
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      }
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "auto-scaling" : "auto",
+    "compression-type" : "gpu-optimized-best",
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "template"
+  }
+}
