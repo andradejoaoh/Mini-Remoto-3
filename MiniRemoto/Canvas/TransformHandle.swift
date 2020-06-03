@@ -28,7 +28,7 @@ final class TransformHandle: UIView {
         var temp = referenceView.view.frame.getCornerPosition(corner)
         temp.x -= size.width/2
         temp.y -= size.height/2
-        var diff: CGFloat = 15 * scale * scale
+        let diff: CGFloat = size.width/2.82 // to position the ring tangent to the frames corner: width/2 * √2/2 :: width/2/√2
         switch corner {
         case .topLeft:
             temp.x -= diff
