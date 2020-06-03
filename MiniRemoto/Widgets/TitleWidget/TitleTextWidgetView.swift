@@ -27,10 +27,10 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
             switch self.state {
             case .editing:
                 titleTextField.isEnabled = true
-                view.becomeFirstResponder()
+                titleTextField.becomeFirstResponder()
             case .idle:
                 titleTextField.isEnabled = false
-                view.resignFirstResponder()
+                titleTextField.resignFirstResponder()
             }
         }
     }
@@ -60,6 +60,12 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    func setInteractions(canvas: CanvasViewController) {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: canvas, action: #selector(canvas.tappedWidget(_:))))
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: canvas, action: #selector(canvas.draggedWidget(_:))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: canvas, action: #selector(canvas.longPressedWidget(_:))))
     }
 
     /// Set the UI up with constraints for `titleTextField` and configures it.

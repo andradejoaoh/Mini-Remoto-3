@@ -95,7 +95,8 @@ class CanvasViewController: UIViewController {
     }
 
     func addWidget(widget: WidgetView, to view: UIView) {
-        addWidgetInteractions(widget: widget, to: view)
+        widget.setInteractions(canvas: self)
+        view.addSubview(widget.view)
         self.addChild(widget)
         widget.didMove(toParent: self)
         widget.internalFrame = widget.view.frame
@@ -130,7 +131,6 @@ class CanvasViewController: UIViewController {
         widget.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedWidget(_:))))
         widget.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(draggedWidget(_:))))
         widget.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressedWidget(_:))))
-        parentView.addSubview(widget.view)
     }
 
     /**
@@ -165,15 +165,21 @@ class CanvasViewController: UIViewController {
     
     // Widget gestures
     @objc
-    func tappedWidget(_ sender: UITapGestureRecognizer) {
+    public func tappedWidget(_ sender: UITapGestureRecognizer) {
         if let widgetView = widgets.contains(view: sender.view) {
-            
-            tapWidget(widgetView: widgetView)
+            if selectedWidgetView == nil {
+                selectWidget(widgetView: widgetView)
+            } else if selectedWidgetView! === widgetView {
+                deselectWidget(widgetView: widgetView)
+            } else {
+                deselectWidget(widgetView: selectedWidgetView!)
+                selectWidget(widgetView: widgetView)
+            }
         }
     }
 
     @objc
-    func longPressedWidget(_ sender: UILongPressGestureRecognizer) {
+    public func longPressedWidget(_ sender: UILongPressGestureRecognizer) {
         if let widgetView = widgets.contains(view: sender.view) {
             selectWidget(widgetView: widgetView)
             editWidget(widgetView: widgetView)
@@ -181,7 +187,7 @@ class CanvasViewController: UIViewController {
     }
 
     @objc
-    func draggedWidget(_ sender : UIPanGestureRecognizer) {
+    public func draggedWidget(_ sender : UIPanGestureRecognizer) {
         if let selectedWidgetView = selectedWidgetView {
             if sender.state == .began {
                 canvasOrigin = canvasView.bounds.origin
@@ -243,23 +249,6 @@ class CanvasViewController: UIViewController {
     func tapCanvas() {
         if selectedWidgetView != nil {
             deselectWidget(widgetView: selectedWidgetView!)
-        }
-    }
-
-    /**
-    Makes the widget selected or desselected
-
-    - Author:
-    Alex Nascimento
-    */
-    func tapWidget(widgetView: WidgetView) {
-        if selectedWidgetView == nil {
-            selectWidget(widgetView: widgetView)
-        } else if selectedWidgetView! === widgetView {
-            deselectWidget(widgetView: widgetView)
-        } else {
-            deselectWidget(widgetView: selectedWidgetView!)
-            selectWidget(widgetView: widgetView)
         }
     }
 

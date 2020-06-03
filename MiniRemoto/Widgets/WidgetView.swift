@@ -34,6 +34,7 @@ protocol WidgetView: UIViewController {
     func select()
     func deselect()
     func delete()
+    func setInteractions(canvas: CanvasViewController)
 }
 
 extension WidgetView {
@@ -57,7 +58,13 @@ extension Array where Element == WidgetView {
     func contains(view: UIView?) -> WidgetView? {
         var foundWidgetView: WidgetView?
         self.contains(where: { (widgetView) -> Bool in
-            if (widgetView.view == view) {
+            if let bodyText = widgetView as? BodyTextWidgetView {
+                if bodyText.gesturesView === view {
+                    foundWidgetView = bodyText
+                    return true
+                } else { return false }
+            }
+            else if (widgetView.view === view) {
                 foundWidgetView = widgetView
                 return true
             } else { return false }

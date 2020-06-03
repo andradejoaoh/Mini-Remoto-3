@@ -61,6 +61,12 @@ final class ImageWidgetView: UIViewController, WidgetView {
         super.viewDidLoad()
         setupUI()
     }
+    
+    func setInteractions(canvas: CanvasViewController) {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: canvas, action: #selector(canvas.tappedWidget(_:))))
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: canvas, action: #selector(canvas.draggedWidget(_:))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: canvas, action: #selector(canvas.longPressedWidget(_:))))
+    }
 
     /// Set the UI up with constraints to match a `ImageWidget`'s frame.
     private func setupUI() {
