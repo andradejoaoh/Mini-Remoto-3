@@ -99,7 +99,7 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
     
     func deselect() {
         state = .idle
-        view.backgroundColor = .white
+        view.backgroundColor = .dotdGrey
     }
 }
 

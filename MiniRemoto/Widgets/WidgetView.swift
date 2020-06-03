@@ -44,7 +44,7 @@ extension WidgetView {
     }
     
     func deselect() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .dotdGrey
     }
     
     func delete(){

@@ -99,7 +99,7 @@ final class BodyTextWidgetView: UIViewController, WidgetView {
     
     func deselect() {
         state = .idle
-        view.backgroundColor = .white
+        view.backgroundColor = .dotdGrey
     }
 }
 
