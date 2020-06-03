@@ -12,26 +12,12 @@ import UIKit
 /// A representation of an `ImageWidget`. This `WidgetView`
 /// should only be instantiated when being added to a Canvas.
 final class ImageWidgetView: UIViewController, WidgetView {
-<<<<<<< HEAD
     var snapshot: WidgetData {
-        return ImageWidgetModel(frame: Frame(rect: frame), id: imageID)
-=======
-    
-    var snapshot: ImageWidgetModel {
-        /// - TODO: Remove coalesce using ??
-        return ImageWidgetModel(frame: self.view.frame,
-                                image: self.image)
->>>>>>> f7c426648da1180bfdbbad338d9e8de9d536ebf5
+        controller.imageData = image?.pngData()
+        return ImageWidgetModel(frame: Frame(rect: internalFrame), id: imageID)
     }
 
-    var frame: CGRect {
-        var _frame = CGRect.zero
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            _frame = self.view.frame
-        }
-        return _frame
-    }
+    var internalFrame: CGRect = CGRect.zero
 
     /// The state of a `WidgetState`.
     var state: WidgetState {
@@ -51,15 +37,18 @@ final class ImageWidgetView: UIViewController, WidgetView {
 
     /// The image being displayed. It is assumed that
     /// the Canvas will provide an UIImage ready to be used.
-    private var image: UIImage
+    private var image: UIImage? {
+        didSet {
+            self.updateImage(self.image ?? UIImage())
+        }
+    }
     private var imageID: String
 
     private let controller = ImageWidgetController()
 
     /// Initialise a new instace of this type:
     /// - parameter image: the image to be displayed.
-    init(image: Data, id: String) {
-        self.image = UIImage(data: image) ?? UIImage()
+    init(id: String) {
         self.state = .idle
         self.imageID = id
         super.init(nibName: nil, bundle: nil)
@@ -75,36 +64,49 @@ final class ImageWidgetView: UIViewController, WidgetView {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        controller.load(image: imageID) { [weak self] (image) in
+            guard let self = self else { return }
+            switch image {
+            case .success(let data):
+                self.image = UIImage(data: data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func setInteractions(canvas: CanvasViewController) {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: canvas, action: #selector(canvas.tappedWidget(_:))))
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: canvas, action: #selector(canvas.draggedWidget(_:))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: canvas, action: #selector(canvas.longPressedWidget(_:))))
     }
 
     /// Set the UI up with constraints to match a `ImageWidget`'s frame.
     private func setupUI() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .dotdGrey
         view.layer.cornerRadius = view.frame.height * 0.005
         view.clipsToBounds = true
 
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.image = image
 
         view.addSubview(imageView)
 
-        NSLayoutConstraint.activate(
-            [imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-             imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.9),
-             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-        )
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
-    /// Updates a `ImageWidget`'s image with the `UIImage` passed as the parameter.
+    /// Updates an `ImageWidget`'s image with the `UIImage` passed as the parameter.
     /// It also registers a new undo operation in the `UndoManager`. Updating of a
     /// `ImageWidget`'s image should be done through this function to maintain the correct
     /// order of operations in the `UndoManager`.
     /// - parameter image: The new image to be set.
     private func updateImage(_ image: UIImage) {
-        let currentImage = self.image
-        self.image = image
-        controller.imageData = image.pngData()
+        guard let currentImage = self.image else { return }
         controller.imageID = imageID
         self.imageView.image = image
 
@@ -151,7 +153,7 @@ extension ImageWidgetView: UIImagePickerControllerDelegate {
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return
         }
-        self.updateImage(selectedImage)
+        self.image = selectedImage
         dismiss(animated: true, completion: nil)
     }
 }

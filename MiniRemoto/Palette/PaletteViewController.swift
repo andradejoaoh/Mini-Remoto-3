@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+
 final class PaletteViewController: UIViewController {
     typealias PaletteWidget = WidgetData
 
@@ -185,7 +186,7 @@ extension PaletteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "carouselCellView", for: indexPath) as? CarouselCellView else { return UICollectionViewCell()}
         cell.image = widgetOptions[indexPath.item].iconImage
-        cell.tintColor = .main
+        cell.tintColor = .dotdMain
         return cell
     }
 }

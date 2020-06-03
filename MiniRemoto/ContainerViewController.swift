@@ -10,14 +10,29 @@ import Foundation
 import UIKit
 import os.log
 
+struct ContainerModel: Codable {
+    var canvas: CanvasModel
+}
+
 final class ContainerViewController: UIViewController {
+    var snapshot: ContainerModel {
+        return ContainerModel(canvas: canvas.snapshot)
+    }
     private lazy var queue: DispatchQueue = {
         let queue = DispatchQueue(label: "dotd.container", qos: .userInitiated)
         return queue
     }()
 
-    @AutoLayout var saveBtn: UIButton
-    @AutoLayout var loadBtn: UIButton
+    private var model: ContainerModel {
+        didSet {
+            canvas.restore(model.canvas)
+        }
+    }
+
+    func update(_ model: ContainerModel) {
+        self.model = model
+    }
+
 
     private var canvas: CanvasViewController = {
         let canvasController = CanvasViewController(nibName: nil, bundle: nil)
@@ -31,43 +46,24 @@ final class ContainerViewController: UIViewController {
         return paletteController
     }()
 
-    init() {
+    init(model: ContainerModel = ContainerModel(canvas: CanvasModel(name: "", lastModifiedAt: "", createdAt: ""))) {
+        self.model = model
         super.init(nibName: nil, bundle: nil)
     }
+    
     required init?(coder: NSCoder) {
+        self.model = ContainerModel(canvas: CanvasModel(name: "", lastModifiedAt: "", createdAt: ""))
         super.init(coder: coder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
-        saveBtn.backgroundColor = .systemRed
-        loadBtn.backgroundColor = .systemBlue
-        saveBtn.addTarget(self, action: #selector(test_save), for: .touchUpInside)
-        loadBtn.addTarget(self, action: #selector(test_load), for: .touchUpInside)
-        view.addSubview(saveBtn)
-        view.addSubview(loadBtn)
-        NSLayoutConstraint.activate(
-            [saveBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-             saveBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-             saveBtn.widthAnchor.constraint(equalToConstant: 50),
-             saveBtn.heightAnchor.constraint(equalToConstant: 50)]
-        )
-
-        NSLayoutConstraint.activate(
-            [loadBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-             loadBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-             loadBtn.widthAnchor.constraint(equalToConstant: 50),
-             loadBtn.heightAnchor.constraint(equalToConstant: 50)]
-        )
     }
 
-    @objc func test_save() {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         save()
-    }
-
-    @objc func test_load() {
-        load(canvas: "Canvas")
     }
 
     private func save() {
@@ -75,10 +71,10 @@ final class ContainerViewController: UIViewController {
         let url = FileManager.userDocumentDirectory
 
         queue.async { [weak self] in
-            if let canvas = self?.canvas.snapshot {
-                let fileURL = url.appendingPathComponent(canvas.name).appendingPathExtension("json")
+            if let container = self?.snapshot {
+                let fileURL = url.appendingPathComponent(container.canvas.name).appendingPathExtension("json")
                 do {
-                    let data = try JSONEncoder().encode(canvas)
+                    let data = try JSONEncoder().encode(container)
                     try data.write(to: fileURL, options: .atomicWrite)
                     os_log("Canvas saved successfully", log: OSLog.persistenceCycle, type: .debug)
                 } catch {
@@ -88,15 +84,17 @@ final class ContainerViewController: UIViewController {
         }
     }
 
-    private func load(canvas fileName: String) {
+    func load(canvas fileName: String) {
 
         let url = FileManager.userDocumentDirectory
 
         let fileURL = url.appendingPathComponent(fileName).appendingPathExtension("json")
 
-        queue.async {
+        queue.async { [weak self] in
+            guard let self = self else { return }
             do {
                 let data = try Data(contentsOf: fileURL)
+                self.model = try JSONDecoder().decode(ContainerModel.self, from: data)
                 os_log("Canvas loaded successfully", log: OSLog.persistenceCycle, type: .debug)
             } catch {
                 os_log("Failed to load canvas", log: OSLog.persistenceCycle, type: .error)
@@ -138,7 +136,8 @@ final class ContainerViewController: UIViewController {
 
     private func mockUpData() {
         palette.widgetOptions = [
-            TextWidgetModel(),
+            TitleTextWidgetModel(),
+            BodyTextWidgetModel(),
             ImageWidgetModel()
         ]
     }

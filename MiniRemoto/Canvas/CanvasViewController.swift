@@ -6,24 +6,68 @@
 //  Copyright © 2020 João Henrique Andrade. All rights reserved.
 //
 
+
 import UIKit
 
 class CanvasViewController: UIViewController {
     var snapshot: CanvasModel {
         var imageWidgetSnapshots: [ImageWidgetModel] = []
-        var textWidgetSnapshots: [TextWidgetModel] = []
+        var titleTextWidgetSnapshots: [TitleTextWidgetModel] = []
+        var bodyTextWidgetSnapshots: [BodyTextWidgetModel] = []
         for widget in widgets {
-            if let textWidget = widget.snapshot as? TextWidgetModel {
-                textWidgetSnapshots.append(textWidget)
-            } else if let imageWidget = widget.snapshot as? ImageWidgetModel {
-                imageWidgetSnapshots.append(imageWidget)
+            switch widget {
+            case is TitleTextWidgetView:
+                if let titleTextWidgetSnapshot = widget.snapshot as? TitleTextWidgetModel {
+                    titleTextWidgetSnapshots.append(titleTextWidgetSnapshot)
+                }
+            case is BodyTextWidgetView:
+                if let bodyTextWidgetSnapshot = widget.snapshot as? BodyTextWidgetModel {
+                    bodyTextWidgetSnapshots.append(bodyTextWidgetSnapshot)
+                }
+            case is ImageWidgetView:
+                if let imageWidgetSnapshot = widget.snapshot as? ImageWidgetModel {
+                    imageWidgetSnapshots.append(imageWidgetSnapshot)
+                }
+            default:
+                break
             }
         }
 
-        return CanvasModel(name: "Canvas", lastModifiedAt: "AGORA", createdAt: "ONTEM", textWidgets: textWidgetSnapshots, imageWidgets: imageWidgetSnapshots)
+        return CanvasModel(name: model.name, lastModifiedAt: model.lastModifiedAt, createdAt: model.createdAt, titleTextWidgets: titleTextWidgetSnapshots, bodyTextWidgets: bodyTextWidgetSnapshots, imageWidgets: imageWidgetSnapshots)
     }
 
     var widgets = Array<WidgetView>()
+
+    var model: CanvasModel = CanvasModel(name: "", lastModifiedAt: "", createdAt: "") {
+        didSet {
+            model.imageWidgets.forEach { [weak self] (widget) in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let _widget = widget.make()
+                    _widget.view.frame = CGRect(frame: widget.frame)
+                    self.addWidget(widget: _widget, to: self.canvasView)
+                }
+            }
+
+            model.titleTextWidgets.forEach { [weak self] (widget) in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let _widget = widget.make()
+                    _widget.view.frame = CGRect(frame: widget.frame)
+                    self.addWidget(widget: _widget, to: self.canvasView)
+                }
+            }
+
+            model.bodyTextWidgets.forEach { [weak self] (widget) in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let _widget = widget.make()
+                    _widget.view.frame = CGRect(frame: widget.frame)
+                    self.addWidget(widget: _widget, to: self.canvasView)
+                }
+            }
+        }
+    }
 
     let maxZoomOut: CGFloat = 4
     let maxZoomIn: CGFloat = 1/2
@@ -51,9 +95,11 @@ class CanvasViewController: UIViewController {
     }
 
     func addWidget(widget: WidgetView, to view: UIView) {
-        addWidgetInteractions(widget: widget, to: view)
+        widget.setInteractions(canvas: self)
+        view.addSubview(widget.view)
         self.addChild(widget)
         widget.didMove(toParent: self)
+        widget.internalFrame = widget.view.frame
         widgets.append(widget)
     }
     
@@ -85,7 +131,6 @@ class CanvasViewController: UIViewController {
         widget.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedWidget(_:))))
         widget.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(draggedWidget(_:))))
         widget.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressedWidget(_:))))
-        parentView.addSubview(widget.view)
     }
 
     /**
@@ -102,7 +147,7 @@ class CanvasViewController: UIViewController {
         canvasView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressedCanvas(_:))))
         view.addSubview(canvasView)
 
-        if let backgroundTexture = UIImage(named: "dotPattern") {
+        if let backgroundTexture = UIImage(named: "Background_Pattern_PDF") {
             canvasView.backgroundColor = UIColor(patternImage: backgroundTexture)
         }
 
@@ -120,16 +165,21 @@ class CanvasViewController: UIViewController {
     
     // Widget gestures
     @objc
-    func tappedWidget(_ sender: UITapGestureRecognizer) {
-        print(sender.state.rawValue)
+    public func tappedWidget(_ sender: UITapGestureRecognizer) {
         if let widgetView = widgets.contains(view: sender.view) {
-            
-            tapWidget(widgetView: widgetView)
+            if selectedWidgetView == nil {
+                selectWidget(widgetView: widgetView)
+            } else if selectedWidgetView! === widgetView {
+                deselectWidget(widgetView: widgetView)
+            } else {
+                deselectWidget(widgetView: selectedWidgetView!)
+                selectWidget(widgetView: widgetView)
+            }
         }
     }
 
     @objc
-    func longPressedWidget(_ sender: UILongPressGestureRecognizer) {
+    public func longPressedWidget(_ sender: UILongPressGestureRecognizer) {
         if let widgetView = widgets.contains(view: sender.view) {
             selectWidget(widgetView: widgetView)
             editWidget(widgetView: widgetView)
@@ -137,7 +187,7 @@ class CanvasViewController: UIViewController {
     }
 
     @objc
-    func draggedWidget(_ sender : UIPanGestureRecognizer) {
+    public func draggedWidget(_ sender : UIPanGestureRecognizer) {
         if let selectedWidgetView = selectedWidgetView {
             if sender.state == .began {
                 canvasOrigin = canvasView.bounds.origin
@@ -145,11 +195,12 @@ class CanvasViewController: UIViewController {
             }
             
             else if sender.state == .changed {
-                if widgets.contains(view: sender.view) != nil
-                    && sender.view === selectedWidgetView.view {
-                    moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: canvasView))
-                } else {
-                    dragCanvas(from: canvasOrigin, by: sender.translation(in: view))
+                if let v = widgets.contains(view: sender.view) {
+                    if v is BodyTextWidgetView || sender.view === selectedWidgetView.view {
+                        moveWidget(widgetView: selectedWidgetView.view, by: sender.translation(in: canvasView))
+                    } else {
+                        dragCanvas(from: canvasOrigin, by: sender.translation(in: view))
+                    }
                 }
             }
         }
@@ -203,23 +254,6 @@ class CanvasViewController: UIViewController {
     }
 
     /**
-    Makes the widget selected or desselected
-
-    - Author:
-    Alex Nascimento
-    */
-    func tapWidget(widgetView: WidgetView) {
-        if selectedWidgetView == nil {
-            selectWidget(widgetView: widgetView)
-        } else if selectedWidgetView! === widgetView {
-            deselectWidget(widgetView: widgetView)
-        } else {
-            deselectWidget(widgetView: selectedWidgetView!)
-            selectWidget(widgetView: widgetView)
-        }
-    }
-
-    /**
     Selects the specified widget
 
     - Author:
@@ -242,17 +276,8 @@ class CanvasViewController: UIViewController {
         if !transformHandles.isEmpty {
             transformHandles.removeAll()
         }
-        let size = CGSize(width: 40, height: 40)
-        for c in Corner.allCases {
-            var origin = widgetView.view.frame.getCornerPosition(c)
-            origin.x -= size.width/2
-            origin.y -= size.height/2
-            let handleView = TransformHandle(frame: CGRect(origin: origin, size: size), reference: widgetView.view, corner: c, canvas: self)
-            handleView.addGestureRecognizer(UIPanGestureRecognizer(target: handleView, action: #selector(handleView.dragHandle(_:))))
-            handleView.backgroundColor = .systemTeal
-            transformHandles.append(handleView)
-            canvasView.addSubview(handleView)
-        }
+        TransformHandle.makeTransformHandles(on: widgetView, handlesArray: &transformHandles, canvas: self)
+        transformHandles[0].setNeedsDisplay()
     }
     
     func updateTransformHandles() {
@@ -316,6 +341,16 @@ class CanvasViewController: UIViewController {
         newWidget.view.frame.size = size
         newWidget.view.center = location
         addWidget(widget: newWidget, to: self.canvasView)
+    }
+
+    func restore(_ model: CanvasModel) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            for widget in self.widgets {
+                self.removeWidget(widget: widget)
+            }
+            self.model = model
+        }
     }
 }
 
