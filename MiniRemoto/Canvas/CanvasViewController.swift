@@ -275,7 +275,7 @@ class CanvasViewController: UIViewController {
         if !transformHandles.isEmpty {
             transformHandles.removeAll()
         }
-        TransformHandle.makeTransformHandles(on: widgetView.view, handlesArray: &transformHandles, canvas: self)
+        TransformHandle.makeTransformHandles(on: widgetView, handlesArray: &transformHandles, canvas: self)
         transformHandles[0].setNeedsDisplay()
     }
     

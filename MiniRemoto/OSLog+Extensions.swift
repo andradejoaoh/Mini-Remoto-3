@@ -13,4 +13,5 @@ extension OSLog {
     private static var subsystem = Bundle.main.bundleIdentifier ?? "com.dotd"
 
     static let persistenceCycle = OSLog(subsystem: subsystem , category: "persistence")
+    static let imageLoadingCycle = OSLog(subsystem: subsystem, category: "image-loading")
 }
