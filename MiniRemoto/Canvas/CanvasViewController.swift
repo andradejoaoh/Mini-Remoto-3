@@ -12,16 +12,28 @@ import UIKit
 class CanvasViewController: UIViewController {
     var snapshot: CanvasModel {
         var imageWidgetSnapshots: [ImageWidgetModel] = []
-        var textWidgetSnapshots: [TextWidgetModel] = []
+        var titleTextWidgetSnapshots: [TitleTextWidgetModel] = []
+        var bodyTextWidgetSnapshots: [BodyTextWidgetModel] = []
         for widget in widgets {
-            if let textWidget = widget.snapshot as? TextWidgetModel {
-                textWidgetSnapshots.append(textWidget)
-            } else if let imageWidget = widget.snapshot as? ImageWidgetModel {
-                imageWidgetSnapshots.append(imageWidget)
+            switch widget {
+            case is TitleTextWidgetView:
+                if let titleTextWidgetSnapshot = widget.snapshot as? TitleTextWidgetModel {
+                    titleTextWidgetSnapshots.append(titleTextWidgetSnapshot)
+                }
+            case is BodyTextWidgetView:
+                if let bodyTextWidgetSnapshot = widget.snapshot as? BodyTextWidgetModel {
+                    bodyTextWidgetSnapshots.append(bodyTextWidgetSnapshot)
+                }
+            case is ImageWidgetView:
+                if let imageWidgetSnapshot = widget.snapshot as? ImageWidgetModel {
+                    imageWidgetSnapshots.append(imageWidgetSnapshot)
+                }
+            default:
+                break
             }
         }
 
-        return CanvasModel(name: model.name, lastModifiedAt: model.lastModifiedAt, createdAt: model.createdAt, textWidgets: textWidgetSnapshots, imageWidgets: imageWidgetSnapshots)
+        return CanvasModel(name: model.name, lastModifiedAt: model.lastModifiedAt, createdAt: model.createdAt, titleTextWidgets: titleTextWidgetSnapshots, bodyTextWidgets: bodyTextWidgetSnapshots, imageWidgets: imageWidgetSnapshots)
     }
 
     var widgets = Array<WidgetView>()
@@ -37,7 +49,16 @@ class CanvasViewController: UIViewController {
                 }
             }
 
-            model.textWidgets.forEach { [weak self] (widget) in
+            model.titleTextWidgets.forEach { [weak self] (widget) in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let _widget = widget.make()
+                    _widget.view.frame = CGRect(frame: widget.frame)
+                    self.addWidget(widget: _widget, to: self.canvasView)
+                }
+            }
+
+            model.bodyTextWidgets.forEach { [weak self] (widget) in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
                     let _widget = widget.make()

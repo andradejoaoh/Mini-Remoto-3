@@ -47,22 +47,55 @@ extension CGRect {
     }
 }
 
-struct TextWidgetModel: WidgetData {
-    let frame: Frame
-    var title: String
-    var body: String
-    let iconPath: String = "pencil.circle.fill"
+//struct TextWidgetModel: WidgetData {
+//    let frame: Frame
+//    var title: String
+//    var body: String
+//    let iconPath: String = "pencil.circle.fill"
+//
+//    init(frame: Frame = Frame.zero, title: String = "", body: String = "") {
+//        self.frame = frame
+//        self.title = title
+//        self.body = body
+//    }
+//
+//    func make() -> WidgetView {
+//        let controller = TextWidgetController(model: self)
+//        return TextWidgetView(controller: controller)
+//    }
+//}
 
-    init(frame: Frame = Frame.zero, title: String = "", body: String = "") {
+struct TitleTextWidgetModel: WidgetData {
+    var frame: Frame
+    var title: String
+    var iconPath: String = "pencil.circle.fill"
+
+    init(frame: Frame = Frame.zero, title: String = "") {
         self.frame = frame
         self.title = title
-        self.body = body
     }
 
     func make() -> WidgetView {
-        let controller = TextWidgetController(model: self)
-        return TextWidgetView(controller: controller)
+        let controller = TitleTextWidgetController(model: self)
+        return TitleTextWidgetView(controller: controller)
     }
+}
+
+struct BodyTextWidgetModel: WidgetData {
+    var frame: Frame
+    var body: String
+    var iconPath: String = "3.circle.fill"
+
+    init(frame: Frame = Frame.zero, body: String = "") {
+        self.frame = frame
+        self.body = body
+    }
+    func make() -> WidgetView {
+        let controller = BodyTextWidgetController(model: self)
+        return BodyTextWidgetView(controller: controller)
+    }
+
+    
 }
 
 struct ImageWidgetModel: WidgetData {

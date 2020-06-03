@@ -136,7 +136,8 @@ final class ContainerViewController: UIViewController {
 
     private func mockUpData() {
         palette.widgetOptions = [
-            TextWidgetModel(),
+            TitleTextWidgetModel(),
+            BodyTextWidgetModel(),
             ImageWidgetModel()
         ]
     }

@@ -12,18 +12,21 @@ struct CanvasModel: Codable {
     let name: String
     let lastModifiedAt: String
     let createdAt: String
-    let textWidgets: [TextWidgetModel]
+    let titleTextWidgets: [TitleTextWidgetModel]
+    let bodyTextWidgets: [BodyTextWidgetModel]
     let imageWidgets: [ImageWidgetModel]
 
     init(name: String,
          lastModifiedAt: String,
          createdAt: String,
-         textWidgets: [TextWidgetModel] = [],
+         titleTextWidgets: [TitleTextWidgetModel] = [],
+         bodyTextWidgets: [BodyTextWidgetModel] = [],
          imageWidgets: [ImageWidgetModel] = []) {
         self.name = name
         self.lastModifiedAt = lastModifiedAt
         self.createdAt = createdAt
-        self.textWidgets = textWidgets
+        self.titleTextWidgets = titleTextWidgets
+        self.bodyTextWidgets = bodyTextWidgets
         self.imageWidgets = imageWidgets
     }
 }
