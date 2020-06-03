@@ -76,7 +76,7 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
         view.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         view.clipsToBounds = true
 
-        titleTextField.font = UIFont(name: "Avenir-Heavy", size: 24)
+        titleTextField.font = UIFont(name: "Avenir-Heavy", size: 72)
         titleTextField.backgroundColor = .systemBackground
         titleTextField.placeholder = "Title"
         titleTextField.delegate = self

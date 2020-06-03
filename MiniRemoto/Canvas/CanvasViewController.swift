@@ -69,8 +69,8 @@ class CanvasViewController: UIViewController {
         }
     }
 
-    let maxZoomOut: CGFloat = 4
-    let maxZoomIn: CGFloat = 1/2
+    let maxZoomOut: CGFloat = 8
+    let maxZoomIn: CGFloat = 1
 
     var canvasOrigin: CGPoint = CGPoint.zero
     var canvasTransform: CGAffineTransform = CGAffineTransform()
@@ -147,7 +147,7 @@ class CanvasViewController: UIViewController {
         canvasView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressedCanvas(_:))))
         view.addSubview(canvasView)
 
-        if let backgroundTexture = UIImage(named: "Background_Pattern_PDF") {
+        if let backgroundTexture = UIImage(named: "Background-Pattern-4xSize") {
             canvasView.backgroundColor = UIColor(patternImage: backgroundTexture)
         }
 
@@ -160,6 +160,8 @@ class CanvasViewController: UIViewController {
         canvasView.addInteraction(dropInteraction)
 
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(zoom(_:))))
+        
+        canvasView.transform = canvasView.transform.scaledBy(x: 1/4, y: 1/4)
     }
     
     
@@ -238,6 +240,7 @@ class CanvasViewController: UIViewController {
             guard scaleResult.a > 1/maxZoomOut, scaleResult.d > 1/maxZoomOut else { return }
             guard scaleResult.a < 1/maxZoomIn, scaleResult.d < 1/maxZoomIn else { return }
             canvasView.transform = scaleResult
+            updateTransformHandles()
         }
     }
 
@@ -336,7 +339,7 @@ class CanvasViewController: UIViewController {
      - Author:
      Rafael Galdino
      */
-    public func receive(widget widgetBlueprint: WidgetData, at location: CGPoint, withSize size: CGSize = CGSize(width: 200, height: 200)) {
+    public func receive(widget widgetBlueprint: WidgetData, at location: CGPoint, withSize size: CGSize = CGSize(width: 400, height: 400)) {
         let newWidget = widgetBlueprint.make()
         newWidget.view.frame.size = size
         newWidget.view.center = location
