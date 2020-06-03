@@ -54,12 +54,13 @@ final class BodyTextWidgetView: UIViewController, WidgetView {
    /// Set the UI up with constraints for `bodyTextView` and configures it.
     private func setupUI() {
         state = .idle
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .dotdGrey
         view.layer.cornerRadius = view.frame.height * 0.005
         view.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         view.clipsToBounds = true
 
-        bodyTextView.font = .preferredFont(forTextStyle: .body)
+        bodyTextView.font = UIFont(name: "Avenir", size: 17)
+        bodyTextView.adjustsFontForContentSizeCategory = true
         bodyTextView.backgroundColor = .systemBackground
         bodyTextView.isScrollEnabled = true
         bodyTextView.text = controller.body

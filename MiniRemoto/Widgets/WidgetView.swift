@@ -39,7 +39,7 @@ protocol WidgetView: UIViewController {
 extension WidgetView {
     
     func select() {
-        self.view.backgroundColor = UIColor.main
+        self.view.backgroundColor = .dotdMain
     }
     
     func deselect() {
