@@ -18,10 +18,7 @@ final class ContainerViewController: UIViewController {
     var snapshot: ContainerModel {
         return ContainerModel(canvas: canvas.snapshot)
     }
-    private lazy var queue: DispatchQueue = {
-        let queue = DispatchQueue(label: "dotd.container", qos: .userInitiated)
-        return queue
-    }()
+    private var queue: DispatchQueue
 
     private var model: ContainerModel {
         didSet {
@@ -46,19 +43,22 @@ final class ContainerViewController: UIViewController {
         return paletteController
     }()
 
-    init(model: ContainerModel = ContainerModel(canvas: CanvasModel(name: "", lastModifiedAt: "", createdAt: ""))) {
+    init(model: ContainerModel = ContainerModel(canvas: CanvasModel(name: "", lastModifiedAt: "", createdAt: "")), queue: DispatchQueue) {
         self.model = model
+        self.queue = queue
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         self.model = ContainerModel(canvas: CanvasModel(name: "", lastModifiedAt: "", createdAt: ""))
+        self.queue = DispatchQueue(label: "nil")
         super.init(coder: coder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
+        self.navigationController?.navigationBar.tintColor = .dotdMain
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,12 +67,11 @@ final class ContainerViewController: UIViewController {
     }
 
     private func save() {
-
-        let url = FileManager.userDocumentDirectory
-
+        let canvasesURL = FileManager.userDocumentDirectory.appendingPathComponent("canvases")
         queue.async { [weak self] in
             if let container = self?.snapshot {
-                let fileURL = url.appendingPathComponent(container.canvas.name).appendingPathExtension("json")
+                let name: String = container.canvas.name
+                let fileURL = canvasesURL.appendingPathComponent(name).appendingPathExtension("json")
                 do {
                     let data = try JSONEncoder().encode(container)
                     try data.write(to: fileURL, options: .atomicWrite)
@@ -84,24 +83,18 @@ final class ContainerViewController: UIViewController {
         }
     }
 
-    func load(canvas fileName: String) {
 
-        let url = FileManager.userDocumentDirectory
-
-        let fileURL = url.appendingPathComponent(fileName).appendingPathExtension("json")
-
-        queue.async { [weak self] in
-            guard let self = self else { return }
-            do {
-                let data = try Data(contentsOf: fileURL)
-                self.model = try JSONDecoder().decode(ContainerModel.self, from: data)
-                os_log("Canvas loaded successfully", log: OSLog.persistenceCycle, type: .debug)
-            } catch {
-                os_log("Failed to load canvas", log: OSLog.persistenceCycle, type: .error)
-            }
-        }
-    }
-
+//    private func canvasName(name: String) -> String {
+//        var canvasName = name
+//        let formatter = DateFormatter()
+//        //2016-12-08 03:37:22 +0000
+//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//        let now = Date()
+//        let dateString = formatter.string(from:now)
+//        canvasName += dateString
+//        return canvasName
+//    }
+    
     private func setupController() {
         add(controller: canvas)
         positionCanvas()
