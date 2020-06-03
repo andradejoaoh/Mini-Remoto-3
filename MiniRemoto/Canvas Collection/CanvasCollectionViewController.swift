@@ -27,6 +27,7 @@ class CanvasCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        self.navigationController?.navigationBar.tintColor = .dotdMain
     }
 
     override func viewWillAppear(_ animated: Bool) {

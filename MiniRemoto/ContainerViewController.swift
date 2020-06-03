@@ -58,6 +58,7 @@ final class ContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
+        self.navigationController?.navigationBar.tintColor = .dotdMain
     }
 
     override func viewWillDisappear(_ animated: Bool) {
