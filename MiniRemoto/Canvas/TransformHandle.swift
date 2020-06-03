@@ -9,25 +9,52 @@
 import UIKit
 
 final class TransformHandle: UIView {
-    
-    weak var referenceView: WidgetView?
-    weak var canvas: CanvasViewController?
+
+    unowned var referenceView: WidgetView
+    unowned var canvas: CanvasViewController
     var corner: Corner
+
+    let constValue: CGFloat = 20
     
-    let minHeight: CGFloat = 60
-    let minWidth: CGFloat = 60
+    var scale: CGFloat {
+        return 1000/canvas.canvasView.frame.width
+    }
+    
+    var size: CGSize {
+        return CGSize(width: constValue + 120 * scale, height: constValue + 120 * scale)
+    }
+    
+    var origin: CGPoint {
+        var temp = referenceView.view.frame.getCornerPosition(corner)
+        temp.x -= size.width/2
+        temp.y -= size.height/2
+        var diff: CGFloat = 15 * scale * scale
+        switch corner {
+        case .topLeft:
+            temp.x -= diff
+            temp.y -= diff
+        case .topRight:
+            temp.x += diff
+            temp.y -= diff
+        case .bottomLeft:
+            temp.x -= diff
+            temp.y += diff
+        case .bottomRight:
+            temp.x += diff
+            temp.y += diff
+        }
+        return temp
+    }
+    
+    let minHeight: CGFloat = 240
+    let minWidth: CGFloat = 240
     
     init(reference: WidgetView, corner: Corner, canvas: CanvasViewController) {
         self.referenceView = reference
         self.corner = corner
         self.canvas = canvas
-        let size = CGSize(width: 40, height: 40)
-        var origin = reference.view.frame.getCornerPosition(corner)
-        origin.x -= size.width/2
-        origin.y -= size.height/2
-        let frame = CGRect(origin: origin, size: size)
-        super.init(frame: frame)
-        
+        super.init(frame: .zero)
+        self.frame = CGRect(origin: origin, size: size)
         self.backgroundColor = .clear
     }
     
@@ -41,12 +68,13 @@ final class TransformHandle: UIView {
     }
     
     override func draw(_ rect: CGRect) {
+        self.frame = CGRect(origin: origin, size: size)
         let path = UIBezierPath()
         
         // main color ring
         UIColor.dotdMain.setStroke()
         let center = CGPoint(x: rect.width/2, y: rect.height/2)
-        let width: CGFloat = 12.0
+        let width: CGFloat = constValue/2 + 32.0 * scale
         let radius = max(rect.width/2, rect.height/2) - width/2
         path.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
         path.lineWidth = width
@@ -61,55 +89,53 @@ final class TransformHandle: UIView {
     
     @objc
     public func dragHandle(_ sender: UIPanGestureRecognizer) {
-        self.center = sender.location(in: canvas?.canvasView)
+        self.center = sender.location(in: canvas.canvasView)
         updateReferenceView()
     }
     
     public func updatePosition() {
-        guard let ref = referenceView else { removeFromSuperview(); return }
         switch corner {
         case .topLeft:
-            self.center = ref.view.frame.topLeftCorner
+            self.center = referenceView.view.frame.topLeftCorner
         case .topRight:
-            self.center = ref.view.frame.topRightCorner
+            self.center = referenceView.view.frame.topRightCorner
         case .bottomLeft:
-            self.center = ref.view.frame.bottomLeftCorner
+            self.center = referenceView.view.frame.bottomLeftCorner
         case .bottomRight:
-            self.center = ref.view.frame.bottomRightCorner
+            self.center = referenceView.view.frame.bottomRightCorner
         }
         self.setNeedsDisplay()
     }
     
     private func updateReferenceView() {
-        guard let ref = referenceView else { return }
         switch corner {
         case .topLeft:
-            let newW = ref.view.frame.maxX - self.center.x
-            let newH = ref.view.frame.maxY - self.center.y
-            let newX = newW < minWidth ? ref.view.frame.maxX - minWidth : self.center.x
-            let newY = newH < minHeight ? ref.view.frame.maxY - minHeight : self.center.y
-            ref.view.frame = CGRect(minX: newX, minY: newY, maxX: ref.view.frame.maxX, maxY: ref.view.frame.maxY)
+            let newW = referenceView.view.frame.maxX - self.center.x
+            let newH = referenceView.view.frame.maxY - self.center.y
+            let newX = newW < minWidth ? referenceView.view.frame.maxX - minWidth : self.center.x
+            let newY = newH < minHeight ? referenceView.view.frame.maxY - minHeight : self.center.y
+            referenceView.view.frame = CGRect(minX: newX, minY: newY, maxX: referenceView.view.frame.maxX, maxY: referenceView.view.frame.maxY)
         case .topRight:
-            let newW = self.center.x - ref.view.frame.minX
-            let newH = ref.view.frame.maxY - self.center.y
-            let newX = newW < minWidth ? ref.view.frame.minX + minWidth : self.center.x
-            let newY = newH < minHeight ? ref.view.frame.maxY - minHeight : self.center.y
-            ref.view.frame = CGRect(minX: ref.view.frame.minX, minY: newY, maxX: newX, maxY: ref.view.frame.maxY)
+            let newW = self.center.x - referenceView.view.frame.minX
+            let newH = referenceView.view.frame.maxY - self.center.y
+            let newX = newW < minWidth ? referenceView.view.frame.minX + minWidth : self.center.x
+            let newY = newH < minHeight ? referenceView.view.frame.maxY - minHeight : self.center.y
+            referenceView.view.frame = CGRect(minX: referenceView.view.frame.minX, minY: newY, maxX: newX, maxY: referenceView.view.frame.maxY)
         case .bottomLeft:
-            let newW = ref.view.frame.maxX - self.center.x
-            let newH = self.center.y - ref.view.frame.minY
-            let newX = newW < minWidth ? ref.view.frame.maxX - minWidth : self.center.x
-            let newY = newH < minHeight ? ref.view.frame.minY + minHeight : self.center.y
-            ref.view.frame = CGRect(minX: newX, minY: ref.view.frame.minY, maxX: ref.view.frame.maxX, maxY: newY)
+            let newW = referenceView.view.frame.maxX - self.center.x
+            let newH = self.center.y - referenceView.view.frame.minY
+            let newX = newW < minWidth ? referenceView.view.frame.maxX - minWidth : self.center.x
+            let newY = newH < minHeight ? referenceView.view.frame.minY + minHeight : self.center.y
+            referenceView.view.frame = CGRect(minX: newX, minY: referenceView.view.frame.minY, maxX: referenceView.view.frame.maxX, maxY: newY)
         case .bottomRight:
-            let newW = self.center.x - ref.view.frame.minX
-            let newH = self.center.y - ref.view.frame.minY
-            let newX = newW < minWidth ? ref.view.frame.minX + minWidth : self.center.x
-            let newY = newH < minHeight ? ref.view.frame.minY + minHeight : self.center.y
-            ref.view.frame = CGRect(minX: ref.view.frame.minX, minY: ref.view.frame.minY, maxX: newX, maxY: newY)
+            let newW = self.center.x - referenceView.view.frame.minX
+            let newH = self.center.y - referenceView.view.frame.minY
+            let newX = newW < minWidth ? referenceView.view.frame.minX + minWidth : self.center.x
+            let newY = newH < minHeight ? referenceView.view.frame.minY + minHeight : self.center.y
+            referenceView.view.frame = CGRect(minX: referenceView.view.frame.minX, minY: referenceView.view.frame.minY, maxX: newX, maxY: newY)
         }
-        ref.internalFrame = ref.view.frame
-        canvas?.updateTransformHandles()
+        referenceView.internalFrame = referenceView.view.frame
+        canvas.updateTransformHandles()
     }
     
     required init?(coder: NSCoder) {

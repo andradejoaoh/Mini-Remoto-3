@@ -68,7 +68,7 @@ final class BodyTextWidgetView: UIViewController, WidgetView {
         view.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         view.clipsToBounds = true
 
-        bodyTextView.font = UIFont(name: "Avenir", size: 17)
+        bodyTextView.font = UIFont(name: "Avenir", size: 54)
         bodyTextView.adjustsFontForContentSizeCategory = true
         bodyTextView.backgroundColor = .systemBackground
         bodyTextView.isScrollEnabled = true
