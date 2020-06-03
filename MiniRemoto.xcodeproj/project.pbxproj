@@ -14,6 +14,7 @@
 		610F9846245B6773003EFDA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 610F9844245B6773003EFDA8 /* LaunchScreen.storyboard */; };
 		616A26B1246F0AF600BD2117 /* CanvasCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */; };
 		616A26B5246F0F9C00BD2117 /* CanvasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */; };
+		8C222C1A2488560C005DAAE2 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C222C192488560C005DAAE2 /* DeleteButton.swift */; };
 		8C45B985247EF585005B30F8 /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C45B984247EF585005B30F8 /* CGRect+Extensions.swift */; };
 		8C45B987247EF642005B30F8 /* TransformHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C45B986247EF642005B30F8 /* TransformHandle.swift */; };
 		8CD2D0A42473112F007B17B4 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */; };
@@ -58,6 +59,7 @@
 		610F9847245B6773003EFDA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		616A26B0246F0AF600BD2117 /* CanvasCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewController.swift; sourceTree = "<group>"; };
 		616A26B4246F0F9C00BD2117 /* CanvasCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionViewCell.swift; sourceTree = "<group>"; };
+		8C222C192488560C005DAAE2 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
 		8C45B984247EF585005B30F8 /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		8C45B986247EF642005B30F8 /* TransformHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformHandle.swift; sourceTree = "<group>"; };
 		8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				8CD2D0A32473112F007B17B4 /* CanvasViewController.swift */,
 				A4393271248048A300882F3E /* CanvasModel.swift */,
 				8C45B986247EF642005B30F8 /* TransformHandle.swift */,
+				8C222C192488560C005DAAE2 /* DeleteButton.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				610F983A245B6770003EFDA8 /* AppDelegate.swift in Sources */,
 				8C45B987247EF642005B30F8 /* TransformHandle.swift in Sources */,
 				F21E6E2F247C51DE0073BE75 /* RootSplitViewController.swift in Sources */,
+				8C222C1A2488560C005DAAE2 /* DeleteButton.swift in Sources */,
 				F2BEF808247859CA00F83E7F /* WidgetData.swift in Sources */,
 				F27B3EA52486700B004D1681 /* CanvasCollectionView.swift in Sources */,
 				F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */,

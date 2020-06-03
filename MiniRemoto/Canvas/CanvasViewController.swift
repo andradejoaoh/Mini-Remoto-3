@@ -78,6 +78,7 @@ class CanvasViewController: UIViewController {
     var selectedWidgetView: WidgetView?
     
     var transformHandles = [TransformHandle]()
+    var deleteButton: DeleteButton?
 
     /// This is the drawing view that contains every other view.
     /// self.view must be static just for handling user input
@@ -110,6 +111,7 @@ class CanvasViewController: UIViewController {
      Alex Nascimento
      */
     func removeWidget(widget: WidgetView) {
+        deselectWidget(widgetView: widget)
         widget.willMove(toParent: nil)
         widget.removeFromParent()
         widget.view.removeFromSuperview()
@@ -273,6 +275,12 @@ class CanvasViewController: UIViewController {
         widgetView.select()
         selectedWidgetView = widgetView
         placeTransformHandles(widgetView: widgetView)
+        placeDeleteButton(widgetView: widgetView)
+    }
+    
+    func placeDeleteButton(widgetView: WidgetView) {
+        deleteButton = DeleteButton(reference: widgetView, canvas: self)
+        canvasView.addSubview(deleteButton!)
     }
     
     func placeTransformHandles(widgetView: WidgetView) {
@@ -302,6 +310,8 @@ class CanvasViewController: UIViewController {
         }
         transformHandles.removeAll()
         selectedWidgetView = nil
+        deleteButton?.removeFromSuperview()
+        deleteButton = nil
     }
     
     func editWidget(widgetView: WidgetView) {

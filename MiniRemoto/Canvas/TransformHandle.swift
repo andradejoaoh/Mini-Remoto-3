@@ -104,6 +104,7 @@ final class TransformHandle: UIView {
         case .bottomRight:
             self.center = referenceView.view.frame.bottomRightCorner
         }
+        canvas.deleteButton?.updatePosition()
         self.setNeedsDisplay()
     }
     
