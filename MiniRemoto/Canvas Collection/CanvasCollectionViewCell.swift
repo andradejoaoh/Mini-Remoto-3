@@ -14,13 +14,18 @@ class CanvasCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
 
         let backgroundView = UIView(frame: frame)
-        backgroundView.backgroundColor = .systemRed
+        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "dotPattern") ?? UIImage())
 
         let selectedBackgroundView = UIView(frame: frame)
         selectedBackgroundView.backgroundColor = UIColor.dotdMain
 
         self.backgroundView = backgroundView
         self.selectedBackgroundView = selectedBackgroundView
+
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
+        self.layer.borderWidth = 4
+        self.layer.borderColor = UIColor.dotdMain.cgColor
         configureLabel()
     }
 
@@ -43,12 +48,13 @@ class CanvasCollectionViewCell: UICollectionViewCell {
     func configureLabel() {
         contentView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2)
+            nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            nameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor)
         ])
         nameLabel.font = UIFont(name: "Avenir-Heavy", size: 24.0)
         nameLabel.textColor = UIColor.dotdGrey
+        nameLabel.textAlignment = .center
     }
 }

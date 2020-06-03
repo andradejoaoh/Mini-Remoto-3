@@ -49,7 +49,7 @@ class CanvasCollectionViewController: UIViewController {
         let viewGuide = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             carouselGuide.topAnchor.constraint(equalTo:viewGuide.topAnchor),
-            carouselGuide.bottomAnchor.constraint(equalTo:viewGuide.bottomAnchor),
+            carouselGuide.bottomAnchor.constraint(equalTo:view.bottomAnchor),
             carouselGuide.trailingAnchor.constraint(equalTo:viewGuide.trailingAnchor),
             carouselGuide.leadingAnchor.constraint(equalTo:viewGuide.leadingAnchor)
         ])
@@ -210,8 +210,9 @@ extension CanvasCollectionViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "canvasCollectionViewCell", for: indexPath) as! CanvasCollectionViewCell
-        
-        cell.contentView.backgroundColor = UIColor.systemGray6
+
+//        TODO: Place Screenshot
+        cell.contentView.backgroundColor = .clear
         cell.nameLabel.text = containers[indexPath.item].canvas.name
         
         return cell
