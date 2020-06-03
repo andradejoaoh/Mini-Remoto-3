@@ -7,14 +7,33 @@
 //
 
 import UIKit
+import os.log
 
 class CanvasCollectionViewController: UIViewController {
     
     @AutoLayout public var collectionView: CanvasCollectionView
+
+    private var containers: [ContainerModel] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+
+    lazy var queue: DispatchQueue = {
+        let queue = DispatchQueue(label: "dotd.container", qos: .userInitiated)
+        return queue
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        containers.removeAll(keepingCapacity: false)
+        loadCanvases()
+        collectionView.reloadData()
     }
 
     private func setupCollectionView() {
@@ -81,9 +100,12 @@ class CanvasCollectionViewController: UIViewController {
     }
 
     private func createCanvas(named name: String) {
-        print("\(name) created with success!")
-        //TODO: Create new Canvas
-        #warning("Canvas creation mocked. Actual implementation pending")
+        if let splitView = self.splitViewController as? RootSplitViewController, let detail = splitView.detail {
+            let canvasModel = CanvasModel(name: name, lastModifiedAt: "", createdAt: "")
+            let containerModel = ContainerModel(canvas: canvasModel)
+            detail.update(containerModel)
+            splitView.showDetailViewController(detail, sender: nil)
+        }
     }
 
     private func deleteCanvas() {
@@ -99,7 +121,7 @@ class CanvasCollectionViewController: UIViewController {
 
         let createAction = UIAlertAction(title: "Create", style: .default) { [weak self] (alertAction) in
             if let answer = alertVC.textFields?.first {
-                self?.createCanvas(named: answer.text ?? "nil value")
+                self?.createCanvas(named: answer.text ?? "MyCanvas")
             }
         }
 
@@ -126,12 +148,31 @@ class CanvasCollectionViewController: UIViewController {
         return alertVC
     }
 
-    private func showCanvas() {
+    private func showCanvas(index: Int) {
         if let splitView = self.splitViewController as? RootSplitViewController, let detail = splitView.detail {
-            detail.load(canvas: "")
+            detail.update(containers[index])
             splitView.showDetailViewController(detail, sender: nil)
         }
     }
+
+    func loadCanvases() {
+        let url = FileManager.userDocumentDirectory.appendingPathComponent("canvases")
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            do {
+                let canvases = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                for canvas in canvases {
+                    let canvasData = try Data(contentsOf: canvas)
+                    let canvasJSON = try JSONDecoder().decode(ContainerModel.self, from: canvasData)
+                    self.containers.append(canvasJSON)
+                }
+                os_log("Canvas loaded successfully", log: OSLog.persistenceCycle, type: .debug)
+            } catch {
+                os_log("Failed to load canvas", log: OSLog.persistenceCycle, type: .error)
+            }
+        }
+    }
+
 }
 
 extension CanvasCollectionViewController: UICollectionViewDelegate {
@@ -139,7 +180,7 @@ extension CanvasCollectionViewController: UICollectionViewDelegate {
         if collectionView.allowsMultipleSelection {
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
         } else {
-            showCanvas()
+            showCanvas(index: indexPath.item)
             collectionView.deselectItem(at: indexPath, animated: false)
         }
     }
@@ -154,13 +195,14 @@ extension CanvasCollectionViewController: UICollectionViewDelegate {
 extension CanvasCollectionViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return containers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "canvasCollectionViewCell", for: indexPath) as! CanvasCollectionViewCell
         
-        cell.contentView.backgroundColor = UIColor.systemTeal
+        cell.contentView.backgroundColor = UIColor.systemGray6
+        cell.nameLabel.text = containers[indexPath.item].canvas.name
         
         return cell
     }

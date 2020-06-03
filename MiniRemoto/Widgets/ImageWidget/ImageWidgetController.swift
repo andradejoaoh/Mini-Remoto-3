@@ -20,7 +20,7 @@ final class ImageWidgetController {
     var imageID: String?
 
     func load(image id: String, completion: @escaping (Result<Data, Error>) -> Void) {
-        let url = FileManager.userDocumentDirectory
+        let url = FileManager.userDocumentDirectory.appendingPathComponent("media")
 
         let fileURL = url.appendingPathComponent(id).appendingPathExtension("png")
 
@@ -36,7 +36,7 @@ final class ImageWidgetController {
 
 
     private func save() {
-        let url = FileManager.userDocumentDirectory
+        let url = FileManager.userDocumentDirectory.appendingPathComponent("media")
 
         guard let imageID = imageID else { return }
         let fileURL = url.appendingPathComponent(imageID).appendingPathExtension("png")

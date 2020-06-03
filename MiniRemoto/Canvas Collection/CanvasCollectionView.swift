@@ -14,7 +14,7 @@ final class CanvasCollectionView: UICollectionView {
         let layout = UICollectionViewFlowLayout()
         super.init(frame: frame, collectionViewLayout: layout)
         self.register(CanvasCollectionViewCell.self, forCellWithReuseIdentifier: "canvasCollectionViewCell")
-        self.backgroundColor = .clear
+        self.backgroundColor = .dotdBackground
     }
 
     required init?(coder: NSCoder) {

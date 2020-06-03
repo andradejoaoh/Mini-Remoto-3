@@ -19,6 +19,8 @@ final class RootSplitViewController: UISplitViewController {
 
         super.init(nibName: nil, bundle: nil)
 
+        self.delegate = self
+
         self.preferredPrimaryColumnWidthFraction = 0.15
         let navMaster = UINavigationController(rootViewController: self.master)
         let navDetail = UINavigationController(rootViewController: self.detail!)
@@ -31,6 +33,12 @@ final class RootSplitViewController: UISplitViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.preferredDisplayMode = .primaryHidden
+    }
+}
+
+extension RootSplitViewController: UISplitViewControllerDelegate {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        let tutorial = UserDefaults.standard.bool(forKey: "tutorialMode")
+        return false
     }
 }

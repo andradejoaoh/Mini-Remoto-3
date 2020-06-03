@@ -12,17 +12,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    private func checkForFirstTimeLaunching() {
+        let userDefaults = UserDefaults.standard
+        let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
+        if !launchedBefore  {
+            do {
+                let canvasFolder: URL = FileManager.userDocumentDirectory.appendingPathComponent("canvases")
+                let imagesFolder: URL = FileManager.userDocumentDirectory.appendingPathComponent("media")
+                try FileManager.default.createDirectory(at: canvasFolder, withIntermediateDirectories: false, attributes: nil)
+                try FileManager.default.createDirectory(at: imagesFolder, withIntermediateDirectories: false, attributes: nil)
+                userDefaults.set(true, forKey: "launchedBefore")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
-
+        checkForFirstTimeLaunching()
         window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
         let masterViewController = CanvasCollectionViewController()
-        let detailViewController = ContainerViewController()
+        let detailViewController = ContainerViewController(queue: masterViewController.queue)
         let splitViewController = RootSplitViewController(master: masterViewController, detail: detailViewController)
         window?.rootViewController = splitViewController
     }

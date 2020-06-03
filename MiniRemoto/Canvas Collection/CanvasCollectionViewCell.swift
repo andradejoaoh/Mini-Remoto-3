@@ -8,6 +8,7 @@
 import UIKit
 
 class CanvasCollectionViewCell: UICollectionViewCell {
+    @AutoLayout var nameLabel: UILabel
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,10 +17,11 @@ class CanvasCollectionViewCell: UICollectionViewCell {
         backgroundView.backgroundColor = .systemRed
 
         let selectedBackgroundView = UIView(frame: frame)
-        selectedBackgroundView.backgroundColor = .systemGreen
+        selectedBackgroundView.backgroundColor = UIColor.dotdMain
 
         self.backgroundView = backgroundView
         self.selectedBackgroundView = selectedBackgroundView
+        configureLabel()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -36,5 +38,17 @@ class CanvasCollectionViewCell: UICollectionViewCell {
         didSet {
             self.contentView.alpha = isHighlighted ? 0.7 : 1
         }
+    }
+
+    func configureLabel() {
+        contentView.addSubview(nameLabel)
+        NSLayoutConstraint.activate([
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2)
+        ])
+        nameLabel.font = UIFont(name: "Avenir-Heavy", size: 24.0)
+        nameLabel.textColor = UIColor.dotdGrey
     }
 }

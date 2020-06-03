@@ -38,7 +38,7 @@ class CanvasViewController: UIViewController {
 
     var widgets = Array<WidgetView>()
 
-    var model: CanvasModel = CanvasModel(name: "", lastModifiedAt: "", createdAt: "") {
+    var model: CanvasModel = CanvasModel(name: "MyCanvas", lastModifiedAt: "", createdAt: "") {
         didSet {
             model.imageWidgets.forEach { [weak self] (widget) in
                 guard let self = self else { return }
