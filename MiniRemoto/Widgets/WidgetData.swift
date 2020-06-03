@@ -47,24 +47,6 @@ extension CGRect {
     }
 }
 
-//struct TextWidgetModel: WidgetData {
-//    let frame: Frame
-//    var title: String
-//    var body: String
-//    let iconPath: String = "pencil.circle.fill"
-//
-//    init(frame: Frame = Frame.zero, title: String = "", body: String = "") {
-//        self.frame = frame
-//        self.title = title
-//        self.body = body
-//    }
-//
-//    func make() -> WidgetView {
-//        let controller = TextWidgetController(model: self)
-//        return TextWidgetView(controller: controller)
-//    }
-//}
-
 struct TitleTextWidgetModel: WidgetData {
     var frame: Frame
     var title: String
@@ -109,7 +91,7 @@ struct ImageWidgetModel: WidgetData {
     }
 
     func make() -> WidgetView {
-        let widget = ImageWidgetView(image: Data(), id: id)
+        let widget = ImageWidgetView(id: id)
         widget.view.frame = CGRect(frame: self.frame)
         return widget
     }

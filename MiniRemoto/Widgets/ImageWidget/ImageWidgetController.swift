@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os.log
 
 final class ImageWidgetController {
 
@@ -18,18 +19,19 @@ final class ImageWidgetController {
 
     var imageID: String?
 
-    func load(image id: String) -> Data {
+    func load(image id: String, completion: @escaping (Result<Data, Error>) -> Void) {
         let url = FileManager.userDocumentDirectory
 
         let fileURL = url.appendingPathComponent(id).appendingPathExtension("png")
 
         do {
             let data = try Data(contentsOf: fileURL)
-            return data
+            completion(.success(data))
+            os_log("Loaded image successfully", log: OSLog.imageLoadingCycle, type: .debug)
         } catch {
-            print(error)
+            completion(.failure(error))
+            os_log("Failed to load image", log: OSLog.imageLoadingCycle, type: .error)
         }
-        return Data()
     }
 
 
@@ -38,10 +40,14 @@ final class ImageWidgetController {
 
         guard let imageID = imageID else { return }
         let fileURL = url.appendingPathComponent(imageID).appendingPathExtension("png")
-        do {
-            try imageData?.write(to: fileURL, options: .atomicWrite)
-        } catch {
-            print(error)
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            do {
+                try self.imageData?.write(to: fileURL, options: .atomicWrite)
+                os_log("Saved image successfully", log: OSLog.imageLoadingCycle, type: .debug)
+            } catch {
+                os_log("Failed to save image", log: OSLog.imageLoadingCycle, type: .error)
+            }
         }
     }
 
