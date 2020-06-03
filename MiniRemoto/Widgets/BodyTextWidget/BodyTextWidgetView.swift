@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 final class BodyTextWidgetView: UIViewController, WidgetView {
+    
+   
     var snapshot: WidgetData {
         return BodyTextWidgetModel(frame: Frame(rect: internalFrame), body: controller.body)
     }
@@ -18,15 +20,16 @@ final class BodyTextWidgetView: UIViewController, WidgetView {
         didSet {
             switch  self.state {
             case .editing:
-                bodyTextView.isEditable = true
+                bodyTextView.becomeFirstResponder()
             case .idle:
-                bodyTextView.isEditable = false
-                view.resignFirstResponder()
+                bodyTextView.resignFirstResponder()
             }
         }
     }
 
     var internalFrame: CGRect = CGRect.zero
+    
+    @AutoLayout var gesturesView: UIView
 
     /// The representation of a `BodyTextWidgetView`'s content.
     @AutoLayout private var bodyTextView: UITextView
@@ -50,6 +53,12 @@ final class BodyTextWidgetView: UIViewController, WidgetView {
         super.viewDidLoad()
         setupUI()
     }
+    
+    func setInteractions(canvas: CanvasViewController) {
+        gesturesView.addGestureRecognizer(UITapGestureRecognizer(target: canvas, action: #selector(canvas.tappedWidget(_:))))
+        gesturesView.addGestureRecognizer(UIPanGestureRecognizer(target: canvas, action: #selector(canvas.draggedWidget(_:))))
+        gesturesView.addGestureRecognizer(UILongPressGestureRecognizer(target: canvas, action: #selector(canvas.longPressedWidget(_:))))
+    }
 
    /// Set the UI up with constraints for `bodyTextView` and configures it.
     private func setupUI() {
@@ -67,17 +76,30 @@ final class BodyTextWidgetView: UIViewController, WidgetView {
         bodyTextView.delegate = self
 
         view.addSubview(bodyTextView)
-
-        NSLayoutConstraint.activate(
-            [bodyTextView.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor),
-             bodyTextView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-             bodyTextView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-             bodyTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-        )
+        NSLayoutConstraint.activate([
+            bodyTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            bodyTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8),
+            bodyTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8),
+            bodyTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
+        ])
+        
+        view.addSubview(gesturesView)
+        gesturesView.backgroundColor = nil
+        NSLayoutConstraint.activate([
+            gesturesView.topAnchor.constraint(equalTo: view.topAnchor),
+            gesturesView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            gesturesView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            gesturesView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
     func edit() {
         state = .editing
+    }
+    
+    func deselect() {
+        state = .idle
+        view.backgroundColor = .white
     }
 }
 

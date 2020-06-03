@@ -27,9 +27,10 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
             switch self.state {
             case .editing:
                 titleTextField.isEnabled = true
+                titleTextField.becomeFirstResponder()
             case .idle:
                 titleTextField.isEnabled = false
-                view.resignFirstResponder()
+                titleTextField.resignFirstResponder()
             }
         }
     }
@@ -60,6 +61,12 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
+    
+    func setInteractions(canvas: CanvasViewController) {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: canvas, action: #selector(canvas.tappedWidget(_:))))
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: canvas, action: #selector(canvas.draggedWidget(_:))))
+        view.addGestureRecognizer(UILongPressGestureRecognizer(target: canvas, action: #selector(canvas.longPressedWidget(_:))))
+    }
 
     /// Set the UI up with constraints for `titleTextField` and configures it.
     private func setupUI() {
@@ -78,16 +85,21 @@ final class TitleTextWidgetView: UIViewController, WidgetView {
 
         view.addSubview(titleTextField)
 
-        NSLayoutConstraint.activate(
-                   [titleTextField.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor),
-                    titleTextField.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-                    titleTextField.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-                    titleTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-        )
+        NSLayoutConstraint.activate([
+            titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            titleTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8),
+            titleTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8),
+            titleTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
+        ])
     }
 
     func edit() {
         state = .editing
+    }
+    
+    func deselect() {
+        state = .idle
+        view.backgroundColor = .white
     }
 }
 
