@@ -73,10 +73,12 @@ final class PaletteViewController: UIViewController {
         addCarouselView()
     }
 
-    //    Override of viewWillTransition to resize collectionView
+    //    Override of viewWillTransition to resize the pallete when the device is rotated or view resized
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        carouselView.reloadData()
+        coordinator.animate(alongsideTransition: { [weak self] (_) in
+            self?.carouselView.collectionViewLayout.invalidateLayout()
+        }, completion: nil)
     }
 
     //MARK: Carousel View Configuration
@@ -137,25 +139,39 @@ extension PaletteViewController: UICollectionViewDelegateFlowLayout {
         return squareItemSize(withPadding: itemPadding)
     }
 
+    //    minimumLineSpacingForSectionAt
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 20
     }
 
+    //    minimumInteritemSpacingForSectionAt
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return itemPadding >= 0 ? CGFloat(itemPadding) : 0
     }
 
-    func centerItemsInCollectionView(cellWidth: Double, numberOfItems items: Int, spaceBetweenCell: Double, collectionView: UICollectionView) -> UIEdgeInsets {
+    /**
+     Returns an instance of `UIEdgeInsets` meant to center items in a collectionView
+
+     - Parameters:
+        - cellWidth: Size of the cell in the collectionView
+        - items: Number of items in the collectionView
+        - padding: Size of the padding between cells
+        - collectionView: The targeted collection view
+
+     - Author:
+     Rafael Galdino
+     */
+    func centerItemsInCollectionView(cellWidth: Double, numberOfItems items: Int, spaceBetweenCell padding: Double, collectionView: UICollectionView) -> UIEdgeInsets {
         let numberOfItems = Double(items)
         let totalWidth = cellWidth * numberOfItems
-        let totalSpacingWidth = spaceBetweenCell * (numberOfItems - 1)
+        let totalSpacingWidth = padding * (numberOfItems - 1)
         let leftInset = (collectionView.frame.width - CGFloat(totalWidth + totalSpacingWidth)) / 2
         let rightInset = leftInset
         return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return centerItemsInCollectionView(cellWidth: Double(squareItemSize(withPadding: itemPadding).width), numberOfItems: widgetOptions.count, spaceBetweenCell: itemPadding, collectionView: collectionView)
+        return centerItemsInCollectionView(cellWidth: Double(squareItemSize(withPadding: itemPadding).width), numberOfItems: widgetOptions.count, spaceBetweenCell: itemPadding/2, collectionView: collectionView)
     }
 }
 
@@ -168,7 +184,7 @@ extension PaletteViewController: UICollectionViewDataSource {
 
     //    Casts collection view cell as CarouselCellView and atributes image based on widgetOptions
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as? CarouselCellView else { return UICollectionViewCell()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "carouselCellView", for: indexPath) as? CarouselCellView else { return UICollectionViewCell()}
         cell.image = widgetOptions[indexPath.item].iconImage
         cell.tintColor = .dotdMain
         return cell
