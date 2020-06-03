@@ -29,6 +29,7 @@ extension WidgetState {
 protocol WidgetView: UIViewController {
     var snapshot: WidgetData { get }
     var state: WidgetState { get set }
+    var internalFrame: CGRect { get set }
     func edit()
     func select()
     func deselect()

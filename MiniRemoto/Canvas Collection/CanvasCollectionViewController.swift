@@ -128,6 +128,7 @@ class CanvasCollectionViewController: UIViewController {
 
     private func showCanvas() {
         if let splitView = self.splitViewController as? RootSplitViewController, let detail = splitView.detail {
+            detail.load(canvas: "")
             splitView.showDetailViewController(detail, sender: nil)
         }
     }

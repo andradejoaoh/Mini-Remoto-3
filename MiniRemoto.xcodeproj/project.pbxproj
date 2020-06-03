@@ -20,14 +20,16 @@
 		8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2D0A82473116C007B17B4 /* CGExtensions.swift */; };
 		A4393272248048A300882F3E /* CanvasModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4393271248048A300882F3E /* CanvasModel.swift */; };
 		A43C6EC8248591AD0079F46B /* ImageWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43C6EC7248591AD0079F46B /* ImageWidgetController.swift */; };
-		A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TextWidgetView.swift */; };
-		A45626A7246DA787006EEABF /* TextWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TextWidgetController.swift */; };
+		A45626A5246DA73F006EEABF /* TitleTextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A4246DA73F006EEABF /* TitleTextWidgetView.swift */; };
+		A45626A7246DA787006EEABF /* TitleTextWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626A6246DA787006EEABF /* TitleTextWidgetController.swift */; };
 		A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */; };
 		A45626B5246DCDC7006EEABF /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B4246DCDC7006EEABF /* WidgetView.swift */; };
 		A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */; };
 		A47C4733247EAE2C0071B3E9 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47C4732247EAE2C0071B3E9 /* UIColor+Extensions.swift */; };
 		A4A386EB2486BB5C0096751B /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A386EA2486BB5C0096751B /* FileManager+Extensions.swift */; };
 		A4A386ED2486BB8F0096751B /* OSLog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A386EC2486BB8F0096751B /* OSLog+Extensions.swift */; };
+		A4B741902487DCE300BC89E6 /* BodyTextWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B7418F2487DCE300BC89E6 /* BodyTextWidgetController.swift */; };
+		A4B741922487DF2F00BC89E6 /* BodyTextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B741912487DF2F00BC89E6 /* BodyTextWidgetView.swift */; };
 		F21E6E2F247C51DE0073BE75 /* RootSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */; };
 		F27B3EA52486700B004D1681 /* CanvasCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27B3EA42486700B004D1681 /* CanvasCollectionView.swift */; };
 		F2BEF7F324784CCA00F83E7F /* CarouselCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */; };
@@ -62,14 +64,16 @@
 		8CD2D0A82473116C007B17B4 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		A4393271248048A300882F3E /* CanvasModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasModel.swift; sourceTree = "<group>"; };
 		A43C6EC7248591AD0079F46B /* ImageWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetController.swift; sourceTree = "<group>"; };
-		A45626A4246DA73F006EEABF /* TextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetView.swift; sourceTree = "<group>"; };
-		A45626A6246DA787006EEABF /* TextWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWidgetController.swift; sourceTree = "<group>"; };
+		A45626A4246DA73F006EEABF /* TitleTextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTextWidgetView.swift; sourceTree = "<group>"; };
+		A45626A6246DA787006EEABF /* TitleTextWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTextWidgetController.swift; sourceTree = "<group>"; };
 		A45626AB246DA7C4006EEABF /* ImageWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWidgetView.swift; sourceTree = "<group>"; };
 		A45626B4246DCDC7006EEABF /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		A45626B6246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutPropertyWrapper.swift; sourceTree = "<group>"; };
 		A47C4732247EAE2C0071B3E9 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		A4A386EA2486BB5C0096751B /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
 		A4A386EC2486BB8F0096751B /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Extensions.swift"; sourceTree = "<group>"; };
+		A4B7418F2487DCE300BC89E6 /* BodyTextWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyTextWidgetController.swift; sourceTree = "<group>"; };
+		A4B741912487DF2F00BC89E6 /* BodyTextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyTextWidgetView.swift; sourceTree = "<group>"; };
 		F21E6E2E247C51DE0073BE75 /* RootSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSplitViewController.swift; sourceTree = "<group>"; };
 		F27B3EA42486700B004D1681 /* CanvasCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCollectionView.swift; sourceTree = "<group>"; };
 		F2BEF7D324784CCA00F83E7F /* CarouselCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCellView.swift; sourceTree = "<group>"; };
@@ -165,19 +169,20 @@
 				A45626B4246DCDC7006EEABF /* WidgetView.swift */,
 				F2BEF807247859CA00F83E7F /* WidgetData.swift */,
 				A45626AA246DA7B6006EEABF /* ImageWidget */,
-				A45626A3246DA720006EEABF /* TextWidget */,
+				A45626A3246DA720006EEABF /* TitleWidget */,
+				A4B7418E2487DCC000BC89E6 /* BodyTextWidget */,
 				8CD2D0A72473116C007B17B4 /* Utilities */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
 		};
-		A45626A3246DA720006EEABF /* TextWidget */ = {
+		A45626A3246DA720006EEABF /* TitleWidget */ = {
 			isa = PBXGroup;
 			children = (
-				A45626A4246DA73F006EEABF /* TextWidgetView.swift */,
-				A45626A6246DA787006EEABF /* TextWidgetController.swift */,
+				A45626A4246DA73F006EEABF /* TitleTextWidgetView.swift */,
+				A45626A6246DA787006EEABF /* TitleTextWidgetController.swift */,
 			);
-			path = TextWidget;
+			path = TitleWidget;
 			sourceTree = "<group>";
 		};
 		A45626AA246DA7B6006EEABF /* ImageWidget */ = {
@@ -187,6 +192,15 @@
 				A43C6EC7248591AD0079F46B /* ImageWidgetController.swift */,
 			);
 			path = ImageWidget;
+			sourceTree = "<group>";
+		};
+		A4B7418E2487DCC000BC89E6 /* BodyTextWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A4B741912487DF2F00BC89E6 /* BodyTextWidgetView.swift */,
+				A4B7418F2487DCE300BC89E6 /* BodyTextWidgetController.swift */,
+			);
+			path = BodyTextWidget;
 			sourceTree = "<group>";
 		};
 		F2358A2724858D33003CD94B /* Canvas Collection */ = {
@@ -324,6 +338,7 @@
 				A43C6EC8248591AD0079F46B /* ImageWidgetController.swift in Sources */,
 				F2BEF7FB24784CCA00F83E7F /* ImageWidget+CoreDataClass.swift in Sources */,
 				A45626AC246DA7C4006EEABF /* ImageWidgetView.swift in Sources */,
+				A4B741922487DF2F00BC89E6 /* BodyTextWidgetView.swift in Sources */,
 				A47C4733247EAE2C0071B3E9 /* UIColor+Extensions.swift in Sources */,
 				F2BEF7F824784CCA00F83E7F /* TextWidget+CoreDataClass.swift in Sources */,
 				F2BEF80A24786D0300F83E7F /* ContainerViewController.swift in Sources */,
@@ -331,7 +346,7 @@
 				610F983E245B6770003EFDA8 /* ViewController.swift in Sources */,
 				F2BEF7FD24784CCA00F83E7F /* Canvas+CoreDataProperties.swift in Sources */,
 				8CD2D0A92473116C007B17B4 /* CGExtensions.swift in Sources */,
-				A45626A5246DA73F006EEABF /* TextWidgetView.swift in Sources */,
+				A45626A5246DA73F006EEABF /* TitleTextWidgetView.swift in Sources */,
 				A45626B7246DCEFF006EEABF /* AutoLayoutPropertyWrapper.swift in Sources */,
 				F2BEF7F624784CCA00F83E7F /* CoreDataManager.swift in Sources */,
 				A4A386ED2486BB8F0096751B /* OSLog+Extensions.swift in Sources */,
@@ -346,11 +361,12 @@
 				F2BEF808247859CA00F83E7F /* WidgetData.swift in Sources */,
 				F27B3EA52486700B004D1681 /* CanvasCollectionView.swift in Sources */,
 				F2BEF7F524784CCA00F83E7F /* PaletteViewController.swift in Sources */,
+				A4B741902487DCE300BC89E6 /* BodyTextWidgetController.swift in Sources */,
 				610F983C245B6770003EFDA8 /* SceneDelegate.swift in Sources */,
 				F2BEF7F424784CCA00F83E7F /* CarouselCollectionView.swift in Sources */,
 				A4393272248048A300882F3E /* CanvasModel.swift in Sources */,
 				F2BEF7F324784CCA00F83E7F /* CarouselCellView.swift in Sources */,
-				A45626A7246DA787006EEABF /* TextWidgetController.swift in Sources */,
+				A45626A7246DA787006EEABF /* TitleTextWidgetController.swift in Sources */,
 				F2BEF7FE24784CCA00F83E7F /* DataModel.xcdatamodeld in Sources */,
 				F2BEF7F924784CCA00F83E7F /* Canvas+CoreDataClass.swift in Sources */,
 			);
