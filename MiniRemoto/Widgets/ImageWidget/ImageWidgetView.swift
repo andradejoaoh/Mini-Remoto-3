@@ -44,12 +44,13 @@ final class ImageWidgetView: UIViewController, WidgetView {
     }
     private var imageID: String
 
-    private let controller = ImageWidgetController()
+    private let controller: ImageWidgetController
 
     /// Initialise a new instace of this type:
     /// - parameter image: the image to be displayed.
     init(id: String) {
         self.state = .idle
+        self.controller = ImageWidgetController()
         self.imageID = id
         super.init(nibName: nil, bundle: nil)
     }
@@ -57,6 +58,7 @@ final class ImageWidgetView: UIViewController, WidgetView {
     required init?(coder: NSCoder) {
         self.state = .idle
         self.image = UIImage()
+        self.controller = ImageWidgetController()
         self.imageID = ""
         super.init(coder: coder)
     }

@@ -208,7 +208,16 @@ extension PaletteViewController: UICollectionViewDragDelegate {
         let itemProvider = NSItemProvider(object: item)
         let dragItem = UIDragItem(itemProvider: itemProvider)
 
-        dragItem.localObject = widgetOptions[indexPath.item]
+        switch indexPath.item {
+        case 0:
+            dragItem.localObject = widgetOptions[indexPath.item]
+        case 1:
+            dragItem.localObject = widgetOptions[indexPath.item]
+        case 2:
+            dragItem.localObject = ImageWidgetModel()
+        default:
+            dragItem.localObject = widgetOptions[indexPath.item]
+        }
 
         return [dragItem]
     }

@@ -80,18 +80,26 @@ struct BodyTextWidgetModel: WidgetData {
     
 }
 
+func genID() -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    let now = Date()
+    let dateString = formatter.string(from:now)
+    return dateString
+}
+
 struct ImageWidgetModel: WidgetData {
     let id: String
     let frame: Frame
     let iconPath: String = "ImageWidgetIcon-main"
 
-    init(frame: Frame = Frame.zero, id: String = UUID().uuidString ) {
+    init(frame: Frame = Frame.zero, id: String = UUID().uuidString) {
         self.frame = frame
         self.id = id
     }
 
     func make() -> WidgetView {
-        let widget = ImageWidgetView(id: id)
+        let widget = ImageWidgetView(id: self.id)
         widget.view.frame = CGRect(frame: self.frame)
         return widget
     }
