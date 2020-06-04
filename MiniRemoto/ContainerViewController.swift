@@ -82,18 +82,6 @@ final class ContainerViewController: UIViewController {
             }
         }
     }
-
-
-//    private func canvasName(name: String) -> String {
-//        var canvasName = name
-//        let formatter = DateFormatter()
-//        //2016-12-08 03:37:22 +0000
-//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        let now = Date()
-//        let dateString = formatter.string(from:now)
-//        canvasName += dateString
-//        return canvasName
-//    }
     
     private func setupController() {
         add(controller: canvas)
@@ -131,7 +119,7 @@ final class ContainerViewController: UIViewController {
         palette.widgetOptions = [
             TitleTextWidgetModel(),
             BodyTextWidgetModel(),
-            ImageWidgetModel()
+            ImageWidgetModel(id: "MEMES")
         ]
     }
 }

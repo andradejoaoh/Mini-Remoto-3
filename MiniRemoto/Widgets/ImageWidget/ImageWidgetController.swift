@@ -39,6 +39,7 @@ final class ImageWidgetController {
         let url = FileManager.userDocumentDirectory.appendingPathComponent("media")
 
         guard let imageID = imageID else { return }
+        print(imageID)
         let fileURL = url.appendingPathComponent(imageID).appendingPathExtension("png")
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
